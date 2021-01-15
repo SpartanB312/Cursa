@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "compatibilityLevel": "JAVA_8",
+  "package": "com.deneb.client.mixin",
+  "refmap": "mixins.deneb.refmap.json",
+  "client": [
+    "entity.MixinEntityPlayerSP",
+    "render.MixinModelBiped",
+    "network.MixinNetWork"
+  ]
+}
