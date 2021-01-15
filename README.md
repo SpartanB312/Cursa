@@ -2,8 +2,10 @@
 A utility mod base for Minecraft 1.12.2 anarchy server.
 
 ## Credits
-Some utils and features form Kami and salhack.
-Thank you 086 for the basic Kami and ionar for salhack and summit!
+Thank you!
+[ionar2](https://github.com/ionar2) for [Salhack](https://github.com/ionar2/spidermod)
+[ronmamo](https://github.com/ronmamo/) for [Reflections](https://github.com/ronmamo/reflections)
+The [Minecraft Forge team](https://github.com/MinecraftForge) for [Forge](https://files.minecraftforge.net/)
 
 ## License
 GPL 3 because this project contains some kami module and event.
