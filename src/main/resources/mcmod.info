@@ -1,0 +1,14 @@
+[
+  {
+    "modid": "deneb",
+    "name": "Deneb",
+    "description": "A legendary Mod made by B_312",
+    "version": "0.0.1",
+    "mcversion": "1.12.2",
+    "logoFile": "sexy.png",
+    "updateUrl": "",
+    "authorList": ["B_312"],
+    "screenshots": [],
+    "dependencies": []
+  }
+]
