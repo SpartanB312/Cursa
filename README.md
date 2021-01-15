@@ -5,6 +5,8 @@ A utility mod base for Minecraft 1.12.2 anarchy server.
 
 Thank you!
 
+[zeroeightsix](https://github.com/zeroeightsix) for [KAMI](https://github.com/zeroeightsix/kami)
+
 [ionar2](https://github.com/ionar2) for [Salhack](https://github.com/ionar2/spidermod)
 
 [ronmamo](https://github.com/ronmamo/) for [Reflections](https://github.com/ronmamo/reflections)
