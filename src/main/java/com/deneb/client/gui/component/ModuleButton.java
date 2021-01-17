@@ -1,6 +1,7 @@
 package com.deneb.client.gui.component;
 
 import com.deneb.client.client.GuiManager;
+import com.deneb.client.features.HUDModule;
 import com.deneb.client.gui.Panel;
 import com.deneb.client.features.IModule;
 import com.deneb.client.utils.Utils;
@@ -10,6 +11,8 @@ import net.minecraft.client.gui.Gui;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.deneb.client.utils.LambdaUtil.isHovered;
 
 /**
  * Created by B_312 on 01/10/21
@@ -31,10 +34,10 @@ public class ModuleButton extends Component {
     }
 
     public void setup() {
-        for (Value value : module.getValues()) {
+        for (Value<?> value : module.getValues()) {
             if (value instanceof BValue) settings.add(new BooleanButton((BValue) value, width, height, father));
             if (value instanceof IValue || value instanceof FValue || value instanceof DValue)
-                settings.add(new NumberSlider(value, width, height, father));
+                settings.add(new NumberSlider<>(value, width, height, father));
             if (value instanceof MValue) settings.add(new ModeButton((MValue) value, width, height, father));
         }
         settings.add(new BindButton(module,width,height,father));
@@ -43,12 +46,16 @@ public class ModuleButton extends Component {
     @Override
     public void render(int mouseX, int mouseY, float partialTicks) {
 
+        if(dragging){
+            ((HUDModule)module).onDragging(mouseX,mouseY);
+        }
+
         solveHUDPos(mouseX,mouseY);
 
         int color = GuiManager.getINSTANCE().getRGB();
         int fontColor = new Color(255, 255, 255).getRGB();
 
-        if (isHovered(mouseX, mouseY)) {
+        if (isHovered(mouseX, mouseY).test(this)) {
             color = (color & 0x7F7F7F) << 1;
         }
 
@@ -67,7 +74,7 @@ public class ModuleButton extends Component {
                 return true;
             }
         }
-        if (!isHovered(mouseX, mouseY))
+        if (!isHovered(mouseX, mouseY).test(this))
             return false;
         if (mouseButton == 0) {
             module.toggle();
@@ -81,7 +88,8 @@ public class ModuleButton extends Component {
 
     @Override
     public void mouseReleased(int mouseX, int mouseY, int state) {
-        if (state == 0) {
+        if (state == 0 && module.isHUD) {
+            ((HUDModule)module).onMouseRelease();
             this.dragging = false;
         }
         for (Component setting : settings) {

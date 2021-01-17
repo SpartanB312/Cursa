@@ -4,6 +4,7 @@ import com.deneb.client.gui.component.Component;
 import com.deneb.client.gui.component.ModuleButton;
 import com.deneb.client.features.Category;
 import com.deneb.client.features.ModuleManager;
+import com.deneb.client.gui.component.ValueButton;
 import net.minecraft.client.gui.GuiScreen;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -29,8 +30,8 @@ public class HUDRender extends GuiScreen {
         int startX = 5;
         for(Category category : Category.values()){
             if(!category.isHUD()) continue;
-            panels.add(new Panel(category, startX, 5, 110, 15));
-            startX += 111;
+            panels.add(new Panel(category, startX, 5, 90, 11));
+            startX += 95;
         }
     }
 
@@ -69,11 +70,14 @@ public class HUDRender extends GuiScreen {
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
         for(Panel panel : panels){
             if(panel.mouseClicked(mouseX, mouseY, mouseButton)) return;
+            if (!panel.extended) continue;
             for(ModuleButton part : panel.Elements){
-                if (!panel.extended) continue;
                 if(part.mouseClicked(mouseX, mouseY, mouseButton)) return;
+                if (!part.isExtended) continue;
                 for(Component component : part.settings){
-                    if (!part.isExtended) continue;
+                    if (component instanceof ValueButton){
+                        if (!((ValueButton<?>) component).getValue().visible()) continue;
+                    }
                     if(component.mouseClicked(mouseX, mouseY, mouseButton)) return;
                 }
             }

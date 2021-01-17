@@ -31,7 +31,7 @@ public class ClickGui extends Module {
 
     @Override
     public void onDisable() {
-        if (mc.currentScreen instanceof ClickGuiScreen) {
+        if (mc.currentScreen != null && mc.currentScreen instanceof ClickGuiScreen) {
             mc.displayGuiScreen(null);
         }
         ConfigManager.saveAll();

@@ -15,8 +15,59 @@ public class IValue extends Value<Integer>{
         this.max = max;
     }
 
-    public IValue visibility(Predicate<Integer> predicate) {
-        return (IValue) super.visibility(predicate);
+    public IValue v(Predicate<Object> predicate) {
+        return (IValue) super.v(predicate);
+    }
+
+    public IValue page(PageValue.Page page) {
+        return (IValue) super.v(page.p());
+    }
+
+    public IValue b(BValue value) {
+        return (IValue) super.v(v -> value.getValue());
+    }
+
+    public IValue r(BValue value) {
+        return (IValue) super.v(v -> !value.getValue());
+    }
+
+    public IValue c(double min,Value value,double max){
+        if(value instanceof IValue) {
+            return (IValue) super.v(v -> ((IValue)value).getValue() <= max && ((IValue)value).getValue() >= min);
+        }
+        if(value instanceof FValue) {
+            return (IValue) super.v(v -> ((FValue)value).getValue() <= max && ((FValue)value).getValue() >= min);
+        }
+        if(value instanceof DValue) {
+            return (IValue) super.v(v -> ((DValue)value).getValue() <= max && ((DValue)value).getValue() >= min);
+        }
+        return (IValue) super.v(v -> true);
+    }
+
+    public IValue c(double min,Value value){
+        if(value instanceof IValue) {
+            return (IValue) super.v(v -> ((IValue)value).getValue() >= min);
+        }
+        if(value instanceof FValue) {
+            return (IValue) super.v(v -> ((FValue)value).getValue() >= min);
+        }
+        if(value instanceof DValue) {
+            return (IValue) super.v(v -> ((DValue)value).getValue() >= min);
+        }
+        return (IValue) super.v(v -> true);
+    }
+
+    public IValue c(Value value,double max){
+        if(value instanceof IValue) {
+            return (IValue) super.v(v -> ((IValue)value).getValue() <= max);
+        }
+        if(value instanceof FValue) {
+            return (IValue) super.v(v -> ((FValue)value).getValue() <= max);
+        }
+        if(value instanceof DValue) {
+            return (IValue) super.v(v -> ((DValue)value).getValue() <= max);
+        }
+        return (IValue) super.v(v -> true);
     }
 
     public Integer getMin(){

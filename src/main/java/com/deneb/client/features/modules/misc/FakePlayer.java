@@ -23,7 +23,7 @@ public class FakePlayer extends Module {
                 new MValue.Mode("bachi"),
                 new MValue.Mode("dot5"),
                 new MValue.Mode("FitMC"),
-                new MValue.Mode("Cyri")).visibility(v -> !customMode.getValue());
+                new MValue.Mode("Cyri")).v(v -> !customMode.getValue());
 
     @Override
     public void onEnable() {

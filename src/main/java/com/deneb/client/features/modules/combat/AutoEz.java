@@ -34,7 +34,6 @@ public class AutoEz extends Module {
     public static String ezMsg = "default ez msg";
 
     private ConcurrentHashMap<String, Integer> targetedPlayers = null;
-    private static final String fileName = "HyperLethal_Two/" + "AutoEz.txt";
     private boolean Announce, Announce2;
 
     @SubscribeEvent

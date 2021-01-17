@@ -18,6 +18,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ConfigManager {
 
@@ -125,6 +126,7 @@ public class ConfigManager {
                         }
                     }
                 }
+                module.onConfigSave();
                 father.add(module.getName(), jsonModule);
             }
             PrintWriter saveJSon = new PrintWriter(new FileWriter(MODULE_CONFIG));
@@ -173,6 +175,7 @@ public class ConfigManager {
                         }
                     }
                 }
+                module.onConfigSave();
                 father.add(module.getName(), jsonModule);
             }
             PrintWriter saveJSon = new PrintWriter(new FileWriter(HUD_CONFIG));
@@ -372,6 +375,7 @@ public class ConfigManager {
                         if (!module.getValues().isEmpty()) {
                             trySet(module,jsonMod);
                         }
+                        module.onConfigLoad();
                         module.setBind(jsonMod.get("Bind").getAsInt());
                     }
                 }
@@ -400,6 +404,7 @@ public class ConfigManager {
                         if (!module.getValues().isEmpty()) {
                             trySet(module,jsonMod);
                         }
+                        module.onConfigLoad();
                         module.setBind(jsonMod.get("Bind").getAsInt());
                     }
                 }
@@ -412,7 +417,7 @@ public class ConfigManager {
 
     private void trySet(IModule mods , JsonObject jsonMod){
         try {
-            for (Value value : mods.getValues()) {
+            for (Value<?> value : mods.getValues()) {
                 tryValue(mods.name, value,jsonMod);
             }
         } catch (Exception e){
@@ -420,23 +425,23 @@ public class ConfigManager {
         }
     }
 
-    private void tryValue(String name, Value value ,JsonObject jsonMod){
+    private void tryValue(String name, Value<?> value ,JsonObject jsonMod){
         try {
             if (value instanceof BValue) {
                 boolean bValue = jsonMod.get(value.getName()).getAsBoolean();
-                value.setValue(bValue);
+                ((BValue)value).setValue(bValue);
             }
             if (value instanceof DValue) {
                 double dValue = jsonMod.get(value.getName()).getAsDouble();
-                value.setValue(dValue);
+                ((DValue)value).setValue(dValue);
             }
             if (value instanceof IValue) {
                 int iValue = jsonMod.get(value.getName()).getAsInt();
-                value.setValue(iValue);
+                ((IValue)value).setValue(iValue);
             }
             if (value instanceof FValue) {
                 float fValue = jsonMod.get(value.getName()).getAsFloat();
-                value.setValue(fValue);
+                ((FValue)value).setValue(fValue);
             }
             if (value instanceof MValue) {
                 MValue modeValue = (MValue) value;

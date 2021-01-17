@@ -51,48 +51,53 @@ import static org.lwjgl.opengl.GL11.GL_QUADS;
 @Module.Info(name = "AutoCrystal", category = Category.COMBAT)
 public class AutoCrystal extends Module {
 
-    MValue Page_value = setting("Page", new Mode("General", true), new Mode("Calculation"), new Mode("Render"));
+    PageValue Page_value = page("Page",1,"General","Calculation","Render");
+
+    PageValue.Page general = newPage(Page_value,1);
+    PageValue.Page calculation = newPage(Page_value,2);
+    PageValue.Page render = newPage(Page_value,3);
+
     //General
-    BValue AutoSwitch_value = setting("AutoSwitch", false).visibility(v -> Page_value.page("General"));
-    BValue TargetPlayer_value = setting("Players", true).visibility(v -> Page_value.page("General"));
-    BValue TargetMobs_value = setting("Mobs", false).visibility(v -> Page_value.page("General"));
-    BValue TargetAnimals_value = setting("Animals", false).visibility(v -> Page_value.page("General"));
-    BValue Place_value = setting("Place", true).visibility(v -> Page_value.page("General"));
-    BValue Explode_value = setting("Explode", true).visibility(v -> Page_value.page("General"));
-    BValue MultiPlace_value = setting("MultiPlace", false).visibility(v -> Page_value.page("General"));
-    IValue AttackDelay_value = setting("AttackDelay", 35, 0, 1000).visibility(v -> Page_value.page("General"));
-    DValue PlaceSpeed_value = setting("PlaceSpeed", 35d, 0d, 30d).visibility(v -> Page_value.page("General"));
-    DValue Distance_value = setting("Distance", 7.0D, 0D, 8D).visibility(v -> Page_value.page("General"));
-    DValue PlaceRange_value = setting("PlaceRange", 6.5D, 0D, 8D).visibility(v -> Page_value.page("General"));
-    DValue HitRange_value = setting("HitRange", 5.5D, 0D, 8D).visibility(v -> Page_value.page("General"));
-    DValue MinDmg_value = setting("Min Damage", 4.5d, 0d, 20d).visibility(v -> Page_value.page("General"));
-    DValue MaxSelf_value = setting("MaxSelfDamage", 10d, 0d, 36d).visibility(v -> Page_value.page("General"));
-    BValue Rotate_value = setting("Rotate", true).visibility(v -> Page_value.page("General"));
-    BValue RayTrace_value = setting("RayTrace", false).visibility(v -> Page_value.page("General"));
+    BValue AutoSwitch_value = setting("AutoSwitch", false).page(general);
+    BValue TargetPlayer_value = setting("Players", true).page(general);
+    BValue TargetMobs_value = setting("Mobs", false).page(general);
+    BValue TargetAnimals_value = setting("Animals", false).page(general);
+    BValue Place_value = setting("Place", true).page(general);
+    BValue Explode_value = setting("Explode", true).page(general);
+    BValue MultiPlace_value = setting("MultiPlace", false).page(general);
+    IValue AttackDelay_value = setting("AttackDelay", 35, 0, 1000).page(general);
+    DValue PlaceSpeed_value = setting("PlaceSpeed", 25d, 0d, 30d).page(general);
+    DValue Distance_value = setting("Distance", 7.0D, 0D, 8D).page(general);
+    DValue PlaceRange_value = setting("PlaceRange", 6.5D, 0D, 8D).page(general);
+    DValue HitRange_value = setting("HitRange", 5.5D, 0D, 8D).page(general);
+    BValue Rotate_value = setting("Rotate", true).page(general);
+    BValue RayTrace_value = setting("RayTrace", false).page(general);
     //Calculation
-    BValue NewPlace_value = setting("1.13Place", false).visibility(v -> Page_value.page("Calculation"));
-    BValue Wall_value = setting("Wall", true).visibility(v -> Page_value.page("Calculation"));
-    DValue Walls_value = setting("WallRange", 3.5, 0d, 20d).visibility(v -> Page_value.page("Calculation"));
-    BValue NoSuicide_value = setting("NoSuicide", true).visibility(v -> Page_value.page("Calculation"));
-    BValue FacePlace_value = setting("FacePlace", true).visibility(v -> Page_value.page("Calculation"));
-    DValue BlastHealth_value = setting("MinHealthFace", 10d, 0d, 20d).visibility(v -> FacePlace_value.getValue() && Page_value.page("Calculation"));
-    DValue BMinDmg_value = setting("BreakMinDmg", 4.5, 0.0, 36.0).visibility(v -> Page_value.page("Calculation"));
-    DValue BMaxSelf_value = setting("BreakMaxSelf", 12.0, 0.0, 36.0).visibility(v -> Page_value.page("Calculation"));
-    MValue AttackMode_value = setting("HitMode", new Mode("Smart", true), new Mode("Always")).visibility(v -> Page_value.page("Calculation"));
-    BValue GhostHand_value = setting("GhostHand", false).visibility(v -> Page_value.page("Calculation"));
-    BValue PauseEating_value = setting("PauseWhileEating", false).visibility(v -> Page_value.page("Calculation"));
+    BValue NewPlace_value = setting("1.13Place", false).page(calculation);
+    BValue Wall_value = setting("Wall", true).page(calculation);
+    DValue Walls_value = setting("WallRange", 3.5, 0d, 20d).page(calculation);
+    BValue NoSuicide_value = setting("NoSuicide", true).page(calculation);
+    BValue FacePlace_value = setting("FacePlace", true).page(calculation);
+    DValue BlastHealth_value = setting("MinHealthFace", 10d, 0d, 20d).page(calculation).b(FacePlace_value);
+    DValue MinDmg_value = setting("PlaceMinDamage", 4.5d, 0d, 20d).page(calculation);
+    DValue MaxSelf_value = setting("PlaceMaxSelf", 10d, 0d, 36d).page(calculation);
+    DValue BMinDmg_value = setting("BreakMinDmg", 4.5, 0.0, 36.0).page(calculation);
+    DValue BMaxSelf_value = setting("BreakMaxSelf", 12.0, 0.0, 36.0).page(calculation);
+    MValue AttackMode_value = setting("HitMode", new Mode("Smart", true), new Mode("Always")).page(calculation);
+    BValue GhostHand_value = setting("GhostHand", false).page(calculation);
+    BValue PauseEating_value = setting("PauseWhileEating", false).page(calculation);
     //Render
-    BValue RenderDmg_value = setting("RenderDamage", false).visibility(v -> Page_value.page("Render"));
-    MValue RenderMode_value = setting("RenderBlock", new Mode("Solid", true), new Mode("Up"), new Mode("UpLine"), new Mode("Full"), new Mode("Outline"), new Mode("NoRender")).visibility(v -> Page_value.page("Render"));
-    BValue SyncGui_value = setting("SyncGui", false).visibility(v -> Page_value.page("Render"));
-    IValue Red_value = setting("Red", 255, 0, 255).visibility(v -> Page_value.page("Render") && !SyncGui_value.getValue());
-    IValue Green_value = setting("Green", 0, 0, 255).visibility(v -> Page_value.page("Render") && !SyncGui_value.getValue());
-    IValue Blue_value = setting("Blue", 0, 0, 255).visibility(v -> Page_value.page("Render") && !SyncGui_value.getValue());
-    IValue Alpha_value = setting("Alpha", 70, 0, 255).visibility(v -> Page_value.page("Render"));
-    BValue Rainbow_value = setting("Rainbow", false).visibility(v -> Page_value.page("Render") && !SyncGui_value.getValue());
-    FValue RGBSpeed_value = setting("RGB Speed", 1.0f, 0.0f, 10.0f).visibility(v -> Page_value.page("Render") && !SyncGui_value.getValue());
-    FValue Saturation_value = setting("Saturation", 0.65f, 0.0f, 1.0f).visibility(v -> Page_value.page("Render") && !SyncGui_value.getValue());
-    FValue Brightness_value = setting("Brightness", 1.0f, 0.0f, 1.0f).visibility(v -> Page_value.page("Render") && !SyncGui_value.getValue());
+    BValue RenderDmg_value = setting("RenderDamage", false).page(render);
+    MValue RenderMode_value = setting("RenderBlock", new Mode("Solid", true), new Mode("Up"), new Mode("UpLine"), new Mode("Full"), new Mode("Outline"), new Mode("NoRender")).page(render);
+    BValue SyncGui_value = setting("SyncGui", false).page(render);
+    IValue Red_value = setting("Red", 255, 0, 255).page(render).r(SyncGui_value);
+    IValue Green_value = setting("Green", 0, 0, 255).page(render).r(SyncGui_value);
+    IValue Blue_value = setting("Blue", 0, 0, 255).page(render).r(SyncGui_value);
+    IValue Alpha_value = setting("Alpha", 70, 0, 255).page(render);
+    BValue Rainbow_value = setting("Rainbow", false).page(render).r(SyncGui_value);
+    FValue RGBSpeed_value = setting("RGB Speed", 1.0f, 0.0f, 10.0f).page(render).r(SyncGui_value);
+    FValue Saturation_value = setting("Saturation", 0.65f, 0.0f, 1.0f).page(render).r(SyncGui_value);
+    FValue Brightness_value = setting("Brightness", 1.0f, 0.0f, 1.0f).page(render).r(SyncGui_value);
 
     public static double yaw;
     public static double pitch;

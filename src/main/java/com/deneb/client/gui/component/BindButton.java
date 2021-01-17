@@ -10,6 +10,8 @@ import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
 
+import static com.deneb.client.utils.LambdaUtil.isHovered;
+
 /**
  * Created by B_312 on 01/10/21
  */
@@ -36,7 +38,7 @@ public class BindButton extends Component{
 
         int c = (accepting ? color : fontColor);
 
-        if (isHovered(mouseX,mouseY)){
+        if (isHovered(mouseX, mouseY).test(this)){
             c = (c & 0x7F7F7F) << 1;
         }
 
@@ -58,7 +60,7 @@ public class BindButton extends Component{
 
     @Override
     public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
-        if (!isHovered(mouseX, mouseY))
+        if (!isHovered(mouseX, mouseY).test(this))
             return false;
 
         if (mouseButton == 0) {

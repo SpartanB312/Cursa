@@ -31,7 +31,7 @@ public class HUDEditor extends Module {
 
     @Override
     public void onDisable() {
-        if (mc.currentScreen instanceof HUDEditorScreen) {
+        if (mc.currentScreen != null && mc.currentScreen instanceof HUDEditorScreen) {
             mc.displayGuiScreen(null);
         }
         ConfigManager.saveAll();

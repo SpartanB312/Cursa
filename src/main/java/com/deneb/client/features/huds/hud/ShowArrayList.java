@@ -5,6 +5,7 @@ import com.deneb.client.features.HUDModule;
 import com.deneb.client.features.IModule;
 import com.deneb.client.features.Module;
 import com.deneb.client.features.ModuleManager;
+import com.deneb.client.gui.guis.HUDEditorScreen;
 import com.deneb.client.utils.ChatUtil;
 import com.deneb.client.utils.clazz.ActivedModule;
 import com.deneb.client.value.BValue;
@@ -86,7 +87,7 @@ public class ShowArrayList extends HUDModule {
             if(listPos.getMode("RightTop").isToggled() ||listPos.getMode("LeftTop").isToggled() ) i++;else i--;
 
             if(listPos.getMode("RightTop").isToggled() ||listPos.getMode("RightDown").isToggled() ) {
-                x = x + this.width - width;
+                x = this.x - width;
                 switch (theme.getToggledMode().getName()) {
                     case "Colorful" : {
                         Gui.drawRect(x, offset.get() + 1, x + width, offset.get() + 13, rect);
@@ -144,6 +145,12 @@ public class ShowArrayList extends HUDModule {
         }
 
         this.width = maxWidth + 8;
+
+        if (listPos.page("RightTop") || listPos.page("RightDown")) {
+            this.width = -(maxWidth + 8);
+        } else {
+            this.width = maxWidth + 8;
+        }
 
         if(listPos.getMode("RightTop").isToggled() ||listPos.getMode("LeftTop").isToggled() ) {
             this.height = theme.page("Colorful") ? modList.size() * 12 + 4 : mc.fontRenderer.FONT_HEIGHT * modList.size();

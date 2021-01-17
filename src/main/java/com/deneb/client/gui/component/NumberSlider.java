@@ -13,6 +13,8 @@ import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 
+import static com.deneb.client.utils.LambdaUtil.isHovered;
+
 /**
  * Created by B_312 on 01/10/21
  */
@@ -90,13 +92,13 @@ public class NumberSlider<T> extends ValueButton<T> {
         }
 
         font.drawString(getValue().getName(), x + 3, (int) (y + height / 2 - font.getHeight() / 2f) + 2, fontColor);
-        font.drawString(String.valueOf(displayvalue), x + width - 1 - font.getStringWidth(String.valueOf(displayvalue)), (int) (y + height / 2 - font.getHeight() / 2f) + 2, ColorUtil.getHoovered(0x909090,isHovered(mouseX,mouseY)));
+        font.drawString(String.valueOf(displayvalue), x + width - 1 - font.getStringWidth(String.valueOf(displayvalue)), (int) (y + height / 2 - font.getHeight() / 2f) + 2, ColorUtil.getHoovered(0x909090,isHovered(mouseX, mouseY).test(this)));
     }
 
     @Override
     public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
 
-        if (!getValue().visible() || !isHovered(mouseX, mouseY))
+        if (!getValue().visible() || !isHovered(mouseX, mouseY).test(this))
             return false;
         if (mouseButton == 0) {
             this.sliding = true;

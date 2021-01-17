@@ -9,6 +9,8 @@ import net.minecraft.client.gui.Gui;
 
 import java.awt.*;
 
+import static com.deneb.client.utils.LambdaUtil.isHovered;
+
 /**
  * Created by B_312 on 01/10/21
  */
@@ -33,7 +35,7 @@ public class BooleanButton extends ValueButton<Boolean>{
 
         int c = (getValue().getValue() ? color : fontColor);
 
-        if (isHovered(mouseX,mouseY)){
+        if (isHovered(mouseX, mouseY).test(this)){
             c = (c & 0x7F7F7F) << 1;
         }
 
@@ -46,7 +48,7 @@ public class BooleanButton extends ValueButton<Boolean>{
 
     @Override
     public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
-        if (!getValue().visible() || !isHovered(mouseX, mouseY))
+        if (!getValue().visible() || !isHovered(mouseX, mouseY).test(this))
             return false;
         if (mouseButton == 0) {
             this.getValue().setValue(!getValue().getValue());

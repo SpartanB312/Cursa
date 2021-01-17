@@ -34,15 +34,15 @@ public class OffHandCrystal extends Module {
     BValue autoSwitchback = setting("SwitchBack", true);
     DValue sbHealth = setting("Health", 11D, 0D, 36D);
     BValue autoSwitch = setting("SwitchGap", true);
-    MValue switchMode = setting("GapWhen", new MValue.Mode("Sword", true), new MValue.Mode("RClick", false)).visibility(v -> autoSwitch.getValue());
+    MValue switchMode = setting("GapWhen", new MValue.Mode("Sword", true), new MValue.Mode("RClick", false)).v(v -> autoSwitch.getValue());
     BValue smart = setting("CheckTarget", false);
     BValue fallCheck = setting("CheckFallDmg",true);
     BValue elytra = setting("CheckElytra",true);
     BValue holeCheck = setting("CheckHole", false);
-    DValue holeSwitch = setting("HoleHealth",8d,0d,36d).visibility(v -> holeCheck.getValue());
+    DValue holeSwitch = setting("HoleHealth",8d,0d,36d).v(v -> holeCheck.getValue());
     BValue crystalCalculate = setting("CalculateDmg",true);
-    DValue maxSelfDmg = setting("MaxSelfDmg",26d,0d,36d).visibility(v -> crystalCalculate.getValue());
-    BValue lethalCheck = setting("CheckLethal",true).visibility(v -> crystalCalculate.getValue());
+    DValue maxSelfDmg = setting("MaxSelfDmg",26d,0d,36d).v(v -> crystalCalculate.getValue());
+    BValue lethalCheck = setting("CheckLethal",true).v(v -> crystalCalculate.getValue());
 
     private int totems;
     private int count;

@@ -12,6 +12,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by B_312 on 01/10/21
@@ -86,12 +87,33 @@ public class IModule {
         return value;
     }
 
+    public PageValue.Page newPage(PageValue value,int index){
+        return new PageValue.Page(value.getValue(),index);
+    }
+
+    public PageValue.Page newPage(PageValue value,String name){
+        return new PageValue.Page(value.getValue(),name);
+    }
+
+    public PageValue page(String name,int defaultPage,String... values){
+        List<MValue.Mode> modes = new ArrayList<>();
+        for(int i = 1;i <= values.length;i++){
+            modes.add(new MValue.Mode(values[i-1],i==defaultPage));
+        }
+        MValue value = new MValue(name,modes);
+        this.getValues().add(value);
+        return new PageValue(value);
+    }
+
     public boolean isEnabled(){
         return toggled;
     }
     public boolean isDisabled(){
         return !toggled;
     }
+
+    public void onConfigLoad(){}
+    public void onConfigSave(){}
 
     public void onEnable(){}
     public void onDisable(){}

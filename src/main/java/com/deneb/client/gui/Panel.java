@@ -15,6 +15,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Created by B_312 on 01/10/21
@@ -84,7 +85,7 @@ public class Panel {
                 if(button.isExtended){
                     for(Component component : button.settings){
                         if(component instanceof ValueButton) {
-                            if(!((ValueButton) component).getValue().visible()) continue;
+                            if(!((ValueButton<?>) component).getValue().visible()) continue;
                         }
                         component.solvePos();
                         component.y = startY;
@@ -114,7 +115,7 @@ public class Panel {
 
 
     public boolean mouseClicked(int mouseX, int mouseY, int mouseButton) {
-        if (mouseButton == 0 && isHovered(mouseX, mouseY)) {
+        if (mouseButton == 0 && isHovered(mouseX, mouseY).test(this)) {
             x2 = this.x - mouseX;
             y2 = this.y - mouseY;
             dragging = true;
@@ -125,7 +126,7 @@ public class Panel {
             }
             return true;
         }
-        if (mouseButton == 1 && isHovered(mouseX, mouseY)) {
+        if (mouseButton == 1 && isHovered(mouseX, mouseY).test(this)) {
             extended = !extended;
             return true;
         }
@@ -148,7 +149,7 @@ public class Panel {
         }
     }
 
-    public boolean isHovered(int mouseX, int mouseY) {
-        return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
+    public Predicate<Panel> isHovered(int mouseX, int mouseY) {
+        return c -> mouseX >= Math.min(c.x,c.x + c.width) && mouseX <= Math.max(c.x,c.x+c.width)  && mouseY >= Math.min(c.y,c.y + c.height) && mouseY <= Math.max(c.y,c.y + c.height);
     }
 }

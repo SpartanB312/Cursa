@@ -5,7 +5,12 @@
   "refmap": "mixins.deneb.refmap.json",
   "client": [
     "entity.MixinEntityPlayerSP",
-    "render.MixinModelBiped",
-    "network.MixinNetWork"
+    "network.MixinNetWork",
+    "render.MixinModelBiped"
+  ],
+  "mixins": [
+    "client.MixinGuiPlayerTabOverlay",
+    "client.MixinMinecraft",
+    "render.MixinEntityRenderer"
   ]
 }

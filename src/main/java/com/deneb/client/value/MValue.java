@@ -25,8 +25,66 @@ public class MValue extends Value<MValue.Mode> {
 		index = this.modes.indexOf(getToggledMode());
     }
 
-	public MValue visibility(Predicate<Mode> predicate) {
-		return (MValue) super.visibility(predicate);
+	public MValue(String modeName, List<Mode> modes) {
+		super(modeName, null);
+		this.modeName = modeName;
+		this.modes = modes;
+		index = this.modes.indexOf(getToggledMode());
+	}
+
+	public MValue v(Predicate<Object> predicate) {
+		return (MValue) super.v(predicate);
+	}
+
+	public MValue page(PageValue.Page page) {
+		return (MValue) super.v(page.p());
+	}
+
+	public MValue b(BValue value) {
+		return (MValue) super.v(v -> value.getValue());
+	}
+
+	public MValue r(BValue value) {
+		return (MValue) super.v(v -> !value.getValue());
+	}
+
+	public MValue c(double min,Value value,double max){
+		if(value instanceof IValue) {
+			return (MValue) super.v(v -> ((IValue)value).getValue() <= max && ((IValue)value).getValue() >= min);
+		}
+		if(value instanceof FValue) {
+			return (MValue) super.v(v -> ((FValue)value).getValue() <= max && ((FValue)value).getValue() >= min);
+		}
+		if(value instanceof DValue) {
+			return (MValue) super.v(v -> ((DValue)value).getValue() <= max && ((DValue)value).getValue() >= min);
+		}
+		return (MValue) super.v(v -> true);
+	}
+
+	public MValue c(double min,Value value){
+		if(value instanceof IValue) {
+			return (MValue) super.v(v -> ((IValue)value).getValue() >= min);
+		}
+		if(value instanceof FValue) {
+			return (MValue) super.v(v -> ((FValue)value).getValue() >= min);
+		}
+		if(value instanceof DValue) {
+			return (MValue) super.v(v -> ((DValue)value).getValue() >= min);
+		}
+		return (MValue) super.v(v -> true);
+	}
+
+	public MValue c(Value value,double max){
+		if(value instanceof IValue) {
+			return (MValue) super.v(v -> ((IValue)value).getValue() <= max);
+		}
+		if(value instanceof FValue) {
+			return (MValue) super.v(v -> ((FValue)value).getValue() <= max);
+		}
+		if(value instanceof DValue) {
+			return (MValue) super.v(v -> ((DValue)value).getValue() <= max);
+		}
+		return (MValue) super.v(v -> true);
 	}
 
 	public boolean page(String page) {

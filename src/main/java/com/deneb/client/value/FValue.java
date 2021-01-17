@@ -15,8 +15,59 @@ public class FValue extends Value<Float>{
         this.max = max;
     }
 
-    public FValue visibility(Predicate<Float> predicate) {
-        return (FValue) super.visibility(predicate);
+    public FValue v(Predicate<Object> predicate) {
+        return (FValue) super.v(predicate);
+    }
+
+    public FValue page(PageValue.Page page) {
+        return (FValue) super.v(page.p());
+    }
+
+    public FValue b(BValue value) {
+        return (FValue) super.v(v -> value.getValue());
+    }
+
+    public FValue r(BValue value) {
+        return (FValue) super.v(v -> !value.getValue());
+    }
+
+    public FValue c(double min,Value value,double max){
+        if(value instanceof IValue) {
+            return (FValue) super.v(v -> ((IValue)value).getValue() <= max && ((IValue)value).getValue() >= min);
+        }
+        if(value instanceof FValue) {
+            return (FValue) super.v(v -> ((FValue)value).getValue() <= max && ((FValue)value).getValue() >= min);
+        }
+        if(value instanceof DValue) {
+            return (FValue) super.v(v -> ((DValue)value).getValue() <= max && ((DValue)value).getValue() >= min);
+        }
+        return (FValue) super.v(v -> true);
+    }
+
+    public FValue c(double min,Value value){
+        if(value instanceof IValue) {
+            return (FValue) super.v(v -> ((IValue)value).getValue() >= min);
+        }
+        if(value instanceof FValue) {
+            return (FValue) super.v(v -> ((FValue)value).getValue() >= min);
+        }
+        if(value instanceof DValue) {
+            return (FValue) super.v(v -> ((DValue)value).getValue() >= min);
+        }
+        return (FValue) super.v(v -> true);
+    }
+
+    public FValue c(Value value,double max){
+        if(value instanceof IValue) {
+            return (FValue) super.v(v -> ((IValue)value).getValue() <= max);
+        }
+        if(value instanceof FValue) {
+            return (FValue) super.v(v -> ((FValue)value).getValue() <= max);
+        }
+        if(value instanceof DValue) {
+            return (FValue) super.v(v -> ((DValue)value).getValue() <= max);
+        }
+        return (FValue) super.v(v -> true);
     }
 
     public Float getMin() {

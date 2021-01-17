@@ -29,6 +29,9 @@ public class PacketEvent extends MinecraftEvent {
         }
     }
 
+    public Packet getPacket(){
+        return packet;
+    }
     public boolean isCancelable() {
         return true;
     }

@@ -33,6 +33,7 @@ public class HUDEditorScreen extends GuiScreen {
             }
             Wrapper.getMinecraft().entityRenderer.loadShader(new ResourceLocation("shaders/post/blur.json"));
         }
+
     }
 
 

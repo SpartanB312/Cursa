@@ -4,7 +4,6 @@ import com.deneb.client.features.Category;
 import com.deneb.client.features.Module;
 import com.deneb.client.value.BValue;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ClickType;
 
@@ -30,7 +29,7 @@ public class Anti32kTotem extends Module {
         }
         for (int i = 9; i < 35; ++i) {
             if (mc.player.inventory.getStackInSlot(i).getItem() == Items.TOTEM_OF_UNDYING) {
-                mc.playerController.windowClick(mc.player.inventoryContainer.windowId, i, 0, ClickType.SWAP, (EntityPlayer)mc.player);
+                mc.playerController.windowClick(mc.player.inventoryContainer.windowId, i, 0, ClickType.SWAP, mc.player);
                 break;
             }
         }

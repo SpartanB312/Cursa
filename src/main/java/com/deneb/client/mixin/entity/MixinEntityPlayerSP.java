@@ -1,9 +1,11 @@
 package com.deneb.client.mixin.entity;
 
+import com.deneb.client.event.events.entity.PlayerMoveEvent;
 import com.deneb.client.event.events.entity.PlayerUpdateEvent;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.entity.MoverType;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,6 +25,13 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
         PlayerUpdateEvent event = new PlayerUpdateEvent();
         MinecraftForge.EVENT_BUS.post(event);
         if (event.isCancelled()) callbackInfo.cancel();
+    }
+
+    @Inject(method = "move", at = @At("HEAD"), cancellable = true)
+    public void move(MoverType type, double x, double y, double z, CallbackInfo info) {
+        PlayerMoveEvent event = new PlayerMoveEvent(type, x, y, z);
+        MinecraftForge.EVENT_BUS.post(event);
+        if (event.isCancelled()) info.cancel();
     }
 
 }

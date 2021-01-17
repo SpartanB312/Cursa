@@ -1,5 +1,7 @@
 package com.deneb.client.value;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 
 /**
@@ -10,14 +12,14 @@ public class Value<T> {
 
     private T value;
     private final T defaultValue;
-    Predicate<T> visibility;
+    List<Predicate<Object>> visibility = new ArrayList<>();
     private final String name;
 
     public Value(String name, T defaultValue) {
         this.name = name;
         this.defaultValue = defaultValue;
         this.value = defaultValue;
-        this.visibility = v -> true;
+        this.visibility.add(V -> true);
     }
 
     public String getName() {
@@ -29,7 +31,10 @@ public class Value<T> {
     }
 
     public boolean visible() {
-        return this.visibility.test(getValue());
+        for(Predicate<Object> predicate : visibility){
+            if(!predicate.test(this)) return false;
+        }
+        return true;
     }
 
     public T getValue() {
@@ -40,8 +45,8 @@ public class Value<T> {
         this.value = value;
     }
 
-    public Value<T> visibility(Predicate<T> predicate) {
-        this.visibility = predicate;
+    public Value<T> v(Predicate<Object> predicate) {
+        this.visibility.add(predicate);
         return this;
     }
 

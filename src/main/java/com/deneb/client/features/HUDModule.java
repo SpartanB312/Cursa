@@ -17,6 +17,7 @@ public class HUDModule extends IModule{
         this.category = getAnnotation().category();
         this.description = getAnnotation().description();
         this.isHUD = true;
+        onInit();
     }
 
     @Retention(RetentionPolicy.RUNTIME)
@@ -37,5 +38,11 @@ public class HUDModule extends IModule{
         }
         throw new IllegalStateException("No Annotation on class " + this.getClass().getCanonicalName() + "!");
     }
+
+    public void onInit(){}
+
+    public void onDragging(int mouseX,int mouseY){}
+
+    public void onMouseRelease(){}
 
 }
