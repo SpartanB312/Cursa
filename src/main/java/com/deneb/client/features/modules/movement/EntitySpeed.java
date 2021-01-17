@@ -22,7 +22,7 @@ public class EntitySpeed extends Module {
     FValue speed = setting("Speed", 1,0,50f);
     BValue antiStuck = setting("AntiStuck",false);
     BValue flight = setting("Flight", false);
-    BValue wobble = setting("Wobble",true).v(v -> flight.getValue());
+    BValue wobble = setting("Wobble",true).b(flight);
 
 
     @Override

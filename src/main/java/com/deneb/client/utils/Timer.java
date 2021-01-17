@@ -64,4 +64,8 @@ public final class Timer {
         this.time = time;
     }
 
+    public long hasPassed(){
+        return System.currentTimeMillis() - time;
+    }
+
 }

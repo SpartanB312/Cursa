@@ -1,9 +1,6 @@
 package com.deneb.client;
 
-import com.deneb.client.client.ConfigManager;
-import com.deneb.client.client.ForgeEventProcessor;
-import com.deneb.client.client.FriendManager;
-import com.deneb.client.client.GuiManager;
+import com.deneb.client.client.*;
 import com.deneb.client.command.CommandManager;
 import com.deneb.client.gui.GUIRender;
 import com.deneb.client.gui.font.CFont;
@@ -54,6 +51,7 @@ public class Deneb {
     private ConfigManager configManager;
     private FriendManager friendManager;
     private CommandManager commandManager;
+    private NotificationManager notificationManager;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event){
@@ -69,6 +67,7 @@ public class Deneb {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event){
 
+        notificationManager = new NotificationManager();
         moduleManager = new ModuleManager();
         friendManager = new FriendManager();
         commandManager = new CommandManager();
@@ -106,6 +105,8 @@ public class Deneb {
             }
         }
     }
+
+    public NotificationManager getNotificationManager(){ return notificationManager; }
 
     public ForgeEventProcessor getEventProcessor(){ return eventProcessor; }
 

@@ -1,8 +1,11 @@
 package com.deneb.client.features;
 
 import com.deneb.client.Deneb;
+import com.deneb.client.client.NotificationManager;
 import com.deneb.client.event.events.render.RenderEvent;
+import com.deneb.client.features.modules.client.Notification;
 import com.deneb.client.gui.font.CFontRenderer;
+import com.deneb.client.utils.ChatUtil;
 import com.deneb.client.value.*;
 import com.deneb.client.utils.Wrapper;
 import net.minecraft.client.Minecraft;
@@ -48,12 +51,16 @@ public class IModule {
     public void enable() {
         toggled = true;
         MinecraftForge.EVENT_BUS.register(this);
+        if(!isHUD) NotificationManager.addNewNotification(this,this.toggled);
+        if(Notification.INSTANCE.chat.getValue()) ChatUtil.sendNoSpamMessage(name + " has been " + ChatUtil.SECTIONSIGN + "a" + "Enabled!");
         onEnable();
     }
 
     public void disable() {
         toggled = false;
         MinecraftForge.EVENT_BUS.unregister(this);
+        if(!isHUD) NotificationManager.addNewNotification(this,this.toggled);
+        if(Notification.INSTANCE.chat.getValue()) ChatUtil.sendNoSpamMessage(name + " has been " + ChatUtil.SECTIONSIGN + "c" + "Disabled!");
         onDisable();
     }
 

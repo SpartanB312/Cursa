@@ -16,8 +16,8 @@ import java.util.function.Function;
 public class Brightness extends Module {
 
     BValue transition = setting("Transition", true);
-    FValue seconds = setting("Seconds",1f,0f,10f).v(v -> transition.getValue());
-    MValue mode = setting("Mode",new MValue.Mode("Sine",true),new MValue.Mode("Liner")).v(v -> transition.getValue());
+    FValue seconds = setting("Seconds",1f,0f,10f).b(transition);
+    MValue mode = setting("Mode",new MValue.Mode("Sine",true),new MValue.Mode("Liner")).b(transition);
 
     private final Stack<Float> transitionStack = new Stack<>();
 

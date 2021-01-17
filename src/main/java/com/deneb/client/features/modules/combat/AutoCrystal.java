@@ -35,6 +35,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.Explosion;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -65,8 +66,8 @@ public class AutoCrystal extends Module {
     BValue Place_value = setting("Place", true).page(general);
     BValue Explode_value = setting("Explode", true).page(general);
     BValue MultiPlace_value = setting("MultiPlace", false).page(general);
-    IValue AttackDelay_value = setting("AttackDelay", 35, 0, 1000).page(general);
-    DValue PlaceSpeed_value = setting("PlaceSpeed", 25d, 0d, 30d).page(general);
+    DValue AttackSpeed_value = setting("AttackSpeed", 35d, 0, 50).page(general);
+    DValue PlaceSpeed_value = setting("PlaceSpeed", 35d, 0d, 50).page(general);
     DValue Distance_value = setting("Distance", 7.0D, 0D, 8D).page(general);
     DValue PlaceRange_value = setting("PlaceRange", 6.5D, 0D, 8D).page(general);
     DValue HitRange_value = setting("HitRange", 5.5D, 0D, 8D).page(general);
@@ -81,9 +82,9 @@ public class AutoCrystal extends Module {
     DValue BlastHealth_value = setting("MinHealthFace", 10d, 0d, 20d).page(calculation).b(FacePlace_value);
     DValue MinDmg_value = setting("PlaceMinDamage", 4.5d, 0d, 20d).page(calculation);
     DValue MaxSelf_value = setting("PlaceMaxSelf", 10d, 0d, 36d).page(calculation);
-    DValue BMinDmg_value = setting("BreakMinDmg", 4.5, 0.0, 36.0).page(calculation);
-    DValue BMaxSelf_value = setting("BreakMaxSelf", 12.0, 0.0, 36.0).page(calculation);
     MValue AttackMode_value = setting("HitMode", new Mode("Smart", true), new Mode("Always")).page(calculation);
+    DValue BMinDmg_value = setting("BreakMinDmg", 4.5, 0.0, 36.0).page(calculation).v(v -> AttackMode_value.getToggledMode().getName().equals("Smart"));
+    DValue BMaxSelf_value = setting("BreakMaxSelf", 12.0, 0.0, 36.0).page(calculation).v(v -> AttackMode_value.getToggledMode().getName().equals("Smart"));
     BValue GhostHand_value = setting("GhostHand", false).page(calculation);
     BValue PauseEating_value = setting("PauseWhileEating", false).page(calculation);
     //Render
@@ -169,6 +170,7 @@ public class AutoCrystal extends Module {
         }
     }
 
+
     private boolean canHitCrystal(EntityEnderCrystal entity) {
         if (mc.player.getDistance(entity) > HitRange_value.getValue()) return false;
         if (AttackMode_value.getToggledMode().getName().equals("Smart")) {
@@ -178,7 +180,7 @@ public class AutoCrystal extends Module {
                 if (player == mc.player || FriendManager.isFriend(player.getName()) || mc.player.isDead
                         || (mc.player.getHealth() + mc.player.getAbsorptionAmount()) <= 0.0f) continue;
                 double minDamage = BMinDmg_value.getValue();
-                double maxSelf = BMaxSelf_value.getValue();
+                double maxSelf =  BMaxSelf_value.getValue();
                 if (canFacePlace(player, BlastHealth_value.getValue())) {
                     minDamage = 1;
                 }
@@ -197,13 +199,13 @@ public class AutoCrystal extends Module {
             yaw = mc.player.rotationYaw;
             pitch = mc.player.rotationPitch;
             isSpoofingAngles = false;
-            //rotating = false;
+            rotating = false;
         }
     }
 
     private void ExplodeCrystal(EntityEnderCrystal crystal) {
         if (Rotate_value.getValue()) lookAtCrystal(crystal);
-        if (breakTimer.passed(AttackDelay_value.getValue())) {
+        if (breakDelayRun(AttackSpeed_value.getValue())) {
             mc.playerController.attackEntity(mc.player, crystal);
             mc.player.swingArm(mc.player.getHeldItemOffhand().getItem() == Items.END_CRYSTAL ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND);
             mc.player.resetCooldown();
@@ -217,7 +219,7 @@ public class AutoCrystal extends Module {
         else facing = EnumFacing.UP;
         if (Rotate_value.getValue()) lookAtPos(targetBlock, facing);
         for (int i = 0; i < 3; i++) {
-            if (hasDelayRun(PlaceSpeed_value.getValue())) {
+            if (placeDelayRun(PlaceSpeed_value.getValue())) {
                 mc.player.connection.sendPacket(new CPacketPlayerTryUseItemOnBlock(targetBlock, facing, enumHand, 0, 0, 0));
                 placeTimer.reset();
                 Placements++;
@@ -225,8 +227,12 @@ public class AutoCrystal extends Module {
         }
     }
 
-    private boolean hasDelayRun(double placeSpeed) {
-        return placeTimer.passed(1000 / placeSpeed);
+    private boolean placeDelayRun(double speed) {
+        return placeTimer.passed(1000 / speed);
+    }
+
+    private boolean breakDelayRun(double speed) {
+        return breakTimer.passed(1000 / speed);
     }
 
     private List<BlockPos> findCrystalBlocks(double range) {
@@ -432,10 +438,10 @@ public class AutoCrystal extends Module {
         return Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1);
     }
 
-    @Override
-    public void onTick() {
+    @SubscribeEvent
+    public void doAutoCrystal(TickEvent.RenderTickEvent event) {
         if (mc.player == null || mc.world == null) return;
-        if(placeTimer.passed(1050) || breakTimer.passed(1050)) rotating = false;
+        if (placeTimer.passed(1050) || breakTimer.passed(1050)) rotating = false;
         if (PauseEating_value.getValue() && IsEating()) return;
         EntityEnderCrystal c = mc.world.loadedEntityList.stream().filter(e -> e instanceof EntityEnderCrystal &&
                 canHitCrystal((EntityEnderCrystal) e)).map(e -> (EntityEnderCrystal) e).min(Comparator.comparing(e -> mc.player.getDistance(e))).orElse(null);
