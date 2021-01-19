@@ -27,7 +27,7 @@ import java.nio.ByteBuffer;
 @Mod(modid = Deneb.MODID, name = Deneb.MODNAME, version = Deneb.VERSION)
 public class Deneb {
 
-    public final static String VERSION = "0.1";
+    public final static String VERSION = "0.1.1";
     public final static String MODID = "deneb";
     public final static String MODNAME = "Deneb";
     public final static String MODNAME2 = "\u30c7\u30cd\u30d6";

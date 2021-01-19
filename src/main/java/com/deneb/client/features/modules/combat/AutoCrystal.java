@@ -83,8 +83,8 @@ public class AutoCrystal extends Module {
     DValue MinDmg_value = setting("PlaceMinDamage", 4.5d, 0d, 20d).page(calculation);
     DValue MaxSelf_value = setting("PlaceMaxSelf", 10d, 0d, 36d).page(calculation);
     MValue AttackMode_value = setting("HitMode", new Mode("Smart", true), new Mode("Always")).page(calculation);
-    DValue BMinDmg_value = setting("BreakMinDmg", 4.5, 0.0, 36.0).page(calculation).v(v -> AttackMode_value.getToggledMode().getName().equals("Smart"));
-    DValue BMaxSelf_value = setting("BreakMaxSelf", 12.0, 0.0, 36.0).page(calculation).v(v -> AttackMode_value.getToggledMode().getName().equals("Smart"));
+    DValue BMinDmg_value = setting("BreakMinDmg", 4.5, 0.0, 36.0).page(calculation).m(AttackMode_value,"Smart");
+    DValue BMaxSelf_value = setting("BreakMaxSelf", 12.0, 0.0, 36.0).page(calculation).m(AttackMode_value,"Smart");
     BValue GhostHand_value = setting("GhostHand", false).page(calculation);
     BValue PauseEating_value = setting("PauseWhileEating", false).page(calculation);
     //Render

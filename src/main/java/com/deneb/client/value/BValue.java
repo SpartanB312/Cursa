@@ -67,4 +67,9 @@ public class BValue extends Value<Boolean> {
         return (BValue) super.v(v -> true);
     }
 
+    public BValue m(MValue value,String mode){
+        this.visibility.add(v -> value.getMode(mode).isToggled());
+        return this;
+    }
+
 }

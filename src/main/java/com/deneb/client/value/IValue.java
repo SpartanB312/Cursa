@@ -70,6 +70,11 @@ public class IValue extends Value<Integer>{
         return (IValue) super.v(v -> true);
     }
 
+    public IValue m(MValue value,String mode){
+        this.visibility.add(v -> value.getMode(mode).isToggled());
+        return this;
+    }
+
     public Integer getMin(){
         return min;
     }

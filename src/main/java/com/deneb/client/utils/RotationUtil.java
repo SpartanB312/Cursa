@@ -7,10 +7,6 @@ import net.minecraft.util.math.Vec3d;
 
 public class RotationUtil {
 
-    public static boolean rotating = false;
-
-    public static float pitch = 0;
-
     public static float[] getRotations(Vec3d from, Vec3d to) {
         double difX = to.x - from.x;
         double difY = (to.y - from.y) * -1.0;

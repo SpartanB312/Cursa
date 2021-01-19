@@ -87,6 +87,11 @@ public class MValue extends Value<MValue.Mode> {
 		return (MValue) super.v(v -> true);
 	}
 
+	public MValue m(MValue value,String mode){
+		this.visibility.add(v -> value.getMode(mode).isToggled());
+		return this;
+	}
+
 	public boolean page(String page) {
 		return getMode(page).isToggled();
 	}

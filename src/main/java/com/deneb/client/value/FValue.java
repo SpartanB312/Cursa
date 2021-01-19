@@ -70,6 +70,11 @@ public class FValue extends Value<Float>{
         return (FValue) super.v(v -> true);
     }
 
+    public FValue m(MValue value,String mode){
+        this.visibility.add(v -> value.getMode(mode).isToggled());
+        return this;
+    }
+
     public Float getMin() {
         return min;
     }

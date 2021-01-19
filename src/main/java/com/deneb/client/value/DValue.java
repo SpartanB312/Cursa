@@ -71,6 +71,11 @@ public class DValue extends Value<Double> {
         return (DValue) super.v(v -> true);
     }
 
+    public DValue m(MValue value,String mode){
+        this.visibility.add(v -> value.getMode(mode).isToggled());
+        return this;
+    }
+
     public Double getMin() {
         return min;
     }
