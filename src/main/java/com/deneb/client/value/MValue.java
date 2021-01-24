@@ -1,5 +1,6 @@
 package com.deneb.client.value;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
@@ -10,7 +11,7 @@ import java.util.function.Predicate;
  */
 public class MValue extends Value<MValue.Mode> {
 	
-	private final List<Mode> modes;
+	private List<Mode> modes = new ArrayList<>();
 	private final String modeName;
 	private int index;
 
@@ -25,11 +26,36 @@ public class MValue extends Value<MValue.Mode> {
 		index = this.modes.indexOf(getToggledMode());
     }
 
+	public MValue(String modeName) {
+		super(modeName, null);
+		this.modeName = modeName;
+	}
+
+	public MValue(String modeName,String defaultMode ,String... modes1) {
+		super(modeName, null);
+		this.modeName = modeName;
+		this.modes = new ArrayList<>();
+		Arrays.asList(modes1).forEach(m -> modes.add(new Mode(m,defaultMode.equals(m))));
+		index = this.modes.indexOf(getToggledMode());
+	}
+
 	public MValue(String modeName, List<Mode> modes) {
 		super(modeName, null);
 		this.modeName = modeName;
 		this.modes = modes;
 		index = this.modes.indexOf(getToggledMode());
+	}
+
+	public MValue mode(String modeName,boolean toggled){
+    	modes.add(new Mode(modeName,toggled));
+    	index = this.modes.indexOf(getToggledMode());
+    	return this;
+	}
+
+	public MValue mode(String modeName){
+		modes.add(new Mode(modeName));
+		index = this.modes.indexOf(getToggledMode());
+		return this;
 	}
 
 	public MValue v(Predicate<Object> predicate) {

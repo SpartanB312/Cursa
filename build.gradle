@@ -1,13 +1,9 @@
-// make folders
-
 task mkdir {
     group = "deneb"
     doLast {
         mkdir System.getProperty("user.home") + "/.minecraft/mods/1.12.2/"
     }
 }
-
-// delete old versions
 
 task rmOld(type: Delete) {
     group = "deneb"
@@ -16,8 +12,6 @@ task rmOld(type: Delete) {
     }
 }
 
-// copy file
-
 task copy(type: Copy) {
     group = "deneb"
     from file("build/libs/")
@@ -25,7 +19,6 @@ task copy(type: Copy) {
     into file(System.getProperty("user.home") + "/.minecraft/mods/1.12.2/")
 }
 
-// forge's stuff
 
 buildscript {
     repositories {
@@ -88,47 +81,35 @@ repositories {
 }
 
 dependencies {
-   // mixin needs to be distributed with the mod, very important
     compile("org.spongepowered:mixin:0.7.4-SNAPSHOT") {
         exclude module: 'launchwrapper'
         exclude module: 'guava'
         exclude module: 'gson'
         exclude module: 'commons-io'
     }
-	
-
-    //compile "com.github.ZeroMemes:Alpine:1.7"
-    //compile group: 'org.yaml', name: 'snakeyaml', version: '1.19'
 
     compile(group: 'org.reflections', name: 'reflections', version: '0.9.11') {
         exclude group: 'com.google.guava', module: 'guava'
     }
 
 	compile 'club.minnced:java-discord-rpc:v2.0.1'
-    //compile 'club.minnced:java-discord-rpc:v2.0.1'
 
-    //compile 'com.github.cabaletta:baritone:1.2.14'
-    //compile 'cabaletta:baritone-api:1.2'
+    compile 'com.github.cabaletta:baritone:1.2.14'
+    compile 'cabaletta:baritone-api:1.2'
 }
 
 processResources {
-    // this will ensure that this task is redone when the versions change.
     inputs.property 'version', project.version
     inputs.property 'mcversion', project.minecraft.version
 
-    // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-		include 'patch_at.cfg'
 
-        // replace version and mcversion
         expand 'version': project.version, 'mcversion': project.minecraft.version
     }
 
-    // copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
-		exclude 'patch_at.cfg'
     }
 
     // move _at.cfg into META-INF
@@ -138,14 +119,13 @@ processResources {
 shadowJar {
 
     dependencies {
-        //include(dependency('com.github.ZeroMemes:Alpine'))
         include(dependency('club.minnced:java-discord-rpc'))
         include(dependency('org.dom4j:dom4j'))
         include(dependency('org.javassist:javassist'))
         include(dependency('org.spongepowered:mixin'))
         include(dependency('org.yaml:snakeyaml'))
         include(dependency('org.reflections:reflections'))
-        //include(dependency('cabaletta:baritone-api'))
+        include(dependency('cabaletta:baritone-api'))
     }
 
     exclude 'LICENSE.txt' // exclude license.txt file after building jar
@@ -176,7 +156,7 @@ jar {
                 'FMLCorePluginContainsFMLMod': 'true',
                 'FMLCorePlugin': 'com.deneb.client.mixin.MixinLoader',
                 'ForceLoadAsMod': 'true',
-                'FMLAT': 'sexy_at.cfg'
+                'FMLAT': 'deneb_at.cfg'
         )
     }
 }

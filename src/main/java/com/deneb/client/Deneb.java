@@ -27,11 +27,11 @@ import java.nio.ByteBuffer;
 @Mod(modid = Deneb.MODID, name = Deneb.MODNAME, version = Deneb.VERSION)
 public class Deneb {
 
-    public final static String VERSION = "0.1.1";
+    public final static String VERSION = "0.2";
     public final static String MODID = "deneb";
     public final static String MODNAME = "Deneb";
     public final static String MODNAME2 = "\u30c7\u30cd\u30d6";
-    public final static String CHAT_SUFFIX = " \u1d05\u1d07\u0274\u1d07\u0299";
+    public static String CHAT_SUFFIX = " \u1d05\u1d07\u0274\u1d07\u0299";
     public final static String AUTHOR = "B_312";
     public final static String GITHUB = "https://github.com/SpartanB312/Deneb";
 

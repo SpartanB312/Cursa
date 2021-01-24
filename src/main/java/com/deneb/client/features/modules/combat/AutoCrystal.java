@@ -11,7 +11,6 @@ import com.deneb.client.features.ModuleManager;
 import com.deneb.client.utils.*;
 import com.deneb.client.utils.Timer;
 import com.deneb.client.value.*;
-import com.deneb.client.value.MValue.Mode;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -82,14 +81,14 @@ public class AutoCrystal extends Module {
     DValue BlastHealth_value = setting("MinHealthFace", 10d, 0d, 20d).page(calculation).b(FacePlace_value);
     DValue MinDmg_value = setting("PlaceMinDamage", 4.5d, 0d, 20d).page(calculation);
     DValue MaxSelf_value = setting("PlaceMaxSelf", 10d, 0d, 36d).page(calculation);
-    MValue AttackMode_value = setting("HitMode", new Mode("Smart", true), new Mode("Always")).page(calculation);
+    MValue AttackMode_value = setting("HitMode",new MValue.Mode("Smart",true),new MValue.Mode("Always")).page(calculation);
     DValue BMinDmg_value = setting("BreakMinDmg", 4.5, 0.0, 36.0).page(calculation).m(AttackMode_value,"Smart");
     DValue BMaxSelf_value = setting("BreakMaxSelf", 12.0, 0.0, 36.0).page(calculation).m(AttackMode_value,"Smart");
     BValue GhostHand_value = setting("GhostHand", false).page(calculation);
     BValue PauseEating_value = setting("PauseWhileEating", false).page(calculation);
     //Render
     BValue RenderDmg_value = setting("RenderDamage", false).page(render);
-    MValue RenderMode_value = setting("RenderBlock", new Mode("Solid", true), new Mode("Up"), new Mode("UpLine"), new Mode("Full"), new Mode("Outline"), new Mode("NoRender")).page(render);
+    MValue RenderMode_value = setting("RenderBlock",new MValue.Mode("Solid", true),new MValue.Mode("Up"),new MValue.Mode("UpLine"),new MValue.Mode("Full"),new MValue.Mode("Outline"),new MValue.Mode("NoRender")).page(render);
     BValue SyncGui_value = setting("SyncGui", false).page(render);
     IValue Red_value = setting("Red", 255, 0, 255).page(render).r(SyncGui_value);
     IValue Green_value = setting("Green", 0, 0, 255).page(render).r(SyncGui_value);

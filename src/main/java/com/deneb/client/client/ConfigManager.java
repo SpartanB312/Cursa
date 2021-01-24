@@ -2,6 +2,9 @@ package com.deneb.client.client;
 
 import com.deneb.client.Deneb;
 import com.deneb.client.command.CommandManager;
+import com.deneb.client.features.modules.combat.AutoEz;
+import com.deneb.client.features.modules.misc.CustomChat;
+import com.deneb.client.features.modules.misc.FakePlayer;
 import com.deneb.client.gui.GUIRender;
 import com.deneb.client.gui.HUDRender;
 import com.deneb.client.gui.Panel;
@@ -53,7 +56,7 @@ public class ConfigManager {
 
     private boolean tryLoad(){
         try {
-            initializedConfig.add(CLIENT_FILE = new File(MODULE_CONFIG));
+            initializedConfig.add(CLIENT_FILE = new File(CLIENT_CONFIG));
             initializedConfig.add(FRIEND_FILE = new File(FRIEND_CONFIG));
             initializedConfig.add(GUI_FILE = new File(GUI_CONFIG));
             initializedConfig.add(HUD_FILE = new File(HUD_CONFIG));
@@ -236,11 +239,10 @@ public class ConfigManager {
             JsonObject father = new JsonObject();
             JsonObject stuff = new JsonObject();
 
-            stuff.addProperty("AutoEz",1);
+            stuff.addProperty("AutoEz", AutoEz.ezMsg);
             stuff.addProperty("CommandPrefix",CommandManager.INSTANCE.cmdPrefix);
-            stuff.addProperty("ChatSuffix",1);
-            stuff.addProperty("FakePlayerName",1);
-            stuff.addProperty("WaterMark",1);
+            stuff.addProperty("Suffix", Deneb.CHAT_SUFFIX);
+            stuff.addProperty("FakePlayerName", FakePlayer.customName);
 
             father.add("Client",stuff);
 
@@ -282,10 +284,9 @@ public class ConfigManager {
     private void trySetClient(JsonObject json){
         try {
             CommandManager.INSTANCE.cmdPrefix = json.get("CommandPrefix").getAsString();
-            //HUD.waterMark = json.get("WaterMark").getAsString();
-            //FakePlayer.customName = json.get("FakePlayerName").getAsString();
-            //CustomChat.CHAT_SUFFIX = json.get("ChatSuffix").getAsString();
-            //AutoEz.ezMsg = json.get("AutoEz").getAsString();
+            FakePlayer.customName = json.get("FakePlayerName").getAsString();
+            Deneb.CHAT_SUFFIX = json.get("Suffix").getAsString();
+            AutoEz.ezMsg = json.get("AutoEz").getAsString();
         }catch (Exception e){
             Deneb.log.error("Error while setting client!");
         }

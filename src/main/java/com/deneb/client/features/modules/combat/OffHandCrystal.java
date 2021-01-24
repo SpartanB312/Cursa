@@ -28,6 +28,7 @@ public class OffHandCrystal extends Module {
 
     public static OffHandCrystal INSTANCE;
 
+    //Optimized redundant settings
     MValue mode = setting("Item", new MValue.Mode("Gap"), new MValue.Mode("Crystal", true));
     IValue delay = setting("Delay", 0, 0, 1000);
     BValue totem = setting("SwitchTotem", true);
@@ -35,14 +36,11 @@ public class OffHandCrystal extends Module {
     DValue sbHealth = setting("Health", 11D, 0D, 36D);
     BValue autoSwitch = setting("SwitchGap", true);
     MValue switchMode = setting("GapWhen", new MValue.Mode("Sword", true), new MValue.Mode("RClick", false)).b(autoSwitch);
-    BValue smart = setting("CheckTarget", false);
-    BValue fallCheck = setting("CheckFallDmg",true);
     BValue elytra = setting("CheckElytra",true);
     BValue holeCheck = setting("CheckHole", false);
     DValue holeSwitch = setting("HoleHealth",8d,0d,36d).b(holeCheck);
     BValue crystalCalculate = setting("CalculateDmg",true);
     DValue maxSelfDmg = setting("MaxSelfDmg",26d,0d,36d).b(crystalCalculate);
-    BValue lethalCheck = setting("CheckLethal",true).b(crystalCalculate);
 
     private int totems;
     private int count;
@@ -128,8 +126,7 @@ public class OffHandCrystal extends Module {
         if (totem.getValue()) {
             return checkHealth()
                     || mc.player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() == Items.ELYTRA && elytra.getValue()
-                    || mc.player.fallDistance >= 10.0f && fallCheck.getValue()
-                    || AutoCrystal.target != null && smart.getValue()
+                    || mc.player.fallDistance >= 5.0f
                     || EntityUtil.isPlayerInHole() && holeCheck.getValue() && mc.player.getHealth() + mc.player.getAbsorptionAmount() <= holeSwitch.getValue()
                     || crystalCalculate.getValue() && calcHealth();
         } else {
@@ -145,7 +142,7 @@ public class OffHandCrystal extends Module {
             double d = AutoCrystal.calculateDamage(entity.posX,entity.posY,entity.posZ,mc.player);
             if(d > maxDmg) maxDmg = d;
         }
-        if(lethalCheck.getValue() && maxDmg - 0.5 > mc.player.getHealth() + mc.player.getAbsorptionAmount()) return true;
+        if(maxDmg - 0.5 > mc.player.getHealth() + mc.player.getAbsorptionAmount()) return true;
         return maxDmg > maxSelfDmg.getValue();
     }
 
