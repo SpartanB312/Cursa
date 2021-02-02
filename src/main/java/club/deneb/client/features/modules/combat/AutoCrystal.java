@@ -85,6 +85,7 @@ public class AutoCrystal extends Module {
     BooleanValue PopTotemTry = setting("PopTotemTry",true).page(calculation).m(AttackMode_value,"Smart");
     BooleanValue GhostHand_value = setting("GhostHand", false).page(calculation);
     BooleanValue PauseEating_value = setting("PauseWhileEating", false).page(calculation);
+    BooleanValue ClientSideConfirm_value = setting("ClientSideConfirm",false).page(calculation);
     //Render
     BooleanValue RenderDmg_value = setting("RenderDamage", false).page(render);
     ModeValue RenderMode_value = setting("RenderBlock",new ModeValue.Mode("Solid", true),new ModeValue.Mode("Up"),new ModeValue.Mode("UpLine"),new ModeValue.Mode("Full"),new ModeValue.Mode("Outline"),new ModeValue.Mode("NoRender")).page(render);
@@ -225,6 +226,10 @@ public class AutoCrystal extends Module {
         if (breakDelayRun(AttackSpeed_value.getValue())) {
             mc.playerController.attackEntity(mc.player, crystal);
             mc.player.swingArm(mc.player.getHeldItemOffhand().getItem() == Items.END_CRYSTAL ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND);
+            if(ClientSideConfirm_value.getValue()){
+                //This may cause deSync!
+                crystal.setDead();
+            }
             mc.player.resetCooldown();
             breakTimer.reset();
         }

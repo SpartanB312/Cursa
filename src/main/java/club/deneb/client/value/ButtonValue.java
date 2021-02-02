@@ -1,5 +1,7 @@
 package club.deneb.client.value;
 
+import net.minecraft.client.Minecraft;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -36,6 +38,7 @@ public class ButtonValue extends Value<String> {
         binds.add(predicate);
         return this;
     }
+
 
     public ButtonValue page(PageValue.Page page) {
         return (ButtonValue) super.v(page.p());

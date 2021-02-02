@@ -13,12 +13,14 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraftforge.client.event.InputUpdateEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
+import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by B_312 on 01/10/21
+ * This is abstract module
  */
 public class IModule {
 
@@ -39,6 +41,15 @@ public class IModule {
     private final ArrayList<Value> values = new ArrayList<>();
     public ArrayList<Value> getValues() {
         return values;
+    }
+
+    public boolean reset(){
+        for(Value value  : getValues()){
+            value.setValue(value.getDefaultValue());
+        }
+        this.disable();
+        this.setBind(Keyboard.KEY_NONE);
+        return true;
     }
 
     public static final Minecraft mc = Wrapper.mc;

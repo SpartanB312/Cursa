@@ -32,7 +32,7 @@ import java.nio.ByteBuffer;
 public class Deneb {
 
     //Version 0.x means that this mod still under heavy development!
-    public final static String VERSION = "0.3";
+    public final static String VERSION = "0.3.1";
     public final static String MODID = "deneb";
     public final static String MODNAME = "Deneb";
     public final static String MODNAME2 = "\u30c7\u30cd\u30d6";

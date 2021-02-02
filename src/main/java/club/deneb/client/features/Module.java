@@ -1,5 +1,6 @@
 package club.deneb.client.features;
 
+import club.deneb.client.value.ButtonValue;
 import club.deneb.client.value.ModeValue;
 import org.lwjgl.input.Keyboard;
 
@@ -12,6 +13,7 @@ import java.lang.annotation.RetentionPolicy;
 public class Module extends IModule{
 
     ModeValue visible_value;
+    ButtonValue resetConfig;
 
     public boolean isShownOnArray(){
         return this.visible_value.getMode("ON").isToggled();
@@ -23,6 +25,7 @@ public class Module extends IModule{
         this.description = getAnnotation().description();
         this.keyCode = getAnnotation().keyCode();
         this.getValues().add(visible_value = new ModeValue("Visible",new ModeValue.Mode("ON",getAnnotation().visible()),new ModeValue.Mode("OFF",!getAnnotation().visible())));
+        this.getValues().add(resetConfig = new ButtonValue("LoadDefault","Click here to set this module to default").bind(v -> reset()));
         this.isHUD = false;
         this.onInit();
     }

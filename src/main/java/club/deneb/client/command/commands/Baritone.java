@@ -10,6 +10,7 @@ import club.deneb.client.utils.ChatUtil;
 @Command.Info(command = "b", description = "Baritone commands.")
 public class Baritone extends Command {
 
+
     @Override
     public void onCall(String s, String[] args) {
         if (args[0] == null) {
@@ -54,5 +55,7 @@ public class Baritone extends Command {
     public String getSyntax() {
         return "b help";
     }
+
+
 
 }

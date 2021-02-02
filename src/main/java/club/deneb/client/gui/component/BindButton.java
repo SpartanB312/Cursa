@@ -66,6 +66,9 @@ public class BindButton extends Component {
         if (mouseButton == 0) {
             accepting = true;
             Utils.playButtonClick();
+        } else if(mouseButton == 1){
+            this.module.setBind(Keyboard.KEY_NONE);
+            Utils.playAnvilHit();
         }
         return true;
 

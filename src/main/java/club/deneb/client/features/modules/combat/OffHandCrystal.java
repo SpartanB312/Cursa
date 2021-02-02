@@ -36,11 +36,11 @@ public class OffHandCrystal extends Module {
     DoubleValue sbHealth = setting("Health", 11D, 0D, 36D);
     BooleanValue autoSwitch = setting("SwitchGap", true);
     ModeValue switchMode = setting("GapWhen", new ModeValue.Mode("Sword", true), new ModeValue.Mode("RClick", false)).b(autoSwitch);
-    BooleanValue elytra = setting("CheckElytra",true);
+    BooleanValue elytra = setting("CheckElytra", true);
     BooleanValue holeCheck = setting("CheckHole", false);
-    DoubleValue holeSwitch = setting("HoleHealth",8d,0d,36d).b(holeCheck);
-    BooleanValue crystalCalculate = setting("CalculateDmg",true);
-    DoubleValue maxSelfDmg = setting("MaxSelfDmg",26d,0d,36d).b(crystalCalculate);
+    DoubleValue holeSwitch = setting("HoleHealth", 8d, 0d, 36d).b(holeCheck);
+    BooleanValue crystalCalculate = setting("CalculateDmg", true);
+    DoubleValue maxSelfDmg = setting("MaxSelfDmg", 26d, 0d, 36d).b(crystalCalculate);
 
     private int totems;
     private int count;
@@ -48,12 +48,12 @@ public class OffHandCrystal extends Module {
 
 
     @SubscribeEvent
-    public void onPlayerUpdate(TickEvent.RenderTickEvent event){
+    public void onPlayerUpdate(TickEvent.RenderTickEvent event) {
         if (((AutoTotem) ModuleManager.getModuleByName("AutoTotem")).soft.getValue().equals(false)) {
             ((AutoTotem) ModuleManager.getModuleByName("AutoTotem")).soft.setValue(true);
         }
 
-        if(mc.player == null) return;
+        if (mc.player == null) return;
 
         int crystals = mc.player.inventory.mainInventory.stream().filter(itemStack -> itemStack.getItem() == Items.END_CRYSTAL).mapToInt(ItemStack::getCount).sum();
         if (mc.player.getHeldItemOffhand().getItem() == Items.END_CRYSTAL) {
@@ -94,7 +94,7 @@ public class OffHandCrystal extends Module {
 
         boolean shouldSwitch;
 
-        if (switchMode.getMode("Sword").isToggled()){
+        if (switchMode.getMode("Sword").isToggled()) {
             shouldSwitch = mc.player.getHeldItemMainhand().getItem() instanceof ItemSword && Mouse.isButtonDown(1) && autoSwitch.getValue();
         } else {
             shouldSwitch = Mouse.isButtonDown(1)
@@ -134,19 +134,19 @@ public class OffHandCrystal extends Module {
         }
     }
 
-    private boolean calcHealth(){
+    private boolean calcHealth() {
         double maxDmg = 0.5;
         for (Entity entity : mc.world.loadedEntityList) {
             if (!(entity instanceof EntityEnderCrystal)) continue;
             if (mc.player.getDistance(entity) > 12f) continue;
-            double d = AutoCrystal.calculateDamage(entity.posX,entity.posY,entity.posZ,mc.player);
-            if(d > maxDmg) maxDmg = d;
+            double d = AutoCrystal.calculateDamage(entity.posX, entity.posY, entity.posZ, mc.player);
+            if (d > maxDmg) maxDmg = d;
         }
-        if(maxDmg - 0.5 > mc.player.getHealth() + mc.player.getAbsorptionAmount()) return true;
+        if (maxDmg - 0.5 > mc.player.getHealth() + mc.player.getAbsorptionAmount()) return true;
         return maxDmg > maxSelfDmg.getValue();
     }
 
-    public boolean checkHealth(){
+    public boolean checkHealth() {
         boolean lowHealth = mc.player.getHealth() + mc.player.getAbsorptionAmount() <= sbHealth.getValue();
         boolean notInHoleAndLowHealth = lowHealth && !EntityUtil.isPlayerInHole();
         return holeCheck.getValue() ? notInHoleAndLowHealth : lowHealth;
@@ -161,7 +161,7 @@ public class OffHandCrystal extends Module {
         }
     }
 
-    private void switchTo(int slot){
+    private void switchTo(int slot) {
         try {
             if (timer.passed(delay.getValue())) {
                 mc.playerController.windowClick(mc.player.inventoryContainer.windowId, slot, 0, ClickType.PICKUP, mc.player);
@@ -169,7 +169,8 @@ public class OffHandCrystal extends Module {
                 mc.playerController.windowClick(mc.player.inventoryContainer.windowId, slot, 0, ClickType.PICKUP, mc.player);
                 timer.reset();
             }
-        }catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
     }
 
     private static int getItemSlot(Item input) {
