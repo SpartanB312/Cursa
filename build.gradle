@@ -1,25 +1,3 @@
-task mkdir {
-    group = "deneb"
-    doLast {
-        mkdir System.getProperty("user.home") + "/.minecraft/mods/1.12.2/"
-    }
-}
-
-task rmOld(type: Delete) {
-    group = "deneb"
-    delete fileTree(System.getProperty("user.home") + "/.minecraft/mods/1.12.2/").matching {
-        include "*-release.jar"
-    }
-}
-
-task copy(type: Copy) {
-    group = "deneb"
-    from file("build/libs/")
-    include '*-release.jar'
-    into file(System.getProperty("user.home") + "/.minecraft/mods/1.12.2/")
-}
-
-
 buildscript {
     repositories {
         jcenter()
@@ -33,30 +11,21 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
-        classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
-        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 
-apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
-apply plugin: 'com.github.johnrengelman.shadow'
 
 version project.modVersion
 group project.modGroup // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 
 sourceCompatibility = targetCompatibility = '1.8'
+
 compileJava {
     sourceCompatibility = targetCompatibility = '1.8'
-}
-
-minecraft {
-    version = project.forgeVersion
-    runDir = 'run'
-    mappings = project.mcpVersion
-    coreMod = 'club.deneb.client.mixin.MixinLoader'
-    makeObfSourceJar = false
 }
 
 
@@ -81,7 +50,32 @@ repositories {
     jcenter()
 }
 
+
+minecraft {
+    mappings channel: 'stable', version: '39-1.12'
+
+    accessTransformer = file('src/main/resources/deneb_at.cfg')
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            property 'fml.coreMods.load', 'club.deneb.client.mixin.MixinLoader'
+            property 'mixin.env.disableRefMap', 'true'
+
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+        }
+    }
+}
+
+configurations {
+    compile
+}
+
 dependencies {
+   minecraft "net.minecraftforge:forge:$project.forgeVersion"
+
     compile("org.spongepowered:mixin:0.7.4-SNAPSHOT") {
         exclude module: 'launchwrapper'
         exclude module: 'guava'
@@ -97,16 +91,20 @@ dependencies {
 
     compile 'com.github.cabaletta:baritone:1.2.14'
     compile 'cabaletta:baritone-api:1.2'
+
+    // Add everything in compile to implementation (compile)
+    implementation configurations.compile
 }
 
 processResources {
-    inputs.property 'version', project.version
-    inputs.property 'mcversion', project.minecraft.version
+    inputs.property 'version', project.modVersion
+    inputs.property 'mcversion', project.forgeVersion
 
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
 
-        expand 'version': project.version, 'mcversion': project.minecraft.version
+        expand 'version': project.modVersion,
+                'mcversion': project.forgeVersion
     }
 
     from(sourceSets.main.resources.srcDirs) {
@@ -117,35 +115,9 @@ processResources {
     rename '(.+_at.cfg)', 'META-INF/$1'
 }
 
-shadowJar {
-
-    dependencies {
-        include(dependency('club.minnced:java-discord-rpc'))
-        include(dependency('org.dom4j:dom4j'))
-        include(dependency('org.javassist:javassist'))
-        include(dependency('org.spongepowered:mixin'))
-        include(dependency('org.yaml:snakeyaml'))
-        include(dependency('org.reflections:reflections'))
-        include(dependency('cabaletta:baritone-api'))
-    }
-
-    exclude 'LICENSE.txt' // exclude license.txt file after building jar
-    exclude 'dummyThing' // can someone explain why this is here
-    classifier = 'release'
-}
-
 mixin {
-    defaultObfuscationEnv searge
+    defaultObfuscationEnv 'searge'
     add sourceSets.main, 'mixins.deneb.refmap.json'
-}
-
-
-
-reobf {
-    shadowJar {
-        mappingType = 'SEARGE'
-        classpath = sourceSets.main.compileClasspath
-    }
 }
 
 jar {
@@ -160,6 +132,13 @@ jar {
                 'FMLAT': 'deneb_at.cfg'
         )
     }
-}
 
-build.dependsOn(shadowJar)
+    from {
+        configurations.compile.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+
+    exclude 'LICENSE.txt' // exclude license.txt file after building jar
+
+}
