@@ -1,7 +1,7 @@
 package club.deneb.client.features;
 
-import club.deneb.client.value.ButtonValue;
-import club.deneb.client.value.ModeValue;
+import club.deneb.client.utils.clazz.Button;
+import club.deneb.client.value.Value;
 import org.lwjgl.input.Keyboard;
 
 import java.lang.annotation.Retention;
@@ -10,13 +10,13 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * Created by B_312 on 01/10/21
  */
-public class Module extends IModule{
+public class Module extends AbstractModule {
 
-    ModeValue visible_value;
-    ButtonValue resetConfig;
+    Value<String> visible_value;
+    Value<Button> resetConfig;
 
     public boolean isShownOnArray(){
-        return this.visible_value.getMode("ON").isToggled();
+        return this.visible_value.toggled("ON");
     }
 
     public Module(){
@@ -24,8 +24,8 @@ public class Module extends IModule{
         this.category = getAnnotation().category();
         this.description = getAnnotation().description();
         this.keyCode = getAnnotation().keyCode();
-        this.getValues().add(visible_value = new ModeValue("Visible",new ModeValue.Mode("ON",getAnnotation().visible()),new ModeValue.Mode("OFF",!getAnnotation().visible())));
-        this.getValues().add(resetConfig = new ButtonValue("LoadDefault","Click here to set this module to default").bind(v -> reset()));
+        this.getValues().add(visible_value = new Value<>("Visible",getAnnotation().visible() ? "ON" : "OFF" , listOf("ON","OFF")));
+        this.getValues().add(resetConfig = new Value<>("LoadDefault", new Button().setBind(this::reset)).des("Click here to set this module to default"));
         this.isHUD = false;
         this.onInit();
     }

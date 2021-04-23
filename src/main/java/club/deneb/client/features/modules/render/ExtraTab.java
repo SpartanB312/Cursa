@@ -4,7 +4,7 @@ import club.deneb.client.client.FriendManager;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
 import club.deneb.client.utils.ChatUtil;
-import club.deneb.client.value.IntValue;
+import club.deneb.client.value.Value;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 
@@ -14,7 +14,7 @@ import net.minecraft.scoreboard.ScorePlayerTeam;
 @Module.Info(name = "ExtraTab", description = "Expands the player tab menu", category = Category.RENDER)
 public class ExtraTab extends Module {
 
-    public IntValue tabSize = setting("Players",80,1,200);
+    public Value<Integer> tabSize = setting("Players",80,1,200);
 
     public static ExtraTab INSTANCE;
 

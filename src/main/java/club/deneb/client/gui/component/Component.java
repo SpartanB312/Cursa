@@ -3,6 +3,7 @@ package club.deneb.client.gui.component;
 import club.deneb.client.gui.Panel;
 import club.deneb.client.gui.font.CFontRenderer;
 import club.deneb.client.Deneb;
+import club.deneb.client.utils.Timer;
 import net.minecraft.client.Minecraft;
 
 /**
@@ -18,6 +19,8 @@ public abstract class Component {
     public abstract boolean mouseClicked(int mouseX, int mouseY, int mouseButton);
     public void mouseReleased(int mouseX, int mouseY, int state) { }
     public void keyTyped(char typedChar, int keyCode) { }
+
+    public Timer buttonTimer = new Timer();
 
     public void solvePos(){
         this.x = father.x;

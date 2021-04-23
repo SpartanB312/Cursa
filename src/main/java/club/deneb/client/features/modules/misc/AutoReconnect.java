@@ -3,7 +3,7 @@ package club.deneb.client.features.modules.misc;
 import club.deneb.client.event.events.client.GuiScreenEvent;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
-import club.deneb.client.value.IntValue;
+import club.deneb.client.value.Value;
 import net.minecraft.client.gui.GuiDisconnected;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Module.Info(name = "AutoReconnect", description = "Automatically reconnects after being disconnected", category = Category.MISC)
 public class AutoReconnect extends Module {
 
-    IntValue seconds = setting("Seconds",5,0,100);
+    Value<Integer> seconds = setting("Seconds",5,0,100);
     private static ServerData cServer;
 
     public static AutoReconnect INSTANCE;

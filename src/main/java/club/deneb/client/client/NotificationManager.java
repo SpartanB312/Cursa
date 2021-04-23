@@ -1,8 +1,7 @@
 package club.deneb.client.client;
 
-import club.deneb.client.features.IModule;
+import club.deneb.client.features.AbstractModule;
 import club.deneb.client.utils.Timer;
-;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -17,10 +16,10 @@ public class NotificationManager {
 
     public static class NotificationUnit{
         public Timer timer;
-        public IModule module;
+        public AbstractModule module;
         public boolean enabled;
 
-        public NotificationUnit(Timer timer,IModule module,boolean enabled){
+        public NotificationUnit(Timer timer, AbstractModule module, boolean enabled){
             this.module = module;
             this.timer = timer;
             this.enabled = enabled;
@@ -31,7 +30,7 @@ public class NotificationManager {
         INSTANCE = this;
     }
 
-    public static void addNewNotification(IModule module,boolean enabled){
+    public static void addNewNotification(AbstractModule module, boolean enabled){
         Timer tempTimer = new Timer();
         tempTimer.reset();
         INSTANCE.notificationUnitsList.add(new NotificationUnit(tempTimer,module,enabled));

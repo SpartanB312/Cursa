@@ -14,10 +14,10 @@ public class ChatUtil {
     public static char SECTIONSIGN = '\u00A7';
 
     public static void sendNoSpamMessage(String message, int messageID){
-        sendNoSpamRawChatMessage(SECTIONSIGN + "7[" + SECTIONSIGN + "6" + Deneb.MODNAME2 + SECTIONSIGN +"7] " + SECTIONSIGN + "r" + message, messageID);
+        sendNoSpamRawChatMessage(SECTIONSIGN + "7[" + SECTIONSIGN + "6" + Deneb.CHAT_PREFIX + SECTIONSIGN +"7] " + SECTIONSIGN + "r" + message, messageID);
     }
     public static void sendNoSpamMessage(String message){
-        sendNoSpamRawChatMessage(SECTIONSIGN + "7[" + SECTIONSIGN + "6" + Deneb.MODNAME2 + SECTIONSIGN +"7] " + SECTIONSIGN + "r" + message);
+        sendNoSpamRawChatMessage(SECTIONSIGN + "7[" + SECTIONSIGN + "6" + Deneb.CHAT_PREFIX + SECTIONSIGN +"7] " + SECTIONSIGN + "r" + message);
     }
     public static void sendNoSpamMessage(String[] messages) {
         sendNoSpamMessage("");
@@ -40,7 +40,7 @@ public class ChatUtil {
         ChatMessage(message);
     }
     public static void printChatMessage(String message) {
-        printRawChatMessage(SECTIONSIGN + "7[" + SECTIONSIGN + "6" + Deneb.MODNAME2 + SECTIONSIGN +"7] " + SECTIONSIGN + "r" + message);
+        printRawChatMessage(SECTIONSIGN + "7[" + SECTIONSIGN + "6" + Deneb.CHAT_PREFIX + SECTIONSIGN +"7] " + SECTIONSIGN + "r" + message);
     }
 
     public static void printErrorChatMessage(String message) {

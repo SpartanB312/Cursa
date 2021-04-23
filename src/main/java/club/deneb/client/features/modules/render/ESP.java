@@ -5,7 +5,7 @@ import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
 import club.deneb.client.utils.EntityUtil;
 import club.deneb.client.utils.Wrapper;
-import club.deneb.client.value.BooleanValue;
+import club.deneb.client.value.Value;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,9 +20,9 @@ import static org.lwjgl.opengl.GL11.*;
 @Module.Info(name = "ESP", category = Category.RENDER)
 public class ESP extends Module {
 
-    BooleanValue players = setting("Players", true);
-    BooleanValue animals = setting("Animals", false);
-    BooleanValue mobs = setting("Mobs", false);
+    Value<Boolean> players = setting("Players", true);
+    Value<Boolean> animals = setting("Animals", false);
+    Value<Boolean> mobs = setting("Mobs", false);
 
 
     @Override

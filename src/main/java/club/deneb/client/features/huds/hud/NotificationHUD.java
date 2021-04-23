@@ -3,7 +3,7 @@ package club.deneb.client.features.huds.hud;
 import club.deneb.client.client.NotificationManager;
 import club.deneb.client.features.HUDModule;
 import club.deneb.client.utils.ChatUtil;
-import club.deneb.client.value.IntValue;
+import club.deneb.client.value.Value;
 import net.minecraft.client.gui.Gui;
 
 import java.awt.*;
@@ -11,7 +11,7 @@ import java.awt.*;
 @HUDModule.Info(name = "Notification",x = 200 ,y = 200,width = 100,height = 100)
 public class NotificationHUD extends HUDModule {
 
-    IntValue deadTime = setting("VanishTimer",1000,0,5000);
+    Value<Integer> deadTime = setting("VanishTimer",1000,0,5000);
 
     @Override
     public void onRender(){

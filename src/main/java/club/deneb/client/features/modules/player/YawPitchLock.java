@@ -2,9 +2,7 @@ package club.deneb.client.features.modules.player;
 
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
-import club.deneb.client.value.BooleanValue;
-import club.deneb.client.value.IntValue;
-import club.deneb.client.value.ModeValue;
+import club.deneb.client.value.Value;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.Objects;
@@ -12,17 +10,17 @@ import java.util.Objects;
 @Module.Info(name = "YawPitchLock",category = Category.PLAYER,description = "Lock your camera")
 public class YawPitchLock extends Module {
 
-    ModeValue mode = setting("Mode", new ModeValue.Mode("Yaw&Pitch",true) , new ModeValue.Mode("Yaw",false), new ModeValue.Mode("Pitch",false));
-    BooleanValue yawAuto = setting("YawAuto", true);
-    IntValue yaw = setting("YawValue", 180,0,360);
-    IntValue yawSlice = setting("YawSlice", 8,1,36);
-    BooleanValue pitchAuto = setting("PitchAuto", true);
-    IntValue pitch = setting("PitchValue",180,0,360);
-    IntValue pitchSlice = setting("YawSlice", 8,1,36);
+    Value<String> mode = setting("Mode","Yaw&Pitc",listOf("Yaw&Pitch","Yaw","Pitch"));
+    Value<Boolean> yawAuto = setting("YawAuto", true);
+    Value<Integer> yaw = setting("YawValue", 180,0,360);
+    Value<Integer> yawSlice = setting("YawSlice", 8,1,36);
+    Value<Boolean> pitchAuto = setting("PitchAuto", true);
+    Value<Integer> pitch = setting("PitchValue",180,0,360);
+    Value<Integer> pitchSlice = setting("YawSlice", 8,1,36);
 
     @Override
     public void onTick() {
-        if(mode.getMode("Yaw").isToggled() || mode.getMode("Yaw&Pitch").isToggled()) {
+        if(mode.toggled("Yaw") || mode.toggled("Yaw&Pitch")) {
             if (yawAuto.getValue()) {
                 int angle = 360 / yawSlice.getValue();
                 float yaw = mc.player.rotationYaw;
@@ -34,7 +32,7 @@ public class YawPitchLock extends Module {
             }
         }
 
-        if(mode.getMode("Pitch").isToggled() || mode.getMode("Yaw&Pitch").isToggled()) {
+        if(mode.toggled("Pitch") || mode.toggled("Yaw&Pitch")) {
             if (pitchAuto.getValue()) {
                 int angle = 360 / pitchSlice.getValue();
                 float yaw = mc.player.rotationPitch;

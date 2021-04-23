@@ -3,10 +3,10 @@ package club.deneb.client.gui.guis;
 import club.deneb.client.client.GuiManager;
 import club.deneb.client.features.ModuleManager;
 import club.deneb.client.Deneb;
+import club.deneb.client.gui.Description;
 import club.deneb.client.gui.component.ActionButton;
 import club.deneb.client.utils.Wrapper;
 import club.deneb.client.utils.particles.ParticleSystem;
-import club.deneb.client.value.ButtonValue;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
@@ -21,7 +21,7 @@ public class ClickGuiScreen extends GuiScreen {
 
     private final ParticleSystem particleSystem = new ParticleSystem(100);
 
-    public static ActionButton actionButton;
+    public static String description = "";
 
     @Override
     public boolean doesGuiPauseGame() {
@@ -64,9 +64,9 @@ public class ClickGuiScreen extends GuiScreen {
 
         Deneb.getINSTANCE().getGuiRender().drawScreen( mouseX,  mouseY,  partialTicks);
 
-        if(actionButton !=null){
-            actionButton.runRender(mouseX,mouseY);
-            actionButton = null;
+        if(description !=null){
+            Description.runRender(description,mouseX,mouseY);
+            description = null;
         }
     }
 

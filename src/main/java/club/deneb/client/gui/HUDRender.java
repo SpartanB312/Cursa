@@ -1,6 +1,7 @@
 package club.deneb.client.gui;
 
 import club.deneb.client.features.ModuleManager;
+import club.deneb.client.features.modules.client.HUDEditor;
 import club.deneb.client.gui.component.Component;
 import club.deneb.client.gui.component.ModuleButton;
 import club.deneb.client.gui.component.ValueButton;
@@ -71,22 +72,23 @@ public class HUDRender extends GuiScreen {
         for(Panel panel : panels){
             if(panel.mouseClicked(mouseX, mouseY, mouseButton)) return;
             if (!panel.extended) continue;
-            for(ModuleButton part : panel.Elements){
+            for(ModuleButton part : panel.elements){
                 if(part.mouseClicked(mouseX, mouseY, mouseButton)) return;
                 if (!part.isExtended) continue;
                 for(Component component : part.settings){
                     if (component instanceof ValueButton){
-                        if (!((ValueButton<?>) component).getValue().visible()) continue;
+                        if (!((ValueButton<?>) component).getSetting().visible()) continue;
                     }
                     if(component.mouseClicked(mouseX, mouseY, mouseButton)) return;
                 }
+                if(part.bindButton.mouseClicked(mouseX, mouseY, mouseButton)) return;
             }
         }
     }
 
     public void keyTyped(char typedChar, int keyCode) {
         if(keyCode == Keyboard.KEY_ESCAPE){
-            ModuleManager.getModuleByName("HUDEditor").disable();
+            ModuleManager.getModule(HUDEditor.class).disable();
         }
         for(Panel panel : panels){
             panel.keyTyped(typedChar, keyCode);

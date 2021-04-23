@@ -27,7 +27,11 @@ import java.util.stream.Collectors;
 public class ModuleManager {
 
     public static ModuleManager INSTANCE;
-    private final List<IModule> modules = new ArrayList<>();
+    private final HashMap<Class<? extends AbstractModule>,AbstractModule> moduleHashMap = new HashMap<>();
+
+    private List<AbstractModule> modules(){
+        return new ArrayList<>(moduleHashMap.values());
+    }
 
     public ModuleManager(){
         INSTANCE = this;
@@ -37,21 +41,21 @@ public class ModuleManager {
     private void init(){
         loadModules();
         loadHUDs();
-        modules.sort(Comparator.comparing(IModule::getName));
+        modules().sort(Comparator.comparing(AbstractModule::getName));
     }
 
     public static void onKey(InputUpdateEvent event){
-        INSTANCE.modules.forEach( mod -> {
+        INSTANCE.modules().forEach( mod -> {
             if (mod.isEnabled()) mod.onKey(event);
         });
     }
 
     private void loadModules(){
-        Set<Class> classList = ClassFinder.findClasses(IModule.class.getPackage().getName(), Module.class);
+        Set<Class> classList = ClassFinder.findClasses(AbstractModule.class.getPackage().getName(), Module.class);
         classList.stream().sorted(Comparator.comparing(Class::getSimpleName)).forEach(aClass -> {
             try {
                 Module mod = (Module) aClass.newInstance();
-                modules.add(mod);
+                moduleHashMap.put(aClass,mod);
             } catch (Exception e) {
                 e.printStackTrace();
                 System.err.println("Couldn't initiate Module " + aClass.getSimpleName() + "! Err: " + e.getClass().getSimpleName() + ", message: " + e.getMessage());
@@ -60,11 +64,11 @@ public class ModuleManager {
     }
 
     private void loadHUDs(){
-        Set<Class> classList = ClassFinder.findClasses(IModule.class.getPackage().getName(), HUDModule.class);
+        Set<Class> classList = ClassFinder.findClasses(AbstractModule.class.getPackage().getName(), HUDModule.class);
         classList.stream().sorted(Comparator.comparing(Class::getSimpleName)).forEach(aClass -> {
             try {
                 HUDModule mod = (HUDModule) aClass.newInstance();
-                modules.add(mod);
+                moduleHashMap.put(aClass,mod);
             } catch (Exception e) {
                 e.printStackTrace();
                 System.err.println("Couldn't initiate HUD Module " + aClass.getSimpleName() + "! Err: " + e.getClass().getSimpleName() + ", message: " + e.getMessage());
@@ -72,20 +76,20 @@ public class ModuleManager {
         });
     }
 
-    public static List<IModule> getAllModules(){
-        return INSTANCE.modules;
+    public static List<AbstractModule> getAllModules(){
+        return INSTANCE.modules();
     }
 
-    public static List<IModule> getModules(){
-        return INSTANCE.modules.stream().filter(module -> !module.isHUD).collect(Collectors.toList());
+    public static List<AbstractModule> getModules(){
+        return INSTANCE.modules().stream().filter(module -> !module.isHUD).collect(Collectors.toList());
     }
 
-    public static List<IModule> getHUDModules(){
-        return INSTANCE.modules.stream().filter(module -> module.isHUD).collect(Collectors.toList());
+    public static List<AbstractModule> getHUDModules(){
+        return INSTANCE.modules().stream().filter(module -> module.isHUD).collect(Collectors.toList());
     }
 
-    public static IModule getModuleByName(String targetName) {
-        for(IModule iModule : getAllModules()){
+    public static AbstractModule getModuleByName(String targetName) {
+        for(AbstractModule iModule : getAllModules()){
             if(iModule.name.equalsIgnoreCase(targetName)){
                 return iModule;
             }
@@ -94,8 +98,12 @@ public class ModuleManager {
         return new NullModule();
     }
 
+    public static AbstractModule getModule(Class<? extends AbstractModule> clazz){
+        return INSTANCE.moduleHashMap.get(clazz);
+    }
+
     public static HUDModule getHUDByName(String targetName) {
-        for(IModule iModule : getHUDModules()){
+        for(AbstractModule iModule : getHUDModules()){
             if(iModule.name.equalsIgnoreCase(targetName)){
                 return (HUDModule)iModule;
             }
@@ -106,7 +114,7 @@ public class ModuleManager {
 
     public static void onBind(int bind) {
         if (bind == 0) return;
-        INSTANCE.modules.forEach(module -> {
+        INSTANCE.modules().forEach(module -> {
             if (module.getBind() == bind) {
                 module.toggle();
             }
@@ -114,14 +122,14 @@ public class ModuleManager {
     }
 
     public static void onTick() {
-        INSTANCE.modules.forEach(mod -> {
+        INSTANCE.modules().forEach(mod -> {
             if (mod.isEnabled()) mod.onTick();
         });
     }
 
 
     public static void onRender(RenderGameOverlayEvent.Post event) {
-        INSTANCE.modules.forEach( mod -> {
+        INSTANCE.modules().forEach( mod -> {
             if (mod.isEnabled()) mod.onRender2D(event);
         });
         onRenderHUD();
@@ -153,7 +161,7 @@ public class ModuleManager {
         e.resetTranslation();
         Minecraft.getMinecraft().profiler.endSection();
 
-        INSTANCE.modules.forEach(mod -> {
+        INSTANCE.modules().forEach(mod -> {
             if (mod.isEnabled()) {
                 Minecraft.getMinecraft().profiler.startSection(mod.getName());
                 mod.onWorldRender(e);
@@ -178,7 +186,7 @@ public class ModuleManager {
         return new Vec3d(entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ).add(EntityUtil.getInterpolatedAmount(entity, ticks));
     }
 
-    public static List<IModule> getModulesByCategory(Category category){
+    public static List<AbstractModule> getModulesByCategory(Category category){
         return getAllModules().stream().filter(module -> module.category.equals(category)).collect(Collectors.toList());
     }
 }

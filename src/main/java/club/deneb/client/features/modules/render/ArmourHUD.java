@@ -3,7 +3,7 @@ package club.deneb.client.features.modules.render;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
 import club.deneb.client.utils.ColourHolder;
-import club.deneb.client.value.BooleanValue;
+import club.deneb.client.value.Value;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
@@ -20,7 +20,7 @@ public class ArmourHUD extends Module {
 
     private static final RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
 
-    BooleanValue damage = setting("Damage", false);
+    Value<Boolean> damage = setting("Damage", false);
 
     @SubscribeEvent
     public void onRender(RenderGameOverlayEvent.Post event) {

@@ -2,8 +2,7 @@ package club.deneb.client.features.modules.movement;
 
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
-import club.deneb.client.value.BooleanValue;
-import club.deneb.client.value.IntValue;
+import club.deneb.client.value.Value;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraftforge.client.event.InputUpdateEvent;
 import org.lwjgl.input.Keyboard;
@@ -15,10 +14,10 @@ import org.lwjgl.input.Keyboard;
 @Module.Info(name = "GUIMove",category = Category.MOVEMENT)
 public class GUIMove extends Module {
 
-    IntValue pitchSpeed = setting("PitchSpeed", 6, 0, 20);
-    IntValue yawSpeed = setting("YawSpeed", 6, 0, 20);
-    BooleanValue chat = setting("Chat", false);
-    BooleanValue sneak = setting("Sneak", false);
+    Value<Integer> pitchSpeed = setting("PitchSpeed", 6, 0, 20);
+    Value<Integer> yawSpeed = setting("YawSpeed", 6, 0, 20);
+    Value<Boolean> chat = setting("Chat", false);
+    Value<Boolean> sneak = setting("Sneak", false);
 
     @Override
     public void onTick() {

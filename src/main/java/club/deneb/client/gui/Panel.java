@@ -2,7 +2,7 @@ package club.deneb.client.gui;
 
 import club.deneb.client.features.Category;
 import club.deneb.client.features.HUDModule;
-import club.deneb.client.features.IModule;
+import club.deneb.client.features.AbstractModule;
 import club.deneb.client.features.ModuleManager;
 import club.deneb.client.gui.font.CFontRenderer;
 import club.deneb.client.Deneb;
@@ -10,7 +10,10 @@ import club.deneb.client.client.GuiManager;
 import club.deneb.client.gui.component.Component;
 import club.deneb.client.gui.component.ModuleButton;
 import club.deneb.client.gui.component.ValueButton;
+import club.deneb.client.gui.guis.ClickGuiScreen;
 import club.deneb.client.gui.guis.HUDEditorScreen;
+import club.deneb.client.utils.LambdaUtil;
+import club.deneb.client.utils.Timer;
 import club.deneb.client.utils.Wrapper;
 import net.minecraft.client.gui.Gui;
 
@@ -19,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Created by B_312 on 01/10/21
@@ -36,7 +40,7 @@ public class Panel {
 
     CFontRenderer font;
 
-    public List<ModuleButton> Elements = new ArrayList<>();
+    public List<ModuleButton> elements = new ArrayList<>();
 
     public Panel(Category category, int x, int y, int width, int height) {
         this.x = x;
@@ -52,12 +56,14 @@ public class Panel {
     }
 
     public void setup() {
-        for (IModule m : ModuleManager.getAllModules()) {
+        for (AbstractModule m : ModuleManager.getAllModules()) {
             if(m.category == category){
-                Elements.add(new ModuleButton(m,width,height,this));
+                elements.add(new ModuleButton(m,width,height,this));
             }
         }
     }
+
+    Timer panelTimer = new Timer();
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 
@@ -75,39 +81,72 @@ public class Panel {
 
         Gui.drawRect(x, y+height, x + width, y +height +1 , panelColor);
 
-        if (this.extended && !Elements.isEmpty()) {
+        if (!elements.isEmpty()) {
 
             int startY = y + height + 2;
 
-            for (ModuleButton button : Elements){
+            int index =0;
+
+            for (ModuleButton button : elements) {
+                index++;
+                //Animation
+                if (extended) {
+                    if (!panelTimer.passed(index * 25)) continue;
+                } else {
+                    if (panelTimer.passed((elements.size() - index) * 25)) continue;
+                }
+
                 button.solvePos();
                 button.y = startY;
-                button.render(mouseX,mouseY,partialTicks);
-                int settingY = startY-1;
+                button.render(mouseX, mouseY, partialTicks);
+                if (LambdaUtil.isHovered(mouseX, mouseY).test(button)) {
+                    ClickGuiScreen.description = button.module.description;
+                }
+                int settingY = startY - 1;
                 startY += height + 1;
-                if(button.isExtended){
-                    for(Component component : button.settings){
-                        if(component instanceof ValueButton) {
-                            if(!((ValueButton<?>) component).getValue().visible()) continue;
-                        }
-                        component.solvePos();
-                        component.y = startY;
-                        component.render(mouseX,mouseY,partialTicks);
-                        startY += height;
+
+                int extendedCount = 0;
+                int settingIndex = -1;
+
+                List<Component> visibleSettings = button.settings.stream().filter(ValueButton::visible).collect(Collectors.toList());
+                visibleSettings.add(button.bindButton);
+
+                for (Component component : visibleSettings) {
+
+                    settingIndex++;
+                    //Animation
+                    if (button.isExtended) {
+                        if (!button.buttonTimer.passed(settingIndex * 25)) continue;
+                    } else {
+                        if (button.buttonTimer.passed((visibleSettings.size() - settingIndex) * 25)) continue;
                     }
-                    if(GuiManager.getINSTANCE().isSettingRect() || GuiManager.getINSTANCE().isSettingSide())
-                        Gui.drawRect(x,settingY,x+1,startY,color);
-                    if(GuiManager.getINSTANCE().isSettingRect()) {
+
+                    extendedCount++;
+                    component.solvePos();
+                    component.y = startY;
+                    component.render(mouseX, mouseY, partialTicks);
+                    if (component instanceof ValueButton) {
+                        if (LambdaUtil.isHovered(mouseX, mouseY).test(component)) {
+                            ClickGuiScreen.description = ((ValueButton<?>) component).getSetting().description;
+                        }
+                    }
+                    startY += height;
+                }
+
+                if (extendedCount != 0) {
+                    if (GuiManager.getINSTANCE().isSettingRect() || GuiManager.getINSTANCE().isSettingSide())
+                        Gui.drawRect(x, settingY, x + 1, startY, color);
+                    if (GuiManager.getINSTANCE().isSettingRect()) {
                         Gui.drawRect(x + width, settingY, x + width - 1, startY, color);
                         Gui.drawRect(x + 1, settingY, x + width - 1, settingY + 1, color);
                         Gui.drawRect(x + 1, startY - 1, x + width - 1, startY, color);
                     }
                 }
-                //Gui.drawRect(x, settingY -1, x + width, settingY + 1, panelColor);
+
                 startY += 1;
-                if(button.module.isHUD && Wrapper.mc.currentScreen instanceof HUDEditorScreen) {
+                if (button.module.isHUD && Wrapper.mc.currentScreen instanceof HUDEditorScreen) {
                     HUDModule hud = (HUDModule) button.module;
-                    Gui.drawRect(hud.x, hud.y, hud.x + hud.width, hud.y + hud.height , panelColor);
+                    Gui.drawRect(hud.x, hud.y, hud.x + hud.width, hud.y + hud.height, panelColor);
                     hud.onRender();
                 }
             }
@@ -131,6 +170,7 @@ public class Panel {
         }
         if (mouseButton == 1 && isHovered(mouseX, mouseY).test(this)) {
             extended = !extended;
+            panelTimer.reset();
             return true;
         }
         return false;
@@ -140,14 +180,14 @@ public class Panel {
         if (state == 0) {
             this.dragging = false;
         }
-        for (Component part : Elements) {
+        for (Component part : elements) {
             part.mouseReleased(mouseX, mouseY, state);
         }
 
     }
 
     public void keyTyped(char typedChar, int keyCode) {
-        for (Component part : Elements) {
+        for (Component part : elements) {
             part.keyTyped(typedChar, keyCode);
         }
     }

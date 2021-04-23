@@ -3,8 +3,8 @@ package club.deneb.client.features.modules.player;
 import club.deneb.client.event.events.client.PacketEvent;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
-import club.deneb.client.value.IntValue;
 import club.deneb.client.event.events.entity.PlayerMoveEvent;
+import club.deneb.client.value.Value;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Module.Info(name = "Freecam", category = Category.PLAYER, description = "Leave your body and trascend into the realm of the gods")
 public class Freecam extends Module {
 
-   IntValue speed = setting("Speed", 5,0,100);
+    Value<Integer> speed = setting("Speed", 5, 0, 100);
 
     private double posX, posY, posZ;
     private float pitch, yaw;
@@ -86,17 +86,17 @@ public class Freecam extends Module {
     }
 
     @SubscribeEvent
-    public void moveListener(PlayerMoveEvent event){
+    public void moveListener(PlayerMoveEvent event) {
         mc.player.noClip = true;
     }
 
     @SubscribeEvent
-    public void pushListener (PlayerSPPushOutOfBlocksEvent event){
+    public void pushListener(PlayerSPPushOutOfBlocksEvent event) {
         event.setCanceled(true);
     }
 
     @SubscribeEvent
-    public void sendListener (PacketEvent.Send event){
+    public void sendListener(PacketEvent.Send event) {
         if (event.getPacket() instanceof CPacketPlayer || event.getPacket() instanceof CPacketInput) {
             event.cancel();
         }

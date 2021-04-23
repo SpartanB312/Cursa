@@ -2,7 +2,7 @@ package club.deneb.client.features.modules.combat;
 
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
-import club.deneb.client.value.BooleanValue;
+import club.deneb.client.value.Value;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ClickType;
@@ -13,7 +13,7 @@ import net.minecraft.inventory.ClickType;
 @Module.Info(name = "Anti32KTotem",category = Category.COMBAT)
 public class Anti32kTotem extends Module {
 
-    BooleanValue pauseInInventory = setting("PauseInInventory",false);
+    Value<Boolean> pauseInInventory = setting("PauseInInventory",false);
 
     @Override
     public void onTick() {

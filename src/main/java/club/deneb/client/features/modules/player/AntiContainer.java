@@ -3,7 +3,7 @@ package club.deneb.client.features.modules.player;
 import club.deneb.client.event.events.client.PacketEvent;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
-import club.deneb.client.value.BooleanValue;
+import club.deneb.client.value.Value;
 import net.minecraft.block.BlockShulkerBox;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
@@ -14,18 +14,18 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Module.Info(name = "AntiContainer",category = Category.PLAYER)
 public class AntiContainer extends Module {
 
-    BooleanValue Chest = setting("Chest",true);
-    BooleanValue EnderChest = setting("EnderChest",true);
-    BooleanValue Trapped_Chest = setting("Trapped_Chest",true);
-    BooleanValue Hopper = setting("Hopper",true);
-    BooleanValue Dispenser = setting("Dispenser",true);
-    BooleanValue Furnace = setting("Furnace",true);
-    BooleanValue Beacon = setting("Beacon",true);
-    BooleanValue Crafting_Table = setting("Crafting_Table",true);
-    BooleanValue Anvil = setting("Anvil",true);
-    BooleanValue Enchanting_table = setting("Enchanting_table",true);
-    BooleanValue Brewing_Stand = setting("Brewing_Stand",true);
-    BooleanValue ShulkerBox = setting("ShulkerBox",true);
+    Value<Boolean> Chest = setting("Chest",true);
+    Value<Boolean> EnderChest = setting("EnderChest",true);
+    Value<Boolean> Trapped_Chest = setting("Trapped_Chest",true);
+    Value<Boolean> Hopper = setting("Hopper",true);
+    Value<Boolean> Dispenser = setting("Dispenser",true);
+    Value<Boolean> Furnace = setting("Furnace",true);
+    Value<Boolean> Beacon = setting("Beacon",true);
+    Value<Boolean> Crafting_Table = setting("Crafting_Table",true);
+    Value<Boolean> Anvil = setting("Anvil",true);
+    Value<Boolean> Enchanting_table = setting("Enchanting_table",true);
+    Value<Boolean> Brewing_Stand = setting("Brewing_Stand",true);
+    Value<Boolean> ShulkerBox = setting("ShulkerBox",true);
 
     @SubscribeEvent
     public void onCheck(PacketEvent.Send packet){

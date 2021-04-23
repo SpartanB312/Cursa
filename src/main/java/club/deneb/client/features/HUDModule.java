@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * Created by B_312 on 01/10/21
  */
-public class HUDModule extends IModule{
+public class HUDModule extends AbstractModule {
 
     public HUDModule(){
         this.x = getAnnotation().x();

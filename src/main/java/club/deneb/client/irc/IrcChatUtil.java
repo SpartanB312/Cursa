@@ -15,14 +15,14 @@ public class IrcChatUtil {
 
     public static void printIRCMessage(String message){
         try {
-            printRawChatMessage(SECTIONSIGN + "7[" + SECTIONSIGN + "6" + "EridanusIRC" + SECTIONSIGN +"7] "
+            printRawChatMessage(SECTIONSIGN + "7[" + SECTIONSIGN + "6" + "DenebIRC" + SECTIONSIGN +"7] "
                     + buildIRCMsg(message)
             );
         } catch (Exception ignored){}
     }
 
     public static void printRawIRCMessage(String message){
-        printRawChatMessage(SECTIONSIGN + "7[" + SECTIONSIGN + "6" + "EridanusIRC" + SECTIONSIGN +"7] " + SECTIONSIGN + "r" + message);
+        printRawChatMessage(SECTIONSIGN + "7[" + SECTIONSIGN + "6" + "DenebIRC" + SECTIONSIGN +"7] " + SECTIONSIGN + "r" + message);
     }
 
     public static String buildIRCMsg(String message){

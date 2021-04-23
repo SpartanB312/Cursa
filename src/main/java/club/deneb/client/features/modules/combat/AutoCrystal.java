@@ -49,55 +49,51 @@ import static org.lwjgl.opengl.GL11.GL_QUADS;
 @Module.Info(name = "AutoCrystal", category = Category.COMBAT,description = "Automatically place crystal to kill enemy")
 public class AutoCrystal extends Module {
 
-    PageValue Page_value = page("Page",1,"General","Calculation","Render");
-
-    PageValue.Page general = newPage(Page_value,1);
-    PageValue.Page calculation = newPage(Page_value,2);
-    PageValue.Page render = newPage(Page_value,3);
+    Value<String> Page_value = setting("Page","General",listOf("General","Calculation","Render"));
 
     //General
-    BooleanValue AutoSwitch_value = setting("AutoSwitch", false).page(general);
-    BooleanValue TargetPlayer_value = setting("Players", true).page(general);
-    BooleanValue TargetMobs_value = setting("Mobs", false).page(general);
-    BooleanValue TargetAnimals_value = setting("Animals", false).page(general);
-    BooleanValue Place_value = setting("Place", true).page(general);
-    BooleanValue Explode_value = setting("Explode", true).page(general);
-    BooleanValue MultiPlace_value = setting("MultiPlace", false).page(general);
-    DoubleValue AttackSpeed_value = setting("AttackSpeed", 35d, 0, 50).page(general);
-    DoubleValue PlaceSpeed_value = setting("PlaceSpeed", 35d, 0d, 50).page(general);
-    DoubleValue Distance_value = setting("Distance", 7.0D, 0D, 8D).page(general);
-    DoubleValue PlaceRange_value = setting("PlaceRange", 6.5D, 0D, 8D).page(general);
-    DoubleValue HitRange_value = setting("HitRange", 5.5D, 0D, 8D).page(general);
-    BooleanValue Rotate_value = setting("Rotate", true).page(general);
-    BooleanValue RayTrace_value = setting("RayTrace", false).page(general);
+    Value<Boolean> AutoSwitch_value = setting("AutoSwitch", false).m(Page_value,"General");
+    Value<Boolean> TargetPlayer_value = setting("Players", true).m(Page_value,"General");
+    Value<Boolean> TargetMobs_value = setting("Mobs", false).m(Page_value,"General");
+    Value<Boolean> TargetAnimals_value = setting("Animals", false).m(Page_value,"General");
+    Value<Boolean> Place_value = setting("Place", true).m(Page_value,"General");
+    Value<Boolean> Explode_value = setting("Explode", true).m(Page_value,"General");
+    Value<Boolean> MultiPlace_value = setting("MultiPlace", false).m(Page_value,"General");
+    Value<Double> AttackSpeed_value = setting("AttackSpeed", 35d, 0, 50).m(Page_value,"General");
+    Value<Double> PlaceSpeed_value = setting("PlaceSpeed", 35d, 0d, 50).m(Page_value,"General");
+    Value<Double> Distance_value = setting("Distance", 7.0D, 0D, 8D).m(Page_value,"General");
+    Value<Double> PlaceRange_value = setting("PlaceRange", 6.5D, 0D, 8D).m(Page_value,"General");
+    Value<Double> HitRange_value = setting("HitRange", 5.5D, 0D, 8D).m(Page_value,"General");
+    Value<Boolean> Rotate_value = setting("Rotate", true).m(Page_value,"General");
+    Value<Boolean> RayTrace_value = setting("RayTrace", false).m(Page_value,"General");
     //Calculation
-    BooleanValue NewPlace_value = setting("1.13Place", false).page(calculation);
-    BooleanValue Wall_value = setting("Wall", true).page(calculation);
-    DoubleValue WallRange_value = setting("WallRange", 3.5, 0d, 20d).page(calculation);
-    BooleanValue NoSuicide_value = setting("NoSuicide", true).page(calculation);
-    BooleanValue FacePlace_value = setting("FacePlace", true).page(calculation);
-    DoubleValue BlastHealth_value = setting("MinHealthFace", 10d, 0d, 20d).page(calculation).b(FacePlace_value);
-    DoubleValue MinDmg_value = setting("PlaceMinDamage", 4.5d, 0d, 20d).page(calculation);
-    DoubleValue MaxSelf_value = setting("PlaceMaxSelf", 10d, 0d, 36d).page(calculation);
-    ModeValue AttackMode_value = setting("HitMode",new ModeValue.Mode("Smart",true),new ModeValue.Mode("Always")).page(calculation);
-    DoubleValue BMinDmg_value = setting("BreakMinDmg", 4.5, 0.0, 36.0).page(calculation).m(AttackMode_value,"Smart");
-    DoubleValue BMaxSelf_value = setting("BreakMaxSelf", 12.0, 0.0, 36.0).page(calculation).m(AttackMode_value,"Smart");
-    BooleanValue PopTotemTry = setting("PopTotemTry",true).page(calculation).m(AttackMode_value,"Smart");
-    BooleanValue GhostHand_value = setting("GhostHand", false).page(calculation);
-    BooleanValue PauseEating_value = setting("PauseWhileEating", false).page(calculation);
-    BooleanValue ClientSideConfirm_value = setting("ClientSideConfirm",false).page(calculation);
+    Value<Boolean> NewPlace_value = setting("1.13Place", false).m(Page_value,"Calculation");
+    Value<Boolean> Wall_value = setting("Wall", true).m(Page_value,"Calculation");
+    Value<Double> WallRange_value = setting("WallRange", 3.5, 0d, 20d).m(Page_value,"Calculation");
+    Value<Boolean> NoSuicide_value = setting("NoSuicide", true).m(Page_value,"Calculation");
+    Value<Boolean> FacePlace_value = setting("FacePlace", true).m(Page_value,"Calculation");
+    Value<Double> BlastHealth_value = setting("MinHealthFace", 10d, 0d, 20d).m(Page_value,"Calculation").b(FacePlace_value);
+    Value<Double> MinDmg_value = setting("PlaceMinDamage", 4.5d, 0d, 20d).m(Page_value,"Calculation");
+    Value<Double> MaxSelf_value = setting("PlaceMaxSelf", 10d, 0d, 36d).m(Page_value,"Calculation");
+    Value<String> AttackMode_value = setting("HitMode","Smart",listOf("Smart","Always")).m(Page_value,"Calculation");
+    Value<Double> BMinDmg_value = setting("BreakMinDmg", 4.5, 0.0, 36.0).m(Page_value,"Calculation").m(AttackMode_value,"Smart");
+    Value<Double> BMaxSelf_value = setting("BreakMaxSelf", 12.0, 0.0, 36.0).m(Page_value,"Calculation").m(AttackMode_value,"Smart");
+    Value<Boolean> PopTotemTry = setting("PopTotemTry",true).m(Page_value,"Calculation").m(AttackMode_value,"Smart");
+    Value<Boolean> GhostHand_value = setting("GhostHand", false).m(Page_value,"Calculation");
+    Value<Boolean> PauseEating_value = setting("PauseWhileEating", false).m(Page_value,"Calculation");
+    Value<Boolean> ClientSideConfirm_value = setting("ClientSideConfirm",false).m(Page_value,"Calculation");
     //Render
-    BooleanValue RenderDmg_value = setting("RenderDamage", false).page(render);
-    ModeValue RenderMode_value = setting("RenderBlock",new ModeValue.Mode("Solid", true),new ModeValue.Mode("Up"),new ModeValue.Mode("UpLine"),new ModeValue.Mode("Full"),new ModeValue.Mode("Outline"),new ModeValue.Mode("NoRender")).page(render);
-    BooleanValue SyncGui_value = setting("SyncGui", false).page(render);
-    IntValue Red_value = setting("Red", 255, 0, 255).page(render).r(SyncGui_value);
-    IntValue Green_value = setting("Green", 0, 0, 255).page(render).r(SyncGui_value);
-    IntValue Blue_value = setting("Blue", 0, 0, 255).page(render).r(SyncGui_value);
-    IntValue Alpha_value = setting("Alpha", 70, 0, 255).page(render);
-    BooleanValue Rainbow_value = setting("Rainbow", false).page(render).r(SyncGui_value);
-    FloatValue RGBSpeed_value = setting("RGB Speed", 1.0f, 0.0f, 10.0f).page(render).r(SyncGui_value);
-    FloatValue Saturation_value = setting("Saturation", 0.65f, 0.0f, 1.0f).page(render).r(SyncGui_value);
-    FloatValue Brightness_value = setting("Brightness", 1.0f, 0.0f, 1.0f).page(render).r(SyncGui_value);
+    Value<Boolean> RenderDmg_value = setting("RenderDamage", false).m(Page_value,"Render");
+    Value<String> RenderMode_value = setting("RenderBlock","Solid",listOf("Solid","Up","UpLine","Full","Outline","NoRender")).m(Page_value,"Render");
+    Value<Boolean> SyncGui_value = setting("SyncGui", false).m(Page_value,"Render");
+    Value<Integer> Red_value = setting("Red", 255, 0, 255).m(Page_value,"Render").r(SyncGui_value);
+    Value<Integer> Green_value = setting("Green", 0, 0, 255).m(Page_value,"Render").r(SyncGui_value);
+    Value<Integer> Blue_value = setting("Blue", 0, 0, 255).m(Page_value,"Render").r(SyncGui_value);
+    Value<Integer> Alpha_value = setting("Alpha", 70, 0, 255).m(Page_value,"Render");
+    Value<Boolean> Rainbow_value = setting("Rainbow", false).m(Page_value,"Render").r(SyncGui_value);
+    Value<Float> RGBSpeed_value = setting("RGB Speed", 1.0f, 0.0f, 10.0f).m(Page_value,"Render").r(SyncGui_value);
+    Value<Float> Saturation_value = setting("Saturation", 0.65f, 0.0f, 1.0f).m(Page_value,"Render").r(SyncGui_value);
+    Value<Float> Brightness_value = setting("Brightness", 1.0f, 0.0f, 1.0f).m(Page_value,"Render").r(SyncGui_value);
 
     public static double yaw;
     public static double pitch;
@@ -181,7 +177,7 @@ public class AutoCrystal extends Module {
      */
     private boolean canHitCrystal(EntityEnderCrystal crystal) {
         if (mc.player.getDistance(crystal) > HitRange_value.getValue()) return false;
-        if (AttackMode_value.getToggledMode().getName().equals("Smart")) {
+        if (AttackMode_value.getValue().equals("Smart")) {
             float selfDamage = calculateDamage(crystal.posX, crystal.posY, crystal.posZ, mc.player, mc.player.getPositionVector());
             if (selfDamage >= mc.player.getHealth() + mc.player.getAbsorptionAmount()) return false;
             List<EntityPlayer> entities = mc.world.playerEntities.stream()
@@ -268,17 +264,17 @@ public class AutoCrystal extends Module {
 
     private void drawBlock(BlockPos blockPos, int color) {
         DenebTessellator.prepare(GL_QUADS);
-        if (!RenderMode_value.getMode("NoRender").isToggled()) {
-            if (RenderMode_value.getMode("Solid").isToggled() || RenderMode_value.getMode("Up").isToggled()) {
-                if (RenderMode_value.getMode("Up").isToggled()) {
+        if (!RenderMode_value.toggled("NoRender")) {
+            if (RenderMode_value.toggled("Solid") || RenderMode_value.toggled("Up")) {
+                if (RenderMode_value.toggled("Up")) {
                     DenebTessellator.drawBox(blockPos, color, GeometryMasks.Quad.UP);
                 } else {
                     DenebTessellator.drawBox(blockPos, color, GeometryMasks.Quad.ALL);
                 }
             } else {
-                if (RenderMode_value.getMode("Full").isToggled()) {
+                if (RenderMode_value.toggled("Full")) {
                     DenebTessellator.drawFullBox(blockPos, 1f, color);
-                } else if (RenderMode_value.getMode("Outline").isToggled()) {
+                } else if (RenderMode_value.toggled("Outline")) {
                     DenebTessellator.drawBoundingBox(blockPos, 2f, color);
                 } else {
                     DenebTessellator.drawBoundingBox(blockPos.add(0, 1, 0), 2f, color);

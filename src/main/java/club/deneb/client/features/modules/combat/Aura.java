@@ -7,8 +7,7 @@ import club.deneb.client.features.Module;
 import club.deneb.client.features.ModuleManager;
 import club.deneb.client.utils.EntityUtil;
 import club.deneb.client.utils.LagCompensator;
-import club.deneb.client.value.BooleanValue;
-import club.deneb.client.value.DoubleValue;
+import club.deneb.client.value.Value;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -28,13 +27,13 @@ import net.minecraft.util.math.Vec3d;
 @Module.Info(name = "Aura", category = Category.COMBAT, description = "Hits entities around you")
 public class Aura extends Module {
 
-    BooleanValue players = setting("Players", true);
-    BooleanValue animals = setting("Animals", false);
-    BooleanValue mobs = setting("Mobs", false);
-    DoubleValue range = setting("Range", 5.5d,0.0d,10.0d);
-    BooleanValue wait = setting("Wait", true);
-    BooleanValue walls = setting("Walls", false);
-    BooleanValue sharpness = setting("32k Switch", false);
+    Value<Boolean> players = setting("Players", true);
+    Value<Boolean> animals = setting("Animals", false);
+    Value<Boolean> mobs = setting("Mobs", false);
+    Value<Double> range = setting("Range", 5.5d,0.0d,10.0d);
+    Value<Boolean> wait = setting("Wait", true);
+    Value<Boolean> walls = setting("Walls", false);
+    Value<Boolean> sharpness = setting("32k Switch", false);
 
     @Override
     public void onTick() {

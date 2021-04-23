@@ -2,8 +2,7 @@ package club.deneb.client.features.modules.misc;
 
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
-import club.deneb.client.value.IntValue;
-import club.deneb.client.value.ModeValue;
+import club.deneb.client.value.Value;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 
 import java.util.Random;
@@ -14,8 +13,8 @@ import java.util.Random;
 @Module.Info(name = "SkinFlicker", description = "Toggle the jacket layer rapidly for a cool skin effect", category = Category.MISC)
 public class SkinFlicker extends Module {
 
-    ModeValue mode = setting("Mode", new ModeValue.Mode("HORIZONTAL",true),new ModeValue.Mode("VERTICAL"),new ModeValue.Mode("RANDOM"));
-    IntValue slowness = setting("Slowness",2,1,10);
+    Value<String> mode = setting("Mode", "HORIZONTAL",listOf("HORIZONTAL","VERTICAL","RANDOM"));
+    Value<Integer> slowness = setting("Slowness",2,1,10);
 
     private final static EnumPlayerModelParts[] PARTS_HORIZONTAL = new EnumPlayerModelParts[]{
             EnumPlayerModelParts.LEFT_SLEEVE,
@@ -40,7 +39,7 @@ public class SkinFlicker extends Module {
 
     @Override
     public void onTick() {
-        switch (mode.getToggledMode().getName()) {
+        switch (mode.getValue()) {
             case "RANDOM":
                 if (mc.player.ticksExisted % slowness.getValue() != 0) return;
                 mc.gameSettings.switchModelPartEnabled(EnumPlayerModelParts.values()[r.nextInt(len)]);
@@ -53,7 +52,7 @@ public class SkinFlicker extends Module {
                     on = true;
                     i -= PARTS_HORIZONTAL.length;
                 }
-                mc.gameSettings.setModelPartEnabled(mode.getToggledMode().getName().equals("VERTICAL") ? PARTS_VERTICAL[i] : PARTS_HORIZONTAL[i], on);
+                mc.gameSettings.setModelPartEnabled(mode.getValue().equals("VERTICAL") ? PARTS_VERTICAL[i] : PARTS_HORIZONTAL[i], on);
         }
     }
 

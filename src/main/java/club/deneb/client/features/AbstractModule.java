@@ -5,6 +5,7 @@ import club.deneb.client.event.events.render.RenderEvent;
 import club.deneb.client.features.modules.client.Notification;
 import club.deneb.client.gui.font.CFontRenderer;
 import club.deneb.client.utils.ChatUtil;
+import club.deneb.client.utils.clazz.Button;
 import club.deneb.client.value.*;
 import club.deneb.client.Deneb;
 import club.deneb.client.utils.Wrapper;
@@ -16,13 +17,15 @@ import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by B_312 on 01/10/21
  * This is abstract module
  */
-public class IModule {
+public class AbstractModule {
 
     public CFontRenderer font = Deneb.getINSTANCE().getFont();
     public String name;
@@ -38,18 +41,22 @@ public class IModule {
     public int width;
     public int height;
 
-    private final ArrayList<Value> values = new ArrayList<>();
-    public ArrayList<Value> getValues() {
+    private final ArrayList<Value<?>> values = new ArrayList<>();
+    public ArrayList<Value<?>> getValues() {
         return values;
     }
 
     public boolean reset(){
-        for(Value value  : getValues()){
-            value.setValue(value.getDefaultValue());
+        for(Value<?> value  : getValues()){
+            value.reset();
         }
         this.disable();
         this.setBind(Keyboard.KEY_NONE);
         return true;
+    }
+
+    public static List<String> listOf(String ...strings){
+        return Arrays.stream(strings).collect(Collectors.toList());
     }
 
     public static final Minecraft mc = Wrapper.mc;
@@ -75,58 +82,40 @@ public class IModule {
         onDisable();
     }
 
-    public ButtonValue setting(String name, String description){
-        ButtonValue value = new ButtonValue(name,description);
+    public Value<Button> setting(String name, Button button){
+        Value<Button> value = new Value<>(name, button);
         this.getValues().add(value);
         return value;
     }
 
-    public BooleanValue setting(String name, boolean defaultValue){
-        BooleanValue value = new BooleanValue(name,defaultValue);
+    public Value<Boolean> setting(String name, boolean defaultValue){
+        Value<Boolean> value = new Value<>(name,defaultValue);
         this.getValues().add(value);
         return value;
     }
 
-    public IntValue setting(String name, int defaultValue, int minValue, int maxValue){
-        IntValue value = new IntValue(name,defaultValue,minValue,maxValue);
+    public Value<Integer> setting(String name, int defaultValue, int minValue, int maxValue){
+        Value<Integer> value = new Value<>(name,defaultValue,minValue,maxValue);
         this.getValues().add(value);
         return value;
     }
 
-    public FloatValue setting(String name, float defaultValue, float minValue, float maxValue){
-        FloatValue value = new FloatValue(name,defaultValue,minValue,maxValue);
+    public Value<Float> setting(String name, float defaultValue, float minValue, float maxValue){
+        Value<Float> value = new Value<>(name,defaultValue,minValue,maxValue);
         this.getValues().add(value);
         return value;
     }
 
-    public DoubleValue setting(String name, double defaultValue, double minValue, double maxValue){
-        DoubleValue value = new DoubleValue(name,defaultValue,minValue,maxValue);
+    public Value<Double> setting(String name, double defaultValue, double minValue, double maxValue){
+        Value<Double> value = new Value<>(name,defaultValue,minValue,maxValue);
         this.getValues().add(value);
         return value;
     }
 
-    public ModeValue setting(String name, ModeValue.Mode... modes){
-        ModeValue value = new ModeValue(name,modes);
+    public Value<String> setting(String name, String defaultValue, List<String> modes){
+        Value<String> value = new Value<>(name,defaultValue,modes);
         this.getValues().add(value);
         return value;
-    }
-
-    public PageValue.Page newPage(PageValue value,int index){
-        return new PageValue.Page(value.getValue(),index);
-    }
-
-    public PageValue.Page newPage(PageValue value,String name){
-        return new PageValue.Page(value.getValue(),name);
-    }
-
-    public PageValue page(String name,int defaultPage,String... values){
-        List<ModeValue.Mode> modes = new ArrayList<>();
-        for(int i = 1;i <= values.length;i++){
-            modes.add(new ModeValue.Mode(values[i-1],i==defaultPage));
-        }
-        ModeValue value = new ModeValue(name,modes);
-        this.getValues().add(value);
-        return new PageValue(value);
     }
 
     public boolean isEnabled(){

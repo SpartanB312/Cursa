@@ -3,7 +3,7 @@ package club.deneb.client.features.modules.render;
 import club.deneb.client.event.events.client.PacketEvent;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
-import club.deneb.client.value.BooleanValue;
+import club.deneb.client.value.Value;
 import net.minecraft.init.MobEffects;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketExplosion;
@@ -16,15 +16,15 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Module.Info(name = "AntiOverlay",category = Category.RENDER)
 public class AntiOverlay extends Module {
 
-    BooleanValue fire = setting("Fire", true);
-    BooleanValue blocks = setting("Blocks", true);
-    BooleanValue water = setting("Water", true);
-    BooleanValue blindness = setting("Blindness", true);
-    BooleanValue nausea = setting("Nausea", false);
-    BooleanValue xp = setting("XP", false);
-    BooleanValue mob = setting("Mob", false);
-    BooleanValue explosion = setting("Explosions", true);
-    BooleanValue paint = setting("Paintings", false);
+    Value<Boolean> fire = setting("Fire", true);
+    Value<Boolean> blocks = setting("Blocks", true);
+    Value<Boolean> water = setting("Water", true);
+    Value<Boolean> blindness = setting("Blindness", true);
+    Value<Boolean> nausea = setting("Nausea", false);
+    Value<Boolean> xp = setting("XP", false);
+    Value<Boolean> mob = setting("Mob", false);
+    Value<Boolean> explosion = setting("Explosions", true);
+    Value<Boolean> paint = setting("Paintings", false);
 
     @Override
     public void onTick() {

@@ -4,7 +4,7 @@ import club.deneb.client.Deneb;
 import club.deneb.client.event.events.client.PacketEvent;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
-import club.deneb.client.value.BooleanValue;
+import club.deneb.client.value.Value;
 import net.minecraft.network.play.client.CPacketChatMessage;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Module.Info(name = "CustomChat", category = Category.MISC, description = "Modifies your chat messages")
 public class CustomChat extends Module {
 
-    BooleanValue commands = setting("Commands", false);
+    Value<Boolean> commands = setting("Commands", false);
 
     @SubscribeEvent
     public void listener (PacketEvent.Send event){

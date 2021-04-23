@@ -2,7 +2,7 @@ package club.deneb.client.features.modules.combat;
 
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
-import club.deneb.client.value.BooleanValue;
+import club.deneb.client.value.Value;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -20,9 +20,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Module.Info(name = "AutoTotem",category = Category.COMBAT)
 public class AutoTotem extends Module {
 
-    BooleanValue soft = setting("Soft",true);
-    BooleanValue pauseInContainers = setting("PauseInInventory",false);
-    BooleanValue pauseInInventory = setting("PauseInContainer",false);
+    Value<Boolean> soft = setting("Soft",true);
+    Value<Boolean> pauseInContainers = setting("PauseInInventory",false);
+    Value<Boolean> pauseInInventory = setting("PauseInContainer",false);
 	
 	private int numOfTotems;
     private int preferredTotemSlot;

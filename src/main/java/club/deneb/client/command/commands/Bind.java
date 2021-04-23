@@ -1,7 +1,7 @@
 package club.deneb.client.command.commands;
 
 
-import club.deneb.client.features.IModule;
+import club.deneb.client.features.AbstractModule;
 import club.deneb.client.features.ModuleManager;
 import club.deneb.client.features.modules.client.NullHUD;
 import club.deneb.client.features.modules.client.NullModule;
@@ -27,7 +27,7 @@ public class Bind extends Command {
             String module = args[0];
             String rkey = args[1];
 
-            IModule m = ModuleManager.getModuleByName(module);
+            AbstractModule m = ModuleManager.getModuleByName(module);
 
             if ((m instanceof NullModule) || (m instanceof NullHUD)) {
                 ChatUtil.sendNoSpamMessage("Unknown module '" + module + "'!");

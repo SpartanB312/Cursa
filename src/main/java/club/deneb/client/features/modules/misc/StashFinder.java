@@ -3,7 +3,7 @@ package club.deneb.client.features.modules.misc;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
 import club.deneb.client.utils.ChatUtil;
-import club.deneb.client.value.BooleanValue;
+import club.deneb.client.value.Value;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityDonkey;
 import net.minecraft.tileentity.TileEntity;
@@ -30,12 +30,12 @@ import java.util.Objects;
 @Module.Info(name = "StashFinder",category = Category.MISC)
 public class StashFinder extends Module {
 
-    BooleanValue chest = setting("Chests", true);
-    BooleanValue shulker = setting("Shulker boxes", true);
-    BooleanValue donkey = setting("Donkey", true);
-    BooleanValue enderChest = setting("Ender Chest", true);
-    BooleanValue autowalk = setting("AutoWalk", false);
-    BooleanValue chat = setting("Send Message", false);
+    Value<Boolean> chest = setting("Chests", true);
+    Value<Boolean> shulker = setting("Shulker boxes", true);
+    Value<Boolean> donkey = setting("Donkey", true);
+    Value<Boolean> enderChest = setting("Ender Chest", true);
+    Value<Boolean> autowalk = setting("AutoWalk", false);
+    Value<Boolean> chat = setting("Send Message", false);
 
     private final ArrayList<BlockPos> chests = new ArrayList<>();
     private final ArrayList<BlockPos> shulkers = new ArrayList<>();

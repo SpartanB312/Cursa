@@ -17,10 +17,10 @@ public class Watermark extends HUDModule {
 
         int fontColor = new Color(GuiManager.getINSTANCE().getRed() / 255f, GuiManager.getINSTANCE().getGreen() / 255f, GuiManager.getINSTANCE().getBlue() / 255f, 1F).getRGB();
 
-        font.drawString(Deneb.MODNAME + " "  + Deneb.VERSION , this.x + 2, this.y + 4, fontColor);
+        font.drawString(Deneb.MOD_NAME + " "  + Deneb.VERSION , this.x + 2, this.y + 4, fontColor);
 
         this.height = font.getHeight() * 2;
-        this.width = font.getStringWidth(Deneb.MODNAME + " "  + Deneb.VERSION ) + 4;
+        this.width = font.getStringWidth(Deneb.MOD_NAME + " "  + Deneb.VERSION ) + 4;
 
     }
 

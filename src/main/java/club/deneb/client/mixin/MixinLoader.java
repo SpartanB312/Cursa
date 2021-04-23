@@ -21,14 +21,14 @@ public class MixinLoader implements IFMLLoadingPlugin {
     public MixinLoader() {
         log.info("Deneb mixins initialized");
         MixinBootstrap.init();
-        Mixins.addConfigurations("mixins.deneb.json"/*,"mixins.baritone.json"*/);
+        Mixins.addConfigurations("mixins.deneb.json","mixins.baritone.json");
         MixinEnvironment.getDefaultEnvironment().setObfuscationContext("searge");
         log.info(MixinEnvironment.getDefaultEnvironment().getObfuscationContext());
     }
 
     @Override
     public String[] getASMTransformerClass() {
-        return new String[] {"com.mrcrayfish.controllable.asm.ControllableTransformer"};
+        return new String[0];
     }
 
     @Override

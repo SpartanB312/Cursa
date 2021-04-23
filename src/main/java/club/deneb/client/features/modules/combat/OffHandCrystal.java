@@ -5,10 +5,7 @@ import club.deneb.client.features.Module;
 import club.deneb.client.features.ModuleManager;
 import club.deneb.client.utils.EntityUtil;
 import club.deneb.client.utils.Timer;
-import club.deneb.client.value.BooleanValue;
-import club.deneb.client.value.DoubleValue;
-import club.deneb.client.value.IntValue;
-import club.deneb.client.value.ModeValue;
+import club.deneb.client.value.Value;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.init.Items;
@@ -29,18 +26,18 @@ public class OffHandCrystal extends Module {
     public static OffHandCrystal INSTANCE;
 
     //Optimized redundant settings
-    ModeValue mode = setting("Item", new ModeValue.Mode("Gap"), new ModeValue.Mode("Crystal", true));
-    IntValue delay = setting("Delay", 0, 0, 1000);
-    BooleanValue totem = setting("SwitchTotem", true);
-    BooleanValue autoSwitchback = setting("SwitchBack", true);
-    DoubleValue sbHealth = setting("Health", 11D, 0D, 36D);
-    BooleanValue autoSwitch = setting("SwitchGap", true);
-    ModeValue switchMode = setting("GapWhen", new ModeValue.Mode("Sword", true), new ModeValue.Mode("RClick", false)).b(autoSwitch);
-    BooleanValue elytra = setting("CheckElytra", true);
-    BooleanValue holeCheck = setting("CheckHole", false);
-    DoubleValue holeSwitch = setting("HoleHealth", 8d, 0d, 36d).b(holeCheck);
-    BooleanValue crystalCalculate = setting("CalculateDmg", true);
-    DoubleValue maxSelfDmg = setting("MaxSelfDmg", 26d, 0d, 36d).b(crystalCalculate);
+    Value<String> mode = setting("Item","Crystal",listOf("Gap","Crystal"));
+    Value<Integer> delay = setting("Delay", 0, 0, 1000);
+    Value<Boolean> totem = setting("SwitchTotem", true);
+    Value<Boolean> autoSwitchback = setting("SwitchBack", true);
+    Value<Double> sbHealth = setting("Health", 11D, 0D, 36D);
+    Value<Boolean> autoSwitch = setting("SwitchGap", true);
+    Value<String> switchMode = setting("GapWhen", "Sword",listOf("Sword","RClick")).b(autoSwitch);
+    Value<Boolean> elytra = setting("CheckElytra", true);
+    Value<Boolean> holeCheck = setting("CheckHole", false);
+    Value<Double> holeSwitch = setting("HoleHealth", 8d, 0d, 36d).b(holeCheck);
+    Value<Boolean> crystalCalculate = setting("CalculateDmg", true);
+    Value<Double> maxSelfDmg = setting("MaxSelfDmg", 26d, 0d, 36d).b(crystalCalculate);
 
     private int totems;
     private int count;
@@ -89,12 +86,12 @@ public class OffHandCrystal extends Module {
         }
 
         Item handItem = mc.player.getHeldItemMainhand().item;
-        Item offhandItem = mode.getMode("Crystal").isToggled() ? Items.END_CRYSTAL : Items.GOLDEN_APPLE;
-        Item sOffhandItem = mode.getMode("Crystal").isToggled() ? Items.GOLDEN_APPLE : Items.END_CRYSTAL;
+        Item offhandItem = mode.toggled("Crystal") ? Items.END_CRYSTAL : Items.GOLDEN_APPLE;
+        Item sOffhandItem = mode.toggled("Crystal") ? Items.GOLDEN_APPLE : Items.END_CRYSTAL;
 
         boolean shouldSwitch;
 
-        if (switchMode.getMode("Sword").isToggled()) {
+        if (switchMode.toggled("Sword")) {
             shouldSwitch = mc.player.getHeldItemMainhand().getItem() instanceof ItemSword && Mouse.isButtonDown(1) && autoSwitch.getValue();
         } else {
             shouldSwitch = Mouse.isButtonDown(1)

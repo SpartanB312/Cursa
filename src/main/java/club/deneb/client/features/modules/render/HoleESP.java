@@ -22,19 +22,19 @@ import static org.lwjgl.opengl.GL11.GL_QUADS;
 @Module.Info(name = "HoleESP", category = Category.RENDER)
 public class HoleESP extends Module {
 
-    IntValue count = setting("Hole Count", 10, 0, 50);
-    DoubleValue range = setting("Range", 6D, 0D, 15D);
-    BooleanValue hideOwn = setting("HideOwn", false);
-    BooleanValue low = setting("LowHole", false);
-    ModeValue mode = setting("HoleMode", new ModeValue.Mode("Solid", true), new ModeValue.Mode("SolidFlat", false), new ModeValue.Mode("Full", false), new ModeValue.Mode("Outline", false));
-    IntValue red = setting("BedrockRed", 130, 0, 255);
-    IntValue green = setting("BedrockGreen", 104, 0, 255);
-    IntValue blue = setting("BedrockBlue", 0, 0, 255);
-    IntValue obbyred = setting("ObbyRed", 255, 0, 255);
-    IntValue obbygreen = setting("ObbyGreen", 0, 0, 255);
-    IntValue obbyblue = setting("ObbyBlue", 0, 0, 255);
-    IntValue alpha = setting("Alpha", 39, 0, 255);
-    FloatValue iWidth = setting("Width", 1.0f, 0.1f, 10.0f);
+    Value<Integer> count = setting("Hole Count", 10, 0, 50);
+    Value<Double> range = setting("Range", 6D, 0D, 15D);
+    Value<Boolean> hideOwn = setting("HideOwn", false);
+    Value<Boolean> low = setting("LowHole", false);
+    Value<String> mode = setting("HoleMode", "Solid",listOf("Solid","SolidFlat","Full","Outline"));
+    Value<Integer> red = setting("BedrockRed", 130, 0, 255);
+    Value<Integer> green = setting("BedrockGreen", 104, 0, 255);
+    Value<Integer> blue = setting("BedrockBlue", 0, 0, 255);
+    Value<Integer> obbyred = setting("ObbyRed", 255, 0, 255);
+    Value<Integer> obbygreen = setting("ObbyGreen", 0, 0, 255);
+    Value<Integer> obbyblue = setting("ObbyBlue", 0, 0, 255);
+    Value<Integer> alpha = setting("Alpha", 39, 0, 255);
+    Value<Float> iWidth = setting("Width", 1.0f, 0.1f, 10.0f);
 
     private ArrayList<BlockPos> safeHoles;
     private ArrayList<BlockPos> unsafeHoles;
@@ -110,20 +110,20 @@ public class HoleESP extends Module {
 
 
     private void drawBlock(BlockPos blockPos, float iWidth, int color) {
-        if (mode.getMode("Solid").isToggled() || mode.getMode("SolidFlat").isToggled()) {
+        if (mode.toggled("Solid") || mode.toggled("SolidFlat")) {
             DenebTessellator.prepare(GL_QUADS);
-            if (mode.getMode("SolidFlat").isToggled()) {
+            if (mode.toggled("SolidFlat")) {
                 DenebTessellator.drawBox(blockPos, color, GeometryMasks.Quad.UP);
-            } else if (mode.getMode("Solid").isToggled()) {
+            } else if (mode.toggled("Solid")) {
                 DenebTessellator.drawBox(blockPos, color, GeometryMasks.Quad.ALL);
             }
             DenebTessellator.release();
         } else {
             IBlockState iBlockState = mc.world.getBlockState(blockPos);
             Vec3d interp = MathUtil.interpolateEntity(mc.player, mc.getRenderPartialTicks());
-            if (mode.getMode("Full").isToggled()) {
+            if (mode.toggled("Full")) {
                 DenebTessellator.drawFullBox(iBlockState.getSelectedBoundingBox(mc.world, blockPos).grow(0.0020000000949949026).offset(-interp.x, -interp.y, -interp.z), iWidth, color);
-            } else if (mode.getMode("Outline").isToggled()) {
+            } else if (mode.toggled("Outline")) {
                 DenebTessellator.drawBoundingBox(iBlockState.getSelectedBoundingBox(mc.world, blockPos).grow(0.0020000000949949026).offset(-interp.x, -interp.y, -interp.z), iWidth, color);
             }
         }

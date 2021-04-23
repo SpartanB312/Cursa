@@ -2,7 +2,7 @@ package club.deneb.client.features.modules.misc;
 
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
-import club.deneb.client.value.BooleanValue;
+import club.deneb.client.value.Value;
 import net.minecraft.network.play.client.CPacketAnimation;
 import net.minecraft.util.EnumHand;
 
@@ -15,8 +15,8 @@ import java.util.Random;
 @Module.Info(name = "AntiAFK", category = Category.MISC, description = "Moves in order not to get kicked. (May be invisible client-sided)")
 public class AntiAFK extends Module {
 
-    BooleanValue swing = setting("Swing", true);
-    BooleanValue turn = setting("Turn", true);
+    Value<Boolean> swing = setting("Swing", true);
+    Value<Boolean> turn = setting("Turn", true);
 
     private final Random random = new Random();
 

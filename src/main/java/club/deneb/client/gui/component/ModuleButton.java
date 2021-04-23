@@ -3,8 +3,9 @@ package club.deneb.client.gui.component;
 import club.deneb.client.gui.Panel;
 import club.deneb.client.client.GuiManager;
 import club.deneb.client.features.HUDModule;
-import club.deneb.client.features.IModule;
+import club.deneb.client.features.AbstractModule;
 import club.deneb.client.utils.Utils;
+import club.deneb.client.utils.clazz.Button;
 import club.deneb.client.value.*;
 import net.minecraft.client.gui.Gui;
 
@@ -19,13 +20,14 @@ import static club.deneb.client.utils.LambdaUtil.isHovered;
  */
 public class ModuleButton extends club.deneb.client.gui.component.Component {
 
-    public List<club.deneb.client.gui.component.Component> settings = new ArrayList<>();
-    public IModule module;
+    public List<ValueButton<?>> settings = new ArrayList<>();
+    public AbstractModule module;
+    public BindButton bindButton;
 
     int x2, y2;
     boolean dragging;
 
-    public ModuleButton(IModule module, int width, int height, Panel father) {
+    public ModuleButton(AbstractModule module, int width, int height, Panel father) {
         this.module = module;
         this.width = width;
         this.height = height;
@@ -35,23 +37,30 @@ public class ModuleButton extends club.deneb.client.gui.component.Component {
 
     public void setup() {
         for (Value<?> value : module.getValues()) {
-            if (value instanceof BooleanValue) settings.add(new BooleanButton((BooleanValue) value, width, height, father));
-            if (value instanceof ButtonValue) settings.add(new ActionButton((ButtonValue) value, width, height, father));
-            if (value instanceof IntValue || value instanceof FloatValue || value instanceof DoubleValue)
-                settings.add(new NumberSlider<>(value, width, height, father));
-            if (value instanceof ModeValue) settings.add(new ModeButton((ModeValue) value, width, height, father));
+            if (value.getValue() instanceof Boolean)
+                settings.add(new BooleanButton((Value<Boolean>) value, width, height, father));
+            if (value.getValue() instanceof Button)
+                settings.add(new ActionButton((Value<Button>) value, width, height, father));
+            if (value.getValue() instanceof Integer)
+                settings.add(new NumberSlider<>((Value<Integer>) value, width, height, father));
+            if (value.getValue() instanceof Float)
+                settings.add(new NumberSlider<>((Value<Float>) value, width, height, father));
+            if (value.getValue() instanceof Double)
+                settings.add(new NumberSlider<>((Value<Double>) value, width, height, father));
+            if (value.getValue() instanceof String)
+                settings.add(new ModeButton((Value<String>) value, width, height, father));
         }
-        settings.add(new BindButton(module,width,height,father));
+        bindButton = new BindButton(module, width, height, father);
     }
 
     @Override
     public void render(int mouseX, int mouseY, float partialTicks) {
 
-        if(dragging){
-            ((HUDModule)module).onDragging(mouseX,mouseY);
+        if (dragging) {
+            ((HUDModule) module).onDragging(mouseX, mouseY);
         }
 
-        solveHUDPos(mouseX,mouseY);
+        solveHUDPos(mouseX, mouseY);
 
         int color = GuiManager.getINSTANCE().getRGB();
         int fontColor = new Color(255, 255, 255).getRGB();
@@ -82,6 +91,7 @@ public class ModuleButton extends club.deneb.client.gui.component.Component {
             Utils.playButtonClick();
         } else if (mouseButton == 1) {
             isExtended = !isExtended;
+            buttonTimer.reset();
             Utils.playButtonClick();
         }
         return true;
@@ -90,12 +100,13 @@ public class ModuleButton extends club.deneb.client.gui.component.Component {
     @Override
     public void mouseReleased(int mouseX, int mouseY, int state) {
         if (state == 0 && module.isHUD) {
-            ((HUDModule)module).onMouseRelease();
+            ((HUDModule) module).onMouseRelease();
             this.dragging = false;
         }
         for (club.deneb.client.gui.component.Component setting : settings) {
             setting.mouseReleased(mouseX, mouseY, state);
         }
+        bindButton.mouseReleased(mouseX, mouseY, state);
     }
 
     @Override
@@ -104,44 +115,45 @@ public class ModuleButton extends club.deneb.client.gui.component.Component {
         for (Component setting : settings) {
             setting.keyTyped(typedChar, keyCode);
         }
+        bindButton.keyTyped(typedChar, keyCode);
     }
 
-    public void solveHUDPos(int mouseX,int mouseY){
+    public void solveHUDPos(int mouseX, int mouseY) {
         if (module.isHUD && this.dragging) {
             module.x = x2 + mouseX;
             module.y = y2 + mouseY;
         }
 
         if (module.isHUD && !this.dragging) {
-            if(Math.min(module.x,module.x + module.width) < 0){
-                if(module.x < module.x + module.width){
+            if (Math.min(module.x, module.x + module.width) < 0) {
+                if (module.x < module.x + module.width) {
                     module.x = 0;
-                }else {
+                } else {
                     module.x = -module.width;
                 }
             }
 
-            if(Math.max(module.x,module.x + module.width) > mc.displayWidth/2){
-                if(module.x < module.x + module.width){
-                    module.x = mc.displayWidth/2 - module.width;
-                }else {
-                    module.x = mc.displayWidth/2;
+            if (Math.max(module.x, module.x + module.width) > mc.displayWidth / 2) {
+                if (module.x < module.x + module.width) {
+                    module.x = mc.displayWidth / 2 - module.width;
+                } else {
+                    module.x = mc.displayWidth / 2;
                 }
             }
 
-            if(Math.min(module.y,module.y + module.height) < 0){
-                if(module.y < module.y + module.height){
+            if (Math.min(module.y, module.y + module.height) < 0) {
+                if (module.y < module.y + module.height) {
                     module.y = 0;
-                }else {
+                } else {
                     module.y = -module.height;
                 }
             }
 
-            if(Math.max(module.y,module.y + module.height) > mc.displayHeight/2){
-                if(module.y < module.y + module.height){
-                    module.y = mc.displayHeight/2 - module.height;
-                }else {
-                    module.y = mc.displayHeight/2;
+            if (Math.max(module.y, module.y + module.height) > mc.displayHeight / 2) {
+                if (module.y < module.y + module.height) {
+                    module.y = mc.displayHeight / 2 - module.height;
+                } else {
+                    module.y = mc.displayHeight / 2;
                 }
             }
         }

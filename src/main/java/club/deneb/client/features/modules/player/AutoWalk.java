@@ -5,7 +5,7 @@ import club.deneb.client.features.Module;
 import club.deneb.client.features.ModuleManager;
 import club.deneb.client.features.modules.render.Pathfind;
 import club.deneb.client.utils.EntityUtil;
-import club.deneb.client.value.ModeValue;
+import club.deneb.client.value.Value;
 import net.minecraft.pathfinding.PathPoint;
 import net.minecraftforge.client.event.InputUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -17,11 +17,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Module.Info(name = "AutoWalk", category = Category.PLAYER)
 public class AutoWalk extends Module {
 
-    ModeValue mode = setting("Mode", new ModeValue.Mode("Forward",true),new ModeValue.Mode("Backwards"),new ModeValue.Mode("Path"));
+    Value<String> mode = setting("Mode","Forward", listOf("Forward","Backwards","Path"));
 
     @SubscribeEvent
     public void onInput(InputUpdateEvent event){
-        switch (mode.getToggledMode().getName()) {
+        switch (mode.getValue()) {
             case "Forward":
                 event.getMovementInput().moveForward = 1;
                 break;

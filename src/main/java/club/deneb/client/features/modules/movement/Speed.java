@@ -3,9 +3,7 @@ package club.deneb.client.features.modules.movement;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
 import club.deneb.client.utils.WorldTimer;
-import club.deneb.client.value.BooleanValue;
-import club.deneb.client.value.DoubleValue;
-import club.deneb.client.value.FloatValue;
+import club.deneb.client.value.Value;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemShield;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
@@ -21,12 +19,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Module.Info(name = "Speed",category = Category.MOVEMENT)
 public class Speed extends Module {
 
-    DoubleValue speed = setting("Speed",1.0,0,50);
-    BooleanValue airMotion = setting("InAirMotion",true);
-    BooleanValue autoJump = setting("AutoJump",true);
-    BooleanValue useTimer = setting("UseTimer", true);
-    BooleanValue IceSpeed = setting("IceSpeed", false);
-    FloatValue slipperiness = setting("Slipperiness",0.4F,0.2F,1.0F).b(IceSpeed);
+    Value<Double> speed = setting("Speed",1.0,0,50);
+    Value<Boolean> airMotion = setting("InAirMotion",true);
+    Value<Boolean> autoJump = setting("AutoJump",true);
+    Value<Boolean> useTimer = setting("UseTimer", true);
+    Value<Boolean> IceSpeed = setting("IceSpeed", false);
+    Value<Float> slipperiness = setting("Slipperiness",0.4F,0.2F,1.0F).b(IceSpeed);
 
     int waitCounter;
 

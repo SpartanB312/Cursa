@@ -3,8 +3,7 @@ package club.deneb.client.features.modules.movement;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
 import club.deneb.client.utils.EntityUtil;
-import club.deneb.client.value.BooleanValue;
-import club.deneb.client.value.FloatValue;
+import club.deneb.client.value.Value;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.passive.AbstractHorse;
@@ -19,10 +18,10 @@ import net.minecraft.world.chunk.EmptyChunk;
 @Module.Info(name = "EntitySpeed", category = Category.MOVEMENT, description = "Abuse client-sided movement to shape sound barrier breaking rideables")
 public class EntitySpeed extends Module {
 
-    FloatValue speed = setting("Speed", 1,0,50f);
-    BooleanValue antiStuck = setting("AntiStuck",false);
-    BooleanValue flight = setting("Flight", false);
-    BooleanValue wobble = setting("Wobble",true).b(flight);
+    Value<Float> speed = setting("Speed", 1,0,50f);
+    Value<Boolean> antiStuck = setting("AntiStuck",false);
+    Value<Boolean> flight = setting("Flight", false);
+    Value<Boolean> wobble = setting("Wobble",true).b(flight);
 
 
     @Override

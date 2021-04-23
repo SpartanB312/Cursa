@@ -4,8 +4,7 @@ import club.deneb.client.event.events.client.PacketEvent;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
 import club.deneb.client.utils.Wrapper;
-import club.deneb.client.value.BooleanValue;
-import club.deneb.client.value.IntValue;
+import club.deneb.client.value.Value;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
@@ -34,8 +33,8 @@ public class AutoPenis extends Module {
     private static double pitch;
     private static boolean isSpoofingAngles;
 
-    IntValue tickDelay = setting("TickDelay",15,0,100);
-    BooleanValue looking = setting("LookingMode",true);
+    Value<Integer> tickDelay = setting("TickDelay",15,0,100);
+    Value<Boolean> looking = setting("LookingMode",true);
 
     public static Minecraft mc = Minecraft.getMinecraft();
     public List<Block> emptyBlocks = Arrays.asList(Blocks.AIR, Blocks.FLOWING_LAVA, Blocks.LAVA, Blocks.FLOWING_WATER, Blocks.WATER, Blocks.VINE, Blocks.SNOW_LAYER, Blocks.TALLGRASS, Blocks.FIRE);

@@ -3,8 +3,7 @@ package club.deneb.client.features.modules.movement;
 import club.deneb.client.event.events.client.PacketEvent;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
-import club.deneb.client.value.BooleanValue;
-import club.deneb.client.value.IntValue;
+import club.deneb.client.value.Value;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.EntityFishHook;
@@ -19,10 +18,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Module.Info(name = "Velocity",category = Category.MOVEMENT)
 public class Velocity extends Module {
 
-    IntValue horizontal_vel = setting("Horizontal",0,0,100);
-    IntValue vertical_vel = setting("Vertical",0,0,100);
-    BooleanValue explosions = setting("Explosions",true);
-    BooleanValue bobbers = setting("Bobbers",true);
+    Value<Integer> horizontal_vel = setting("Horizontal",0,0,100);
+    Value<Integer> vertical_vel = setting("Vertical",0,0,100);
+    Value<Boolean> explosions = setting("Explosions",true);
+    Value<Boolean> bobbers = setting("Bobbers",true);
 
     public final Minecraft mc = Minecraft.getMinecraft();
 

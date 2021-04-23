@@ -5,8 +5,7 @@ import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
 import club.deneb.client.utils.ChatUtil;
 import club.deneb.client.utils.EntityUtil;
-import club.deneb.client.value.BooleanValue;
-import club.deneb.client.value.DoubleValue;
+import club.deneb.client.value.Value;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.*;
@@ -33,12 +32,12 @@ import static org.lwjgl.opengl.GL11.*;
 @Module.Info(name = "Nametags", description = "Draws descriptive nametags above entities", category = Category.RENDER)
 public class Nametags extends Module {
 
-    BooleanValue players = setting("Players", true);
-    BooleanValue animals = setting("Animals", false);
-    BooleanValue mobs = setting("Mobs", false);
-    DoubleValue range = setting("Range", 200,20,400d);
-    DoubleValue scale = setting("Scale",5,1,10d);
-    BooleanValue health = setting("Health", true);
+    Value<Boolean> players = setting("Players", true);
+    Value<Boolean> animals = setting("Animals", false);
+    Value<Boolean> mobs = setting("Mobs", false);
+    Value<Double> range = setting("Range", 200,20,400d);
+    Value<Double> scale = setting("Scale",5,1,10d);
+    Value<Boolean> health = setting("Health", true);
 
     RenderItem itemRenderer = mc.getRenderItem();
 

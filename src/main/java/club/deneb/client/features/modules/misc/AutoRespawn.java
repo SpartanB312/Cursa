@@ -3,8 +3,8 @@ package club.deneb.client.features.modules.misc;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
 import club.deneb.client.utils.ChatUtil;
-import club.deneb.client.value.BooleanValue;
 import club.deneb.client.event.events.client.GuiScreenEvent;
+import club.deneb.client.value.Value;
 import net.minecraft.client.gui.GuiGameOver;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -14,8 +14,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Module.Info(name = "AutoRespawn", description = "Automatically respawns upon death and tells you where you died", category = Category.MISC)
 public class AutoRespawn extends Module {
 
-    BooleanValue deathCoords = setting("DeathCoords", false);
-    BooleanValue respawn = setting("Respawn", true);
+    Value<Boolean> deathCoords = setting("DeathCoords", false);
+    Value<Boolean> respawn = setting("Respawn", true);
 
     @SubscribeEvent
     public void listener(GuiScreenEvent.Displayed event){

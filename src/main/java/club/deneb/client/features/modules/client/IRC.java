@@ -3,20 +3,19 @@ package club.deneb.client.features.modules.client;
 import club.deneb.client.Deneb;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
-import club.deneb.client.value.BooleanValue;
-import club.deneb.client.value.ButtonValue;
+import club.deneb.client.utils.clazz.Button;
+import club.deneb.client.value.Value;
 
 @Module.Info(name = "IRC",category = Category.CLIENT,visible = false)
 public class IRC extends Module {
 
-    public ButtonValue reconnect = setting("Reconnect","Click to reconnect IRC").bind(v -> tryReconnect());
-    public BooleanValue enable = setting("EnableIRC",true);
+    public Value<Button> reconnect = setting("Reconnect",new Button().setBind(this::tryReconnect)).des("Click to reconnect IRC");
+    public Value<Boolean> enable = setting("EnableIRC",true);
 
     static IRC INSTANCE;
 
-    public boolean tryReconnect(){
+    public void tryReconnect(){
         Deneb.getINSTANCE().getIrcManager().reconnect();
-        return true;
     }
 
     public static IRC getINSTANCE(){

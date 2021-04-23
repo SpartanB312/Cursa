@@ -1,12 +1,13 @@
 package club.deneb.client.command.commands;
 
-import club.deneb.client.features.IModule;
+import club.deneb.client.features.AbstractModule;
 import club.deneb.client.features.ModuleManager;
 import club.deneb.client.features.modules.client.NullHUD;
 import club.deneb.client.features.modules.client.NullModule;
 import club.deneb.client.utils.ChatUtil;
 import club.deneb.client.value.*;
 import club.deneb.client.command.Command;
+import scala.Int;
 
 import java.util.ArrayList;
 
@@ -20,19 +21,19 @@ public class Settings extends Command {
     @Override
     public void onCall(String s, String[] args) {
         try {
-            IModule m = ModuleManager.getModuleByName(args[0]);
+            AbstractModule m = ModuleManager.getModuleByName(args[0]);
 
             if ((m instanceof NullModule) || (m instanceof NullHUD)) {
                 ChatUtil.sendNoSpamErrorMessage("Couldn't find a module &b" + args[0] + "!");
                 return;
             }
 
-            ArrayList<Value> settings = m.getValues();
+            ArrayList<Value<?>> settings = m.getValues();
 
             for (Value value : settings) {
                 if (value.getName().toLowerCase().equals(args[1].toLowerCase())) {
                     try {
-                        if (value instanceof BooleanValue) {
+                        if (value.getValue() instanceof Boolean) {
                             if (args[2].toLowerCase().equals("true")) {
                                 value.setValue(true);
                             } else if (args[2].toLowerCase().equals("false")) {
@@ -41,38 +42,39 @@ public class Settings extends Command {
                                 ChatUtil.sendNoSpamErrorMessage("Can not set value to " + args[2]);
                             }
                         }
-                        if (value instanceof IntValue) {
+                        if (value.getValue() instanceof Integer) {
                             int input = Integer.parseInt(args[2]);
-                            if (input > ((IntValue) value).getMax() || input < ((IntValue) value).getMin()) {
+                            if (input > ((Value<Integer>) value).getMax().intValue() || input < (((Value<Integer>) value).getMin().intValue())) {
                                 ChatUtil.sendNoSpamErrorMessage("Can not set value to " + input);
                                 return;
                             }
 
                             value.setValue(input);
                         }
-                        if (value instanceof DoubleValue) {
+                        if (value.getValue() instanceof Double) {
 
                             double input = Double.parseDouble(args[2]);
-                            if (input > ((DoubleValue) value).getMax() || input < ((DoubleValue) value).getMin()) {
+                            if (input > ((Value<Double>) value).getMax().doubleValue() || input < ((Value<Float>) value).getMin().doubleValue()) {
                                 ChatUtil.sendNoSpamErrorMessage("Can not set value to " + input);
                                 return;
                             }
 
                             value.setValue(input);
                         }
-                        if (value instanceof FloatValue) {
+                        if (value.getValue() instanceof Float) {
 
                             float input = Float.parseFloat(args[2]);
-                            if (input > ((FloatValue) value).getMax() || input < ((FloatValue) value).getMin()) {
+                            if (input > ((Value<Float>) value).getMax().floatValue() || input < ((Value<Float>) value).getMin().floatValue()) {
                                 ChatUtil.sendNoSpamErrorMessage("Can not set value to " + input);
                                 return;
                             }
 
                             value.setValue(input);
                         }
-                        if (value instanceof ModeValue) {
-                            for (ModeValue.Mode mode : ((ModeValue) value).getModes()) {
-                                mode.setToggled(mode.getName().toLowerCase().equals(args[2].toLowerCase()));
+                        if (value.getValue() instanceof String) {
+                            int index = ((Value<String>) value).modes.indexOf(args[2].toLowerCase());
+                            if(index != -1){
+                                value.setValue(args[2].toLowerCase());
                             }
                         }
 

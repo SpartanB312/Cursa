@@ -2,9 +2,7 @@ package club.deneb.client.features.modules.render;
 
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
-import club.deneb.client.value.BooleanValue;
-import club.deneb.client.value.FloatValue;
-import club.deneb.client.value.ModeValue;
+import club.deneb.client.value.Value;
 
 import java.util.Stack;
 import java.util.function.Function;
@@ -15,9 +13,9 @@ import java.util.function.Function;
 @Module.Info(name = "Brightness", description = "Makes everything brighter!", category = Category.RENDER)
 public class Brightness extends Module {
 
-    BooleanValue transition = setting("Transition", true);
-    FloatValue seconds = setting("Seconds",1f,0f,10f).b(transition);
-    ModeValue mode = setting("Mode",new ModeValue.Mode("Sine",true),new ModeValue.Mode("Liner")).b(transition);
+    Value<Boolean> transition = setting("Transition", true);
+    Value<Float> seconds = setting("Seconds",1f,0f,10f).b(transition);
+    Value<String> mode = setting("Mode","Sine",listOf("Sine","Liner")).b(transition);
 
     private final Stack<Float> transitionStack = new Stack<>();
 
@@ -28,7 +26,7 @@ public class Brightness extends Module {
         if (transition.getValue()) {
             int length = (int) (seconds.getValue() * 20);
             float[] values;
-            switch (mode.getToggledMode().getName()) {
+            switch (mode.getValue()) {
                 case "Liner":
                     values = linear(length, isUpwards);
                     break;

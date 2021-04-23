@@ -3,7 +3,7 @@ package club.deneb.client.gui.component;
 import club.deneb.client.features.ModuleManager;
 import club.deneb.client.client.GuiManager;
 import club.deneb.client.gui.Panel;
-import club.deneb.client.features.IModule;
+import club.deneb.client.features.AbstractModule;
 import club.deneb.client.utils.Utils;
 import net.minecraft.client.gui.Gui;
 import org.lwjgl.input.Keyboard;
@@ -17,10 +17,10 @@ import static club.deneb.client.utils.LambdaUtil.isHovered;
  */
 public class BindButton extends Component {
 
-    IModule module;
+    AbstractModule module;
     boolean accepting = false;
 
-    public BindButton(IModule module, int width, int height, Panel father) {
+    public BindButton(AbstractModule module, int width, int height, Panel father) {
         this.module = module;
         this.width = width;
         this.height = height;

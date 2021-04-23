@@ -4,9 +4,7 @@ import club.deneb.client.utils.EntityUtil;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
 import club.deneb.client.utils.BlockInteractionHelper;
-import club.deneb.client.value.BooleanValue;
-import club.deneb.client.value.IntValue;
-import club.deneb.client.value.ModeValue;
+import club.deneb.client.value.Value;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockObsidian;
 import net.minecraft.block.state.IBlockState;
@@ -28,12 +26,12 @@ import net.minecraft.util.math.Vec3d;
 @Module.Info(name = "Surround",category = Category.COMBAT)
 public class Surround extends Module {
 
-    BooleanValue autoDisable = setting("Disable on place", true);
-    BooleanValue spoofRotations = setting("Spoof Rotations", true);
-    BooleanValue spoofHotBar = setting("Spoof HotBar", false);
-    IntValue blockPerTick = setting("Blocks per Tick",4,1,20);
-    ModeValue autoCenter = setting("Auto Center",new ModeValue.Mode("TP",true),new ModeValue.Mode("OFF",false));
-    BooleanValue placeAnimation = setting("Place Animation", false);
+    Value<Boolean> autoDisable = setting("Disable on place", true);
+    Value<Boolean> spoofRotations = setting("Spoof Rotations", true);
+    Value<Boolean> spoofHotBar = setting("Spoof HotBar", false);
+    Value<Integer> blockPerTick = setting("Blocks per Tick",4,1,20);
+    Value<String> autoCenter = setting("Auto Center","TP",listOf("TP","OFF"));
+    Value<Boolean> placeAnimation = setting("Place Animation", false);
 
 
     private final Vec3d[] surroundTargets = new Vec3d[]{new Vec3d(0.0D, 0.0D, 0.0D), new Vec3d(1.0D, 1.0D, 0.0D), new Vec3d(0.0D, 1.0D, 1.0D), new Vec3d(-1.0D, 1.0D, 0.0D), new Vec3d(0.0D, 1.0D, -1.0D), new Vec3d(1.0D, 0.0D, 0.0D), new Vec3d(0.0D, 0.0D, 1.0D), new Vec3d(-1.0D, 0.0D, 0.0D), new Vec3d(0.0D, 0.0D, -1.0D), new Vec3d(1.0D, 1.0D, 0.0D), new Vec3d(0.0D, 1.0D, 1.0D), new Vec3d(-1.0D, 1.0D, 0.0D), new Vec3d(0.0D, 1.0D, -1.0D)};
@@ -96,7 +94,7 @@ public class Surround extends Module {
         final Vec3d minusMinus = new Vec3d(x - 0.5, y, z - 0.5);
         final Vec3d minusPlus = new Vec3d(x - 0.5, y, z + 0.5);
 
-        if (autoCenter.getMode("TP").isToggled()) {
+        if (autoCenter.toggled("TP")) {
             if (getDst(plusPlus) < getDst(plusMinus) && getDst(plusPlus) < getDst(minusMinus) && getDst(plusPlus) < getDst(minusPlus)) {
                 x = centerPos.getX() + 0.5;
                 z = centerPos.getZ() + 0.5;

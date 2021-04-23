@@ -4,8 +4,7 @@ import club.deneb.client.event.events.client.PacketEvent;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
 import club.deneb.client.utils.EntityUtil;
-import club.deneb.client.value.BooleanValue;
-import club.deneb.client.value.IntValue;
+import club.deneb.client.value.Value;
 import net.minecraft.init.Items;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.util.EnumHand;
@@ -19,9 +18,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Module.Info(category = Category.PLAYER, description = "Prevents fall damage", name = "NoFall")
 public class NoFall extends Module {
 
-    BooleanValue packet = setting("Packet", false);
-    BooleanValue bucket = setting("Bucket", true);
-    IntValue distance = setting("Distance", 15,0,256);
+    Value<Boolean> packet = setting("Packet", false);
+    Value<Boolean> bucket = setting("Bucket", true);
+    Value<Integer> distance = setting("Distance", 15,0,256);
 
     private long last = 0;
 

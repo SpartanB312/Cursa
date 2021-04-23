@@ -3,7 +3,7 @@ package club.deneb.client.features.modules.combat;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
 import club.deneb.client.features.ModuleManager;
-import club.deneb.client.value.IntValue;
+import club.deneb.client.value.Value;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.network.play.server.SPacketDisconnect;
@@ -20,7 +20,7 @@ import java.util.Objects;
 @Module.Info(name = "AutoLog", description = "Automatically log when in danger or on low health", category = Category.COMBAT)
 public class AutoLog extends Module {
 
-    IntValue health = setting("Health",6,0,36);
+    Value<Integer> health = setting("Health",6,0,36);
 
     private boolean shouldLog = false;
     long lastLog = System.currentTimeMillis();

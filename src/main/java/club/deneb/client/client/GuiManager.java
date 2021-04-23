@@ -79,12 +79,12 @@ public class GuiManager {
         return !isNull() && getColorINSTANCE().particle.getValue();
     }
 
-    public boolean isSettingRect() { return !isNull() && getColorINSTANCE().setting.getMode("Rect").isToggled(); }
+    public boolean isSettingRect() { return !isNull() && getColorINSTANCE().setting.toggled("Rect"); }
 
-    public boolean isSettingSide() { return !isNull() && getColorINSTANCE().setting.getMode("Side").isToggled(); }
+    public boolean isSettingSide() { return !isNull() && getColorINSTANCE().setting.toggled("Side"); }
 
     public Background getBackground(){
-        switch (getColorINSTANCE().background.getToggledMode().getName()){
+        switch (getColorINSTANCE().background.getValue()){
             case "Shadow" :{
                 return Background.Shadow;
             }

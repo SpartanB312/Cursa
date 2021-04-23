@@ -28,19 +28,18 @@ import java.nio.ByteBuffer;
 /**
  * Author B_312 from 01/01/2021
  */
-@Mod(modid = Deneb.MODID, name = Deneb.MODNAME, version = Deneb.VERSION)
+@Mod(modid = Deneb.MOD_ID, name = Deneb.MOD_NAME, version = Deneb.VERSION)
 public class Deneb {
 
-    //Version 0.x means that this mod still under heavy development!
-    public final static String VERSION = "0.3.1";
-    public final static String MODID = "deneb";
-    public final static String MODNAME = "Deneb";
-    public final static String MODNAME2 = "\u30c7\u30cd\u30d6";
+    public final static String VERSION = "0.4";
+    public final static String MOD_ID = "deneb";
+    public final static String MOD_NAME = "Deneb";
+    public final static String CHAT_PREFIX = "\u30c7\u30cd\u30d6";
     public static String CHAT_SUFFIX = " \u1d05\u1d07\u0274\u1d07\u0299";
     public final static String AUTHOR = "B_312";
-    public final static String GITHUB = "https://github.com/SpartanB312/Deneb";
+    public final static String GITHUB = "https://github.com/SexyTeam/Deneb";
 
-    public static final Logger log = LogManager.getLogger(MODNAME);
+    public static final Logger log = LogManager.getLogger(MOD_NAME);
 
     private static Deneb INSTANCE;
     public static Deneb getINSTANCE(){
@@ -62,7 +61,7 @@ public class Deneb {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event){
         INSTANCE = this;
-        Display.setTitle(MODNAME + " " + MODNAME2 + " " + VERSION);
+        Display.setTitle(MOD_NAME + " " + CHAT_PREFIX + " " + VERSION);
         LagCompensator.INSTANCE = new LagCompensator();
         setIcon();
         fontRenderer = new CFontRenderer(new CFont.CustomFont("/assets/minecraft/fonts/Comfortaa-Bold.ttf", 18f, Font.PLAIN), true, false);

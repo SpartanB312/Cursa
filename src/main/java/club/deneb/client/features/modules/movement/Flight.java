@@ -3,8 +3,7 @@ package club.deneb.client.features.modules.movement;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
 import club.deneb.client.utils.EntityUtil;
-import club.deneb.client.value.FloatValue;
-import club.deneb.client.value.ModeValue;
+import club.deneb.client.value.Value;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.CPacketPlayer;
 
@@ -14,13 +13,13 @@ import net.minecraft.network.play.client.CPacketPlayer;
 @Module.Info(category = Category.MOVEMENT, description = "Makes the player fly", name = "Flight")
 public class Flight extends Module {
 
-    FloatValue speed = setting("Speed", 10f,0,50f);
-    ModeValue mode = setting("Mode", new ModeValue.Mode("Vanilla",true),new ModeValue.Mode("Static"),new ModeValue.Mode("Packet"));
+    Value<Float> speed = setting("Speed", 10f,0,50f);
+    Value<String> mode = setting("Mode","Vanilla", listOf("Vanilla","Static","Packet"));
 
     @Override
     public void onEnable() {
         if (mc.player == null) return;
-        if ("Vanilla".equals(mode.getToggledMode().getName())) {
+        if ("Vanilla".equals(mode.getValue())) {
             mc.player.capabilities.isFlying = true;
             if (mc.player.capabilities.isCreativeMode) return;
             mc.player.capabilities.allowFlying = true;
@@ -29,7 +28,7 @@ public class Flight extends Module {
 
     @Override
     public void onTick() {
-        switch (mode.getToggledMode().getName()) {
+        switch (mode.getValue()) {
             case "Static":
                 mc.player.capabilities.isFlying = false;
                 mc.player.motionX = 0;
@@ -79,7 +78,7 @@ public class Flight extends Module {
 
     @Override
     public void onDisable() {
-        if ("Vanilla".equals(mode.getToggledMode().getName())) {
+        if ("Vanilla".equals(mode.getValue())) {
             mc.player.capabilities.isFlying = false;
             mc.player.capabilities.setFlySpeed(0.05f);
             if (mc.player.capabilities.isCreativeMode) return;

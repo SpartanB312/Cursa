@@ -4,9 +4,7 @@ import club.deneb.client.event.events.client.PacketEvent;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
 import club.deneb.client.utils.EntityUtil;
-import club.deneb.client.value.BooleanValue;
-import club.deneb.client.value.IntValue;
-import club.deneb.client.value.ModeValue;
+import club.deneb.client.value.Value;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,10 +24,10 @@ import java.util.concurrent.ConcurrentHashMap;
 @Module.Info(name = "AutoEz",category = Category.COMBAT)
 public class AutoEz extends Module {
 
-    BooleanValue clientName = setting("ClientName", false);
-    BooleanValue antiKick = setting("AntiSpam", false);
-    ModeValue ezModeSetting = setting("EzMode", new ModeValue.Mode("Toxic", true), new ModeValue.Mode("Custom", false));
-    IntValue timeoutTicks = setting("TimeoutTicks", 20, 0, 100);
+    Value<Boolean> clientName = setting("ClientName", false);
+    Value<Boolean> antiKick = setting("AntiSpam", false);
+    Value<String> ezModeSetting = setting("EzMode","Toxic",listOf("Toxic","Custom"));
+    Value<Integer> timeoutTicks = setting("TimeoutTicks", 20, 0, 100);
 
     public static String ezMsg = "default ez msg";
 
@@ -145,9 +143,9 @@ public class AutoEz extends Module {
         String messageSanitized;
         this.targetedPlayers.remove(name);
         StringBuilder message = new StringBuilder();
-        if (ezModeSetting.getMode("Custom").isToggled()) {
+        if (ezModeSetting.toggled("Custom")) {
             message.append(ezMsg);
-        } else if (ezModeSetting.getMode("Toxic").isToggled()){
+        } else if (ezModeSetting.toggled("Toxic")){
             message.append("Ezzzz ");
         } else {
             message.append("Good fight ");
