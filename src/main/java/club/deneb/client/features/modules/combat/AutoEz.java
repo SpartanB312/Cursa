@@ -4,6 +4,7 @@ import club.deneb.client.event.events.client.PacketEvent;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
 import club.deneb.client.utils.EntityUtil;
+import club.deneb.client.value.ModeValue;
 import club.deneb.client.value.Value;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -26,7 +27,7 @@ public class AutoEz extends Module {
 
     Value<Boolean> clientName = setting("ClientName", false);
     Value<Boolean> antiKick = setting("AntiSpam", false);
-    Value<String> ezModeSetting = setting("EzMode","Toxic",listOf("Toxic","Custom"));
+    ModeValue<String> ezModeSetting = setting("EzMode","Toxic",listOf("Toxic","Custom"));
     Value<Integer> timeoutTicks = setting("TimeoutTicks", 20, 0, 100);
 
     public static String ezMsg = "default ez msg";

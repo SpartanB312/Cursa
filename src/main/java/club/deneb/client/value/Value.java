@@ -16,7 +16,6 @@ public class Value<T> {
     private Number minimum, maximum;
     List<BooleanSupplier> visibility = new ArrayList<>();
     private final String name;
-    public List<T> modes = new ArrayList<>();
     public String description = "";
 
     public Value(String name, T defaultValue) {
@@ -24,7 +23,6 @@ public class Value<T> {
         this.defaultValue = defaultValue;
         this.value = defaultValue;
         this.visibility.add(() -> true);
-        setup();
     }
 
     public Value(String name, T defaultValue, Number minimum, Number maximum) {
@@ -33,15 +31,6 @@ public class Value<T> {
         this.value = defaultValue;
         this.minimum = minimum;
         this.maximum = maximum;
-        setup();
-    }
-
-    public Value(String name, T defaultValue,List<T> modes) {
-        this.name = name;
-        this.defaultValue = defaultValue;
-        this.value = defaultValue;
-        this.modes = modes;
-        setup();
     }
 
     public String getName() {
@@ -99,26 +88,13 @@ public class Value<T> {
         return this;
     }
 
-    public Value<T> m(Value<String> modeValue,String mode) {
+    public Value<T> m(ModeValue<String> modeValue,String mode) {
         this.visibility.add(() -> modeValue.getValue().equals(mode));
         return this;
     }
 
     public void reset(){
         this.value = defaultValue;
-    }
-
-    private void setup(){
-        if(modes.contains(defaultValue)) modes.add(defaultValue);
-    }
-
-    public void forwardLoop(){
-        int index = modes.indexOf(value);
-        if(index != modes.size() -1) {
-            value = modes.get(index + 1);
-        } else {
-            value = modes.get(0);
-        }
     }
 
 }

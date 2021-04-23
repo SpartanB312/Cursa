@@ -7,6 +7,7 @@ import club.deneb.client.features.AbstractModule;
 import club.deneb.client.features.Module;
 import club.deneb.client.utils.ChatUtil;
 import club.deneb.client.utils.clazz.ActiveModule;
+import club.deneb.client.value.ModeValue;
 import club.deneb.client.value.Value;
 import net.minecraft.client.gui.Gui;
 
@@ -22,8 +23,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ShowArrayList extends HUDModule {
 
     Value<Boolean> sort = setting("SortList", true);
-    Value<String> theme = setting("Theme","Colorful",listOf("Colorful","Brief","Small"));
-    Value<String> listPos = setting("ListPos", "RightTop",listOf("RightTop", "RightDown", "LeftTop", "LeftDown"));
+    ModeValue<String> theme = setting("Theme","Colorful",listOf("Colorful","Brief","Small"));
+    ModeValue<String> listPos = setting("ListPos", "RightTop",listOf("RightTop", "RightDown", "LeftTop", "LeftDown"));
 
     private String getArrayList(AbstractModule module) {
         return module.getName() + (module.getHudInfo() == null

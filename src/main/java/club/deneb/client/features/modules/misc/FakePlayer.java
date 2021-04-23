@@ -2,6 +2,7 @@ package club.deneb.client.features.modules.misc;
 
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
+import club.deneb.client.value.ModeValue;
 import club.deneb.client.value.Value;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
@@ -15,7 +16,7 @@ public class FakePlayer extends Module {
     public static String customName = "None";
     Value<Integer> health = setting("Health",10,0,36);
     Value<Boolean> customMode = setting("CustomName",false);
-    Value<String> mode = setting("Name","B_312",listOf(
+    ModeValue<String> mode = setting("Name","B_312",listOf(
                 "popbob",
                 "jared2013",
                 "bachi",

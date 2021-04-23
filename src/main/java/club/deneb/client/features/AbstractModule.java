@@ -59,6 +59,22 @@ public class AbstractModule {
         return Arrays.stream(strings).collect(Collectors.toList());
     }
 
+    public static List<Integer> listOf(Integer ...strings){
+        return Arrays.stream(strings).collect(Collectors.toList());
+    }
+
+    public static List<Double> listOf(Double ...strings){
+        return Arrays.stream(strings).collect(Collectors.toList());
+    }
+
+    public static List<Float> listOf(Float ...strings){
+        return Arrays.stream(strings).collect(Collectors.toList());
+    }
+
+    public static List<Boolean> listOf(Boolean ...strings){
+        return Arrays.stream(strings).collect(Collectors.toList());
+    }
+
     public static final Minecraft mc = Wrapper.mc;
     public static final FontRenderer fontRenderer = mc.fontRenderer;
 
@@ -83,37 +99,43 @@ public class AbstractModule {
     }
 
     public Value<Button> setting(String name, Button button){
-        Value<Button> value = new Value<>(name, button);
+        ButtonValue value = new ButtonValue(name, button);
         this.getValues().add(value);
         return value;
     }
 
     public Value<Boolean> setting(String name, boolean defaultValue){
-        Value<Boolean> value = new Value<>(name,defaultValue);
+        BooleanValue value = new BooleanValue(name,defaultValue);
         this.getValues().add(value);
         return value;
     }
 
     public Value<Integer> setting(String name, int defaultValue, int minValue, int maxValue){
-        Value<Integer> value = new Value<>(name,defaultValue,minValue,maxValue);
+        IntValue value = new IntValue(name,defaultValue,minValue,maxValue);
         this.getValues().add(value);
         return value;
     }
 
     public Value<Float> setting(String name, float defaultValue, float minValue, float maxValue){
-        Value<Float> value = new Value<>(name,defaultValue,minValue,maxValue);
+        FloatValue value = new FloatValue(name,defaultValue,minValue,maxValue);
         this.getValues().add(value);
         return value;
     }
 
     public Value<Double> setting(String name, double defaultValue, double minValue, double maxValue){
-        Value<Double> value = new Value<>(name,defaultValue,minValue,maxValue);
+        DoubleValue value = new DoubleValue(name,defaultValue,minValue,maxValue);
         this.getValues().add(value);
         return value;
     }
 
-    public Value<String> setting(String name, String defaultValue, List<String> modes){
-        Value<String> value = new Value<>(name,defaultValue,modes);
+    public StringMode setting(String name, String defaultValue, List<String> modes){
+        StringMode value = new StringMode(name,defaultValue,modes);
+        this.getValues().add(value);
+        return value;
+    }
+
+    public <T extends Enum<?>> EnumValue<T> setting(String name, Enum<?> enumValue){
+        EnumValue<T> value = new EnumValue<>(name, enumValue);
         this.getValues().add(value);
         return value;
     }

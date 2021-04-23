@@ -26,7 +26,7 @@ public class HoleESP extends Module {
     Value<Double> range = setting("Range", 6D, 0D, 15D);
     Value<Boolean> hideOwn = setting("HideOwn", false);
     Value<Boolean> low = setting("LowHole", false);
-    Value<String> mode = setting("HoleMode", "Solid",listOf("Solid","SolidFlat","Full","Outline"));
+    ModeValue<String> mode = setting("HoleMode", "Solid",listOf("Solid","SolidFlat","Full","Outline"));
     Value<Integer> red = setting("BedrockRed", 130, 0, 255);
     Value<Integer> green = setting("BedrockGreen", 104, 0, 255);
     Value<Integer> blue = setting("BedrockBlue", 0, 0, 255);

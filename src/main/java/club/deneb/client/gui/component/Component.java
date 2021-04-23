@@ -20,8 +20,6 @@ public abstract class Component {
     public void mouseReleased(int mouseX, int mouseY, int state) { }
     public void keyTyped(char typedChar, int keyCode) { }
 
-    public Timer buttonTimer = new Timer();
-
     public void solvePos(){
         this.x = father.x;
         this.y = father.y;

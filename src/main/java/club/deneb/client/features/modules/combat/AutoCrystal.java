@@ -49,7 +49,7 @@ import static org.lwjgl.opengl.GL11.GL_QUADS;
 @Module.Info(name = "AutoCrystal", category = Category.COMBAT,description = "Automatically place crystal to kill enemy")
 public class AutoCrystal extends Module {
 
-    Value<String> Page_value = setting("Page","General",listOf("General","Calculation","Render"));
+    ModeValue<String> Page_value = setting("Page","General",listOf("General","Calculation","Render"));
 
     //General
     Value<Boolean> AutoSwitch_value = setting("AutoSwitch", false).m(Page_value,"General");
@@ -75,7 +75,7 @@ public class AutoCrystal extends Module {
     Value<Double> BlastHealth_value = setting("MinHealthFace", 10d, 0d, 20d).m(Page_value,"Calculation").b(FacePlace_value);
     Value<Double> MinDmg_value = setting("PlaceMinDamage", 4.5d, 0d, 20d).m(Page_value,"Calculation");
     Value<Double> MaxSelf_value = setting("PlaceMaxSelf", 10d, 0d, 36d).m(Page_value,"Calculation");
-    Value<String> AttackMode_value = setting("HitMode","Smart",listOf("Smart","Always")).m(Page_value,"Calculation");
+    ModeValue<String> AttackMode_value = setting("HitMode","Smart",listOf("Smart","Always")).m(Page_value,"Calculation");
     Value<Double> BMinDmg_value = setting("BreakMinDmg", 4.5, 0.0, 36.0).m(Page_value,"Calculation").m(AttackMode_value,"Smart");
     Value<Double> BMaxSelf_value = setting("BreakMaxSelf", 12.0, 0.0, 36.0).m(Page_value,"Calculation").m(AttackMode_value,"Smart");
     Value<Boolean> PopTotemTry = setting("PopTotemTry",true).m(Page_value,"Calculation").m(AttackMode_value,"Smart");
@@ -84,7 +84,7 @@ public class AutoCrystal extends Module {
     Value<Boolean> ClientSideConfirm_value = setting("ClientSideConfirm",false).m(Page_value,"Calculation");
     //Render
     Value<Boolean> RenderDmg_value = setting("RenderDamage", false).m(Page_value,"Render");
-    Value<String> RenderMode_value = setting("RenderBlock","Solid",listOf("Solid","Up","UpLine","Full","Outline","NoRender")).m(Page_value,"Render");
+    ModeValue<String> RenderMode_value = setting("RenderBlock","Solid",listOf("Solid","Up","UpLine","Full","Outline","NoRender")).m(Page_value,"Render");
     Value<Boolean> SyncGui_value = setting("SyncGui", false).m(Page_value,"Render");
     Value<Integer> Red_value = setting("Red", 255, 0, 255).m(Page_value,"Render").r(SyncGui_value);
     Value<Integer> Green_value = setting("Green", 0, 0, 255).m(Page_value,"Render").r(SyncGui_value);

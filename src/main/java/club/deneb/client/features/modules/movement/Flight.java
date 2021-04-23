@@ -3,6 +3,7 @@ package club.deneb.client.features.modules.movement;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
 import club.deneb.client.utils.EntityUtil;
+import club.deneb.client.value.ModeValue;
 import club.deneb.client.value.Value;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.CPacketPlayer;
@@ -14,7 +15,7 @@ import net.minecraft.network.play.client.CPacketPlayer;
 public class Flight extends Module {
 
     Value<Float> speed = setting("Speed", 10f,0,50f);
-    Value<String> mode = setting("Mode","Vanilla", listOf("Vanilla","Static","Packet"));
+    ModeValue<String> mode = setting("Mode","Vanilla", listOf("Vanilla","Static","Packet"));
 
     @Override
     public void onEnable() {

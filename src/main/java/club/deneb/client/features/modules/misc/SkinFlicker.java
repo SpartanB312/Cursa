@@ -2,6 +2,7 @@ package club.deneb.client.features.modules.misc;
 
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
+import club.deneb.client.value.ModeValue;
 import club.deneb.client.value.Value;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 
@@ -13,7 +14,7 @@ import java.util.Random;
 @Module.Info(name = "SkinFlicker", description = "Toggle the jacket layer rapidly for a cool skin effect", category = Category.MISC)
 public class SkinFlicker extends Module {
 
-    Value<String> mode = setting("Mode", "HORIZONTAL",listOf("HORIZONTAL","VERTICAL","RANDOM"));
+    ModeValue<String> mode = setting("Mode", "HORIZONTAL",listOf("HORIZONTAL","VERTICAL","RANDOM"));
     Value<Integer> slowness = setting("Slowness",2,1,10);
 
     private final static EnumPlayerModelParts[] PARTS_HORIZONTAL = new EnumPlayerModelParts[]{

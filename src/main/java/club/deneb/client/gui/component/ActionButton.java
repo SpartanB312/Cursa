@@ -2,12 +2,10 @@ package club.deneb.client.gui.component;
 
 import club.deneb.client.client.GuiManager;
 import club.deneb.client.gui.Panel;
-import club.deneb.client.gui.guis.ClickGuiScreen;
 import club.deneb.client.utils.Utils;
 import club.deneb.client.utils.clazz.Button;
 import club.deneb.client.value.Value;
 import net.minecraft.client.gui.Gui;
-
 
 import static club.deneb.client.utils.LambdaUtil.isHovered;
 

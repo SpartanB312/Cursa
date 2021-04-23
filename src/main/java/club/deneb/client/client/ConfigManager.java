@@ -15,8 +15,6 @@ import club.deneb.client.features.modules.client.NullHUD;
 import club.deneb.client.utils.clazz.Friend;
 import club.deneb.client.value.*;
 import com.google.gson.*;
-import scala.Int;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +23,7 @@ import java.util.Map;
 /**
  * Author B_312 on 01/21/2021
  */
+@SuppressWarnings("ALL")
 public class ConfigManager {
 
     public static ConfigManager INSTANCE;
@@ -111,26 +110,25 @@ public class ConfigManager {
                 jsonModule.addProperty("Bind", module.getBind());
                 if (!module.getValues().isEmpty()) {
                     for (Value<?> value : module.getValues()) {
-
-                        if (value.getValue() instanceof Boolean) {
-                            boolean bValue = ((Value<Boolean>)(value)).getValue();
-                            jsonModule.addProperty(value.getName(), bValue);
+                        if (value instanceof BooleanValue) {
+                            boolean valueT = ((BooleanValue) value).getValue();
+                            jsonModule.addProperty(value.getName(), valueT);
                         }
-                        if (value.getValue() instanceof Integer) {
-                            int nValue = ((Value<Integer>)(value)).getValue();
-                            jsonModule.addProperty(value.getName(), nValue);
+                        if (value instanceof IntValue) {
+                            int valueT = ((IntValue) value).getValue();
+                            jsonModule.addProperty(value.getName(), valueT);
                         }
-                        if (value.getValue() instanceof Float) {
-                            float nValue = ((Value<Float>)(value)).getValue();
-                            jsonModule.addProperty(value.getName(), nValue);
+                        if (value instanceof FloatValue) {
+                            float valueT = ((FloatValue) value).getValue();
+                            jsonModule.addProperty(value.getName(), valueT);
                         }
-                        if (value.getValue() instanceof Double) {
-                            double nValue = ((Value<Double>)(value)).getValue();
-                            jsonModule.addProperty(value.getName(), nValue);
+                        if (value instanceof DoubleValue) {
+                            double valueT = ((DoubleValue) value).getValue();
+                            jsonModule.addProperty(value.getName(), valueT);
                         }
-                        if (value.getValue() instanceof String) {
-                            String sValue = ((Value<String>)(value)).getValue();
-                            jsonModule.addProperty(value.getName(), sValue);
+                        if (value instanceof ModeValue<?>) {
+                            String save = value.getValue().toString();
+                            jsonModule.addProperty(value.getName(), save);
                         }
                     }
                 }
@@ -163,26 +161,25 @@ public class ConfigManager {
                 jsonModule.addProperty("Bind", module.getBind());
                 if (!module.getValues().isEmpty()) {
                     for (Value<?> value : module.getValues()) {
-
-                        if (value.getValue() instanceof Boolean) {
-                            boolean bValue = ((Value<Boolean>)(value)).getValue();
-                            jsonModule.addProperty(value.getName(), bValue);
+                        if (value instanceof BooleanValue) {
+                            boolean valueT = ((BooleanValue) value).getValue();
+                            jsonModule.addProperty(value.getName(), valueT);
                         }
-                        if (value.getValue() instanceof Integer) {
-                            int nValue = ((Value<Integer>)(value)).getValue();
-                            jsonModule.addProperty(value.getName(), nValue);
+                        if (value instanceof IntValue) {
+                            int valueT = ((IntValue) value).getValue();
+                            jsonModule.addProperty(value.getName(), valueT);
                         }
-                        if (value.getValue() instanceof Float) {
-                            float nValue = ((Value<Float>)(value)).getValue();
-                            jsonModule.addProperty(value.getName(), nValue);
+                        if (value instanceof FloatValue) {
+                            float valueT = ((FloatValue) value).getValue();
+                            jsonModule.addProperty(value.getName(), valueT);
                         }
-                        if (value.getValue() instanceof Double) {
-                            double nValue = ((Value<Double>)(value)).getValue();
-                            jsonModule.addProperty(value.getName(), nValue);
+                        if (value instanceof DoubleValue) {
+                            double valueT = ((DoubleValue) value).getValue();
+                            jsonModule.addProperty(value.getName(), valueT);
                         }
-                        if (value.getValue() instanceof String) {
-                            String sValue = ((Value<String>)(value)).getValue();
-                            jsonModule.addProperty(value.getName(), sValue);
+                        if (value instanceof ModeValue<?>) {
+                            String save = value.getValue().toString();
+                            jsonModule.addProperty(value.getName(), save);
                         }
                     }
                 }
@@ -436,20 +433,21 @@ public class ConfigManager {
 
     private void tryValue(String name, Value<?> value ,JsonObject jsonMod){
         try {
-            if (value.getValue() instanceof Boolean) {
-                ((Value<Boolean>)value).setValue(jsonMod.get(value.getName()).getAsBoolean());
+            if (value instanceof BooleanValue) {
+                ((BooleanValue)value).setValue(jsonMod.get(value.getName()).getAsBoolean());
             }
-            if (value.getValue() instanceof Double) {
-                ((Value<Double>)value).setValue(jsonMod.get(value.getName()).getAsDouble());
+            if (value instanceof DoubleValue) {
+                ((DoubleValue)value).setValue(jsonMod.get(value.getName()).getAsDouble());
             }
-            if (value.getValue() instanceof Integer) {
-                ((Value<Integer>)value).setValue(jsonMod.get(value.getName()).getAsInt());
+            if (value instanceof IntValue) {
+                ((IntValue)value).setValue(jsonMod.get(value.getName()).getAsInt());
             }
-            if (value.getValue() instanceof Float) {
-                ((Value<Float>)value).setValue(jsonMod.get(value.getName()).getAsFloat());
+            if (value instanceof FloatValue) {
+                ((FloatValue)value).setValue(jsonMod.get(value.getName()).getAsFloat());
             }
-            if (value.getValue() instanceof String) {
-                ((Value<String>)value).setValue(jsonMod.get(value.getName()).getAsString());
+            if (value instanceof ModeValue<?>) {
+                String modeName = jsonMod.get(value.getName()).getAsString();
+                ((ModeValue<?>) value).setWithName(modeName);
             }
         }catch (Exception e) {
             Deneb.log.error("Cant set value for "+ name + ",loaded default!Value name:"+value.getName());

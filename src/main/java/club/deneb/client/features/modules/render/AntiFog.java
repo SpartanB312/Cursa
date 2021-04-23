@@ -2,6 +2,7 @@ package club.deneb.client.features.modules.render;
 
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
+import club.deneb.client.value.ModeValue;
 import club.deneb.client.value.Value;
 
 /**
@@ -10,7 +11,7 @@ import club.deneb.client.value.Value;
 @Module.Info(name = "AntiFog", description = "Disables or reduces fog", category = Category.RENDER)
 public class AntiFog extends Module {
 
-    public static Value<String> mode;
+    public static ModeValue<String> mode;
     private static AntiFog INSTANCE = new AntiFog();
 
     @Override

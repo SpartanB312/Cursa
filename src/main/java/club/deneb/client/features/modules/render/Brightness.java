@@ -2,6 +2,7 @@ package club.deneb.client.features.modules.render;
 
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
+import club.deneb.client.value.ModeValue;
 import club.deneb.client.value.Value;
 
 import java.util.Stack;
@@ -15,7 +16,7 @@ public class Brightness extends Module {
 
     Value<Boolean> transition = setting("Transition", true);
     Value<Float> seconds = setting("Seconds",1f,0f,10f).b(transition);
-    Value<String> mode = setting("Mode","Sine",listOf("Sine","Liner")).b(transition);
+    ModeValue<String> mode = setting("Mode","Sine",listOf("Sine","Liner")).b(transition);
 
     private final Stack<Float> transitionStack = new Stack<>();
 

@@ -7,7 +7,6 @@ import club.deneb.client.features.modules.client.NullModule;
 import club.deneb.client.utils.ChatUtil;
 import club.deneb.client.value.*;
 import club.deneb.client.command.Command;
-import scala.Int;
 
 import java.util.ArrayList;
 
@@ -21,6 +20,7 @@ public class Settings extends Command {
     @Override
     public void onCall(String s, String[] args) {
         try {
+
             AbstractModule m = ModuleManager.getModuleByName(args[0]);
 
             if ((m instanceof NullModule) || (m instanceof NullHUD)) {
@@ -30,52 +30,49 @@ public class Settings extends Command {
 
             ArrayList<Value<?>> settings = m.getValues();
 
-            for (Value value : settings) {
-                if (value.getName().toLowerCase().equals(args[1].toLowerCase())) {
+            for (Value<?> value : settings) {
+                if (value.getName().equalsIgnoreCase(args[1])) {
                     try {
-                        if (value.getValue() instanceof Boolean) {
-                            if (args[2].toLowerCase().equals("true")) {
-                                value.setValue(true);
-                            } else if (args[2].toLowerCase().equals("false")) {
-                                value.setValue(false);
+                        if (value instanceof BooleanValue) {
+                            BooleanValue valueT = (BooleanValue) value;
+                            if (args[2].equalsIgnoreCase("true")) {
+                                valueT.setValue(true);
+                            } else if (args[2].equalsIgnoreCase("false")) {
+                                valueT.setValue(false);
                             } else {
                                 ChatUtil.sendNoSpamErrorMessage("Can not set value to " + args[2]);
                             }
                         }
-                        if (value.getValue() instanceof Integer) {
+                        if (value instanceof IntValue) {
+                            IntValue valueT = (IntValue) value;
                             int input = Integer.parseInt(args[2]);
-                            if (input > ((Value<Integer>) value).getMax().intValue() || input < (((Value<Integer>) value).getMin().intValue())) {
+                            if (input > valueT.getMax().intValue() || input < valueT.getMin().intValue()) {
                                 ChatUtil.sendNoSpamErrorMessage("Can not set value to " + input);
                                 return;
                             }
-
-                            value.setValue(input);
+                            valueT.setValue(input);
                         }
-                        if (value.getValue() instanceof Double) {
-
+                        if (value instanceof DoubleValue) {
+                            DoubleValue valueT = (DoubleValue) value;
                             double input = Double.parseDouble(args[2]);
-                            if (input > ((Value<Double>) value).getMax().doubleValue() || input < ((Value<Float>) value).getMin().doubleValue()) {
+                            if (input > valueT.getMax().doubleValue() || input < valueT.getMin().doubleValue()) {
                                 ChatUtil.sendNoSpamErrorMessage("Can not set value to " + input);
                                 return;
                             }
-
-                            value.setValue(input);
+                            valueT.setValue(input);
                         }
-                        if (value.getValue() instanceof Float) {
-
+                        if (value instanceof FloatValue) {
+                            FloatValue valueT = (FloatValue) value;
                             float input = Float.parseFloat(args[2]);
-                            if (input > ((Value<Float>) value).getMax().floatValue() || input < ((Value<Float>) value).getMin().floatValue()) {
+                            if (input > valueT.getMax().floatValue() || input < valueT.getMin().floatValue()) {
                                 ChatUtil.sendNoSpamErrorMessage("Can not set value to " + input);
                                 return;
                             }
-
-                            value.setValue(input);
+                            valueT.setValue(input);
                         }
-                        if (value.getValue() instanceof String) {
-                            int index = ((Value<String>) value).modes.indexOf(args[2].toLowerCase());
-                            if(index != -1){
-                                value.setValue(args[2].toLowerCase());
-                            }
+                        if (value instanceof ModeValue<?>) {
+                            ModeValue<?> valueT = (ModeValue<?>) value;
+                            valueT.setWithName(args[2]);
                         }
 
                         ChatUtil.sendNoSpamMessage("Set " + value.getName() + " to " + args[2]);

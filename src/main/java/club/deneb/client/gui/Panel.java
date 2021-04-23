@@ -34,7 +34,7 @@ public class Panel {
     public boolean extended;
     boolean dragging;
 
-    boolean isHUD = false;
+    boolean isHUD;
 
     int x2,y2;
 

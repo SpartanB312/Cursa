@@ -1,11 +1,11 @@
 package club.deneb.client.gui.component;
 
-import club.deneb.client.gui.Panel;
 import club.deneb.client.client.GuiManager;
-import club.deneb.client.features.HUDModule;
 import club.deneb.client.features.AbstractModule;
+import club.deneb.client.features.HUDModule;
+import club.deneb.client.gui.Panel;
+import club.deneb.client.utils.Timer;
 import club.deneb.client.utils.Utils;
-import club.deneb.client.utils.clazz.Button;
 import club.deneb.client.value.*;
 import net.minecraft.client.gui.Gui;
 
@@ -24,6 +24,8 @@ public class ModuleButton extends club.deneb.client.gui.component.Component {
     public AbstractModule module;
     public BindButton bindButton;
 
+    public Timer buttonTimer = new Timer();
+
     int x2, y2;
     boolean dragging;
 
@@ -37,18 +39,18 @@ public class ModuleButton extends club.deneb.client.gui.component.Component {
 
     public void setup() {
         for (Value<?> value : module.getValues()) {
-            if (value.getValue() instanceof Boolean)
-                settings.add(new BooleanButton((Value<Boolean>) value, width, height, father));
-            if (value.getValue() instanceof Button)
-                settings.add(new ActionButton((Value<Button>) value, width, height, father));
-            if (value.getValue() instanceof Integer)
-                settings.add(new NumberSlider<>((Value<Integer>) value, width, height, father));
-            if (value.getValue() instanceof Float)
-                settings.add(new NumberSlider<>((Value<Float>) value, width, height, father));
-            if (value.getValue() instanceof Double)
-                settings.add(new NumberSlider<>((Value<Double>) value, width, height, father));
-            if (value.getValue() instanceof String)
-                settings.add(new ModeButton((Value<String>) value, width, height, father));
+            if (value instanceof BooleanValue)
+                settings.add(new BooleanButton((BooleanValue) value, width, height, father));
+            if (value instanceof ButtonValue)
+                settings.add(new ActionButton((ButtonValue) value, width, height, father));
+            if (value instanceof IntValue)
+                settings.add(new NumberSlider<>((IntValue) value, width, height, father));
+            if (value instanceof FloatValue)
+                settings.add(new NumberSlider<>((FloatValue) value, width, height, father));
+            if (value instanceof DoubleValue)
+                settings.add(new NumberSlider<>((DoubleValue) value, width, height, father));
+            if (value instanceof ModeValue<?> && ((ModeValue<?>) value).getModes().size() != 0)
+                settings.add(new ModeButton<>((ModeValue<?>) value, width, height, father));
         }
         bindButton = new BindButton(module, width, height, father);
     }

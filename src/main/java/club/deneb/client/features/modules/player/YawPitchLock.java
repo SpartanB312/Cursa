@@ -2,6 +2,7 @@ package club.deneb.client.features.modules.player;
 
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
+import club.deneb.client.value.ModeValue;
 import club.deneb.client.value.Value;
 import net.minecraft.util.math.MathHelper;
 
@@ -10,7 +11,7 @@ import java.util.Objects;
 @Module.Info(name = "YawPitchLock",category = Category.PLAYER,description = "Lock your camera")
 public class YawPitchLock extends Module {
 
-    Value<String> mode = setting("Mode","Yaw&Pitc",listOf("Yaw&Pitch","Yaw","Pitch"));
+    ModeValue<String> mode = setting("Mode","Yaw&Pitc",listOf("Yaw&Pitch","Yaw","Pitch"));
     Value<Boolean> yawAuto = setting("YawAuto", true);
     Value<Integer> yaw = setting("YawValue", 180,0,360);
     Value<Integer> yawSlice = setting("YawSlice", 8,1,36);

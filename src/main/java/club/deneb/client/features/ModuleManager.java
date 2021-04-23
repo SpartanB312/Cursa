@@ -29,8 +29,10 @@ public class ModuleManager {
     public static ModuleManager INSTANCE;
     private final HashMap<Class<? extends AbstractModule>,AbstractModule> moduleHashMap = new HashMap<>();
 
+    private final List<AbstractModule> moduleList = new ArrayList<>();
+
     private List<AbstractModule> modules(){
-        return new ArrayList<>(moduleHashMap.values());
+        return moduleList;
     }
 
     public ModuleManager(){
@@ -41,8 +43,10 @@ public class ModuleManager {
     private void init(){
         loadModules();
         loadHUDs();
-        modules().sort(Comparator.comparing(AbstractModule::getName));
+        moduleList.addAll(moduleHashMap.values());
+        moduleList.sort(Comparator.comparing(AbstractModule::getName));
     }
+
 
     public static void onKey(InputUpdateEvent event){
         INSTANCE.modules().forEach( mod -> {

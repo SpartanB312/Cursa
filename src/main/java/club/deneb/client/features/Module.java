@@ -1,6 +1,7 @@
 package club.deneb.client.features;
 
 import club.deneb.client.utils.clazz.Button;
+import club.deneb.client.value.StringMode;
 import club.deneb.client.value.Value;
 import org.lwjgl.input.Keyboard;
 
@@ -24,7 +25,7 @@ public class Module extends AbstractModule {
         this.category = getAnnotation().category();
         this.description = getAnnotation().description();
         this.keyCode = getAnnotation().keyCode();
-        this.getValues().add(visible_value = new Value<>("Visible",getAnnotation().visible() ? "ON" : "OFF" , listOf("ON","OFF")));
+        this.getValues().add(visible_value = new StringMode("Visible",getAnnotation().visible() ? "ON" : "OFF" , listOf("ON","OFF")));
         this.getValues().add(resetConfig = new Value<>("LoadDefault", new Button().setBind(this::reset)).des("Click here to set this module to default"));
         this.isHUD = false;
         this.onInit();

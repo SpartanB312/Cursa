@@ -4,6 +4,7 @@ import club.deneb.client.utils.EntityUtil;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
 import club.deneb.client.utils.BlockInteractionHelper;
+import club.deneb.client.value.ModeValue;
 import club.deneb.client.value.Value;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockObsidian;
@@ -30,9 +31,8 @@ public class Surround extends Module {
     Value<Boolean> spoofRotations = setting("Spoof Rotations", true);
     Value<Boolean> spoofHotBar = setting("Spoof HotBar", false);
     Value<Integer> blockPerTick = setting("Blocks per Tick",4,1,20);
-    Value<String> autoCenter = setting("Auto Center","TP",listOf("TP","OFF"));
+    ModeValue<String> autoCenter = setting("Auto Center","TP",listOf("TP","OFF"));
     Value<Boolean> placeAnimation = setting("Place Animation", false);
-
 
     private final Vec3d[] surroundTargets = new Vec3d[]{new Vec3d(0.0D, 0.0D, 0.0D), new Vec3d(1.0D, 1.0D, 0.0D), new Vec3d(0.0D, 1.0D, 1.0D), new Vec3d(-1.0D, 1.0D, 0.0D), new Vec3d(0.0D, 1.0D, -1.0D), new Vec3d(1.0D, 0.0D, 0.0D), new Vec3d(0.0D, 0.0D, 1.0D), new Vec3d(-1.0D, 0.0D, 0.0D), new Vec3d(0.0D, 0.0D, -1.0D), new Vec3d(1.0D, 1.0D, 0.0D), new Vec3d(0.0D, 1.0D, 1.0D), new Vec3d(-1.0D, 1.0D, 0.0D), new Vec3d(0.0D, 1.0D, -1.0D)};
 

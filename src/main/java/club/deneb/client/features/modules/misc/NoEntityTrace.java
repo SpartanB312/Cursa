@@ -2,6 +2,7 @@ package club.deneb.client.features.modules.misc;
 
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
+import club.deneb.client.value.ModeValue;
 import club.deneb.client.value.Value;
 
 /**
@@ -10,7 +11,7 @@ import club.deneb.client.value.Value;
 @Module.Info(name = "NoEntityTrace", category = Category.MISC, description = "Blocks entities from stopping you from mining")
 public class NoEntityTrace extends Module {
 
-    Value<String> mode = setting("Mode", "Dynamic",listOf("Dynamic","Static"));
+    ModeValue<String> mode = setting("Mode", "Dynamic",listOf("Dynamic","Static"));
 
     private static NoEntityTrace INSTANCE;
 

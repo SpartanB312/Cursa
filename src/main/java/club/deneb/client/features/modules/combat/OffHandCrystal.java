@@ -5,6 +5,7 @@ import club.deneb.client.features.Module;
 import club.deneb.client.features.ModuleManager;
 import club.deneb.client.utils.EntityUtil;
 import club.deneb.client.utils.Timer;
+import club.deneb.client.value.ModeValue;
 import club.deneb.client.value.Value;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
@@ -26,13 +27,13 @@ public class OffHandCrystal extends Module {
     public static OffHandCrystal INSTANCE;
 
     //Optimized redundant settings
-    Value<String> mode = setting("Item","Crystal",listOf("Gap","Crystal"));
+    ModeValue<String> mode = setting("Item","Crystal",listOf("Gap","Crystal"));
     Value<Integer> delay = setting("Delay", 0, 0, 1000);
     Value<Boolean> totem = setting("SwitchTotem", true);
     Value<Boolean> autoSwitchback = setting("SwitchBack", true);
     Value<Double> sbHealth = setting("Health", 11D, 0D, 36D);
     Value<Boolean> autoSwitch = setting("SwitchGap", true);
-    Value<String> switchMode = setting("GapWhen", "Sword",listOf("Sword","RClick")).b(autoSwitch);
+    ModeValue<String> switchMode = setting("GapWhen", "Sword",listOf("Sword","RClick")).b(autoSwitch);
     Value<Boolean> elytra = setting("CheckElytra", true);
     Value<Boolean> holeCheck = setting("CheckHole", false);
     Value<Double> holeSwitch = setting("HoleHealth", 8d, 0d, 36d).b(holeCheck);
