@@ -60,7 +60,7 @@ open class ModeValue<T>(name: String, defaultValue: T, var modes: MutableList<T>
 
 
 @Suppress("UNCHECKED_CAST")
-class EnumValue<T : Enum<*>>(name: String, defaultValue: Enum<*>) :
+class EnumValue<T : Enum<T>>(name: String, defaultValue: Enum<*>) :
     ModeValue<T>(name, defaultValue as T,ArrayList()) {
 
     override fun v(booleanSupplier: BooleanSupplier): EnumValue<T> {
@@ -74,12 +74,12 @@ class EnumValue<T : Enum<*>>(name: String, defaultValue: Enum<*>) :
     }
 
     override fun b(booleanValue: Value<Boolean>): EnumValue<T> {
-        visibility.add(BooleanSupplier { booleanValue.value!! })
+        visibility.add(BooleanSupplier { booleanValue.value })
         return this
     }
 
     override fun r(booleanValue: Value<Boolean>): EnumValue<T> {
-        visibility.add(BooleanSupplier { !booleanValue.value!! })
+        visibility.add(BooleanSupplier { !booleanValue.value })
         return this
     }
 

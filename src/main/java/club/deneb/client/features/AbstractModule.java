@@ -134,7 +134,7 @@ public class AbstractModule {
         return value;
     }
 
-    public <T extends Enum<?>> EnumValue<T> setting(String name, Enum<?> enumValue){
+    public <T extends Enum<T>> EnumValue<T> setting(String name, Enum<?> enumValue){
         EnumValue<T> value = new EnumValue<>(name, enumValue);
         this.getValues().add(value);
         return value;

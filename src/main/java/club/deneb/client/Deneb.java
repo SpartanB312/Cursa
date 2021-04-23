@@ -2,6 +2,8 @@ package club.deneb.client;
 
 import club.deneb.client.client.*;
 import club.deneb.client.features.ModuleManager;
+import club.deneb.client.features.modules.client.ClickGui;
+import club.deneb.client.features.modules.client.HUDEditor;
 import club.deneb.client.gui.GUIRender;
 import club.deneb.client.gui.HUDRender;
 import club.deneb.client.gui.font.CFont;
@@ -31,7 +33,7 @@ import java.nio.ByteBuffer;
 @Mod(modid = Deneb.MOD_ID, name = Deneb.MOD_NAME, version = Deneb.VERSION)
 public class Deneb {
 
-    public final static String VERSION = "0.4.1";
+    public final static String VERSION = "0.4.2";
     public final static String MOD_ID = "deneb";
     public final static String MOD_NAME = "Deneb";
     public final static String CHAT_PREFIX = "\u30c7\u30cd\u30d6";
@@ -89,6 +91,10 @@ public class Deneb {
         configManager = new ConfigManager();
         ConfigManager.loadAll();
 
+        //Disable GUIScreen
+        ModuleManager.getModule(ClickGui.class).setEnable(false);
+        ModuleManager.getModule(HUDEditor.class).setEnable(false);
+
     }
 
     @Mod.EventHandler
@@ -101,7 +107,7 @@ public class Deneb {
     }
 
     public void loadDiscordRPC(){
-        //TODO:
+        //TODO:Make discord RPC here
     }
 
     private void setIcon() {

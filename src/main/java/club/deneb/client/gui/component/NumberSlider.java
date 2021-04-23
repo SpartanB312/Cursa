@@ -3,6 +3,9 @@ package club.deneb.client.gui.component;
 import club.deneb.client.gui.Panel;
 import club.deneb.client.utils.ColorUtil;
 import club.deneb.client.client.GuiManager;
+import club.deneb.client.value.DoubleValue;
+import club.deneb.client.value.FloatValue;
+import club.deneb.client.value.IntValue;
 import club.deneb.client.value.Value;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.util.math.MathHelper;
@@ -59,18 +62,18 @@ public class NumberSlider<T extends Number> extends ValueButton<T> {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         if (this.sliding) {
-            if (getSetting().getValue() instanceof Double) {
-                Value<Double> doubleValue = (Value<Double>) getSetting();
+            if (getSetting() instanceof DoubleValue) {
+                DoubleValue doubleValue = (DoubleValue)getSetting();
                 double diff = doubleValue.getMax().doubleValue() - doubleValue.getMin().doubleValue();
                 double val = doubleValue.getMin().doubleValue() + (MathHelper.clamp((mouseX - (double) (x + 1)) / (double) sliderWidth, 0, 1)) * diff;
                 doubleValue.setValue(val);
-            } else if (getSetting().getValue() instanceof Float) {
-                Value<Float> floatValue = (Value<Float>)  getSetting();
+            } else if (getSetting() instanceof FloatValue) {
+                FloatValue floatValue = (FloatValue)getSetting();
                 double diff = floatValue.getMax().floatValue() - floatValue.getMin().floatValue();
                 double val = floatValue.getMin().floatValue() + (MathHelper.clamp((mouseX - (double) (x + 1)) / (double) sliderWidth, 0, 1)) * diff;
                 floatValue.setValue((float) val);
-            } else if (getSetting().getValue() instanceof Integer) {
-                Value<Integer> intValue = (Value<Integer>) getSetting();
+            } else if (getSetting() instanceof IntValue) {
+                IntValue intValue = (IntValue)getSetting();
                 double diff = intValue.getMax().intValue() - intValue.getMin().intValue();
                 double val = intValue.getMin().intValue() + (MathHelper.clamp((mouseX - (double) (x + 1)) / (double) sliderWidth, 0, 1)) * diff;
                 intValue.setValue((int) val);

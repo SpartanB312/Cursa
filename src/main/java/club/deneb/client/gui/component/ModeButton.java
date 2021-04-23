@@ -38,7 +38,7 @@ public class ModeButton<T> extends ValueButton<T> {
         }
 
         //Mode Name
-        font.drawString(getSetting().getName(), x + 3, (int) (y + height / 2 - font.getHeight() / 2f ) + 2, ColorUtil.getHoovered(new Color(255,255,255).getRGB(), isHovered(mouseX, mouseY).test(this)));
+        font.drawString(getSetting().getName(), x + 3, (int) (y + height / 2 - font.getHeight() / 2f ) + 2, ColorUtil.getHoovered(new Color(200,200,200).getRGB(), isHovered(mouseX, mouseY).test(this)));
 
         //Mode Value
         font.drawString(name, x + width - 1 - font.getStringWidth(name), (int) (y + height / 2 - font.getHeight() / 2f ) + 2,

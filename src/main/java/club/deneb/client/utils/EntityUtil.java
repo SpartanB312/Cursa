@@ -10,9 +10,7 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.monster.EntityPigZombie;
-import net.minecraft.entity.passive.EntityAmbientCreature;
-import net.minecraft.entity.passive.EntitySquid;
-import net.minecraft.entity.passive.EntityWolf;
+import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -25,16 +23,28 @@ public class EntityUtil {
 
     public static Minecraft mc = Minecraft.getMinecraft();
 
+    public static boolean mobTypeSettings(Entity e,  Boolean mobs, Boolean passive, Boolean neutral, Boolean hostile) {
+        return mobs && ((passive && isPassiveMob(e)) || (neutral && isCurrentlyNeutral(e)) || (hostile && isMobAggressive(e)));
+    }
+
+    public static boolean isPassiveMob(Entity e) {
+        return e instanceof EntityAgeable || e instanceof EntityAmbientCreature || e instanceof EntitySquid;
+    }
+
+    public static boolean isCurrentlyNeutral(Entity entity) {
+        return (isNeutralMob(entity) && !isMobAggressive(entity));
+    }
+
     public static Vec3d getInterpolatedAmount(Entity entity, double x, double y, double z) {
         return new Vec3d((entity.posX - entity.lastTickPosX) * x, (entity.posY - entity.lastTickPosY) * y, (entity.posZ - entity.lastTickPosZ) * z);
     }
 
     public static double getRelativeX(float yaw){
-        return (double) (MathHelper.sin(-yaw * 0.017453292F));
+        return MathHelper.sin(-yaw * 0.017453292F);
     }
 
     public static double getRelativeZ(float yaw){
-        return (double) (MathHelper.cos(yaw * 0.017453292F));
+        return MathHelper.cos(yaw * 0.017453292F);
     }
 
 
@@ -139,8 +149,7 @@ public class EntityUtil {
 
 
     public static String getPlayerName(EntityPlayer player) {
-        return player.getGameProfile() != null ?
-                player.getGameProfile().getName() : player.getName();
+        return player.getGameProfile().getName();
     }
 
     public static List<Entity> getEntityList(){

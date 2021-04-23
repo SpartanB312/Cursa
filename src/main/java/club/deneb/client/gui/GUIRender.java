@@ -6,13 +6,12 @@ import club.deneb.client.gui.component.Component;
 import club.deneb.client.gui.component.ModuleButton;
 import club.deneb.client.features.Category;
 import club.deneb.client.gui.component.ValueButton;
-import net.minecraft.client.gui.GuiScreen;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import java.util.ArrayList;
 
-public class GUIRender extends GuiScreen {
+public class GUIRender {
 
     static GUIRender INSTANCE;
 
