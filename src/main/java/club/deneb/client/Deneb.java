@@ -33,7 +33,7 @@ import java.nio.ByteBuffer;
 @Mod(modid = Deneb.MOD_ID, name = Deneb.MOD_NAME, version = Deneb.VERSION)
 public class Deneb {
 
-    public final static String VERSION = "0.5";
+    public final static String VERSION = "0.5.1";
     public final static String MOD_ID = "deneb";
     public final static String MOD_NAME = "Deneb";
     public final static String CHAT_PREFIX = "\u30c7\u30cd\u30d6";
@@ -51,6 +51,7 @@ public class Deneb {
     private ModuleManager moduleManager;
     private GuiManager guiManager;
     private CFontRenderer fontRenderer;
+    private CFontRenderer iconFont;
     private GUIRender guiRender;
     private HUDRender hudEditor;
     private ForgeEventProcessor eventProcessor;
@@ -66,6 +67,7 @@ public class Deneb {
         Display.setTitle(MOD_NAME + " " + CHAT_PREFIX + " " + VERSION);
         LagCompensator.INSTANCE = new LagCompensator();
         setIcon();
+        iconFont = new CFontRenderer(new CFont.CustomFont("/assets/minecraft/fonts/Icon.ttf", 22f, Font.PLAIN), true, false);
         fontRenderer = new CFontRenderer(new CFont.CustomFont("/assets/minecraft/fonts/Comfortaa-Bold.ttf", 18f, Font.PLAIN), true, false);
     }
 
@@ -140,6 +142,8 @@ public class Deneb {
     public HUDRender getHudEditor(){ return hudEditor; }
 
     public CFontRenderer getFont(){ return fontRenderer; }
+
+    public CFontRenderer getIconFont(){ return iconFont; }
 
     public ConfigManager getConfigManager(){ return configManager; }
 

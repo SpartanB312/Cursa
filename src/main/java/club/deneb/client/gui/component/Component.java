@@ -14,7 +14,7 @@ public abstract class Component {
     public Minecraft mc = Minecraft.getMinecraft();
     public int x,y,width,height;
     public Panel father;
-    public boolean isToggled,isExtended;
+    public boolean isExtended;
     public abstract void render(int mouseX, int mouseY, float partialTicks);
     public abstract boolean mouseClicked(int mouseX, int mouseY, int mouseButton);
     public void mouseReleased(int mouseX, int mouseY, int state) { }

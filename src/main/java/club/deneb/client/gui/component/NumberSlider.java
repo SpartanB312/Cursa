@@ -33,32 +33,32 @@ public class NumberSlider<T extends Number> extends ValueButton<T> {
     public void render(int mouseX, int mouseY, float partialTicks) {
         if (!getSetting().visible()) sliding = false;
 
-        int color = new Color(GuiManager.INSTANCE.getRed(),GuiManager.INSTANCE.getGreen(),GuiManager.INSTANCE.getBlue(),192).getRGB();
+        int color = new Color(GuiManager.INSTANCE.getRed(),GuiManager.INSTANCE.getGreen(),GuiManager.INSTANCE.getBlue(),GuiManager.INSTANCE.getTransparency()).getRGB();
         int fontColor = new Color(255, 255, 255).getRGB();
 
         //Background
         Gui.drawRect(x, y, x + width, y + height,0x85000000);
 
-        double iwidth = 0;
-        String displayvalue = "0";
+        double iWidth = 0;
+        String displayValue = "0";
 
         int sliderWidth = (width - 2);
 
         if (getSetting().getValue() instanceof Double) {
-            displayvalue = String.format("%.1f", getSetting().getValue().doubleValue());
+            displayValue = String.format("%.1f", getSetting().getValue().doubleValue());
             double percentBar = (getSetting().getValue().doubleValue() - getSetting().getMin().doubleValue()) / (getSetting().getMax().doubleValue() - getSetting().getMin().doubleValue());
-            iwidth = sliderWidth * percentBar;
+            iWidth = sliderWidth * percentBar;
         } else if (getSetting().getValue() instanceof Float) {
-            displayvalue = String.format("%.1f", getSetting().getValue().floatValue());
+            displayValue = String.format("%.1f", getSetting().getValue().floatValue());
             double percentBar = (getSetting().getValue().floatValue() - getSetting().getMin().floatValue()) / (getSetting().getMax().floatValue() - getSetting().getMin().floatValue());
-            iwidth = sliderWidth * percentBar;
+            iWidth = sliderWidth * percentBar;
         } else if (getSetting().getValue() instanceof Integer) {
-            displayvalue = String.format("%.1f", getSetting().getValue().floatValue());
+            displayValue = String.format("%.1f", getSetting().getValue().floatValue());
             double percentBar = (getSetting().getValue().floatValue() - getSetting().getMin().floatValue()) / (getSetting().getMax().floatValue() - getSetting().getMin().floatValue());
-            iwidth = sliderWidth * percentBar;
+            iWidth = sliderWidth * percentBar;
         }
 
-        Gui.drawRect(x + 1, y + 1, x + 1 + (int) iwidth, y + height, color);
+        Gui.drawRect(x + 1, y + 1, x + 1 + (int) iWidth, y + height, color);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         if (this.sliding) {
@@ -81,7 +81,7 @@ public class NumberSlider<T extends Number> extends ValueButton<T> {
         }
 
         font.drawString(getSetting().getName(), x + 3, (int) (y + height / 2 - font.getHeight() / 2f) + 2, fontColor);
-        font.drawString(String.valueOf(displayvalue), x + width - 1 - font.getStringWidth(String.valueOf(displayvalue)), (int) (y + height / 2 - font.getHeight() / 2f) + 2, ColorUtil.getHoovered(0x909090,isHovered(mouseX, mouseY).test(this)));
+        font.drawString(String.valueOf(displayValue), x + width - 1 - font.getStringWidth(String.valueOf(displayValue)), (int) (y + height / 2 - font.getHeight() / 2f) + 2, ColorUtil.getHoovered(0x909090,isHovered(mouseX, mouseY).test(this)));
     }
 
     @Override

@@ -30,7 +30,7 @@ public class HUDRender {
         int startX = 5;
         for(Category category : Category.values()){
             if(!category.isHUD()) continue;
-            panels.add(new Panel(category, startX, 5, 90, 11));
+            panels.add(new Panel(category, startX, 5, 90, 13));
             startX += 95;
         }
     }

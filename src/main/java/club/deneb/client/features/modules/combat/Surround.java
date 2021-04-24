@@ -34,14 +34,26 @@ public class Surround extends Module {
     ModeValue<String> autoCenter = setting("Auto Center","TP",listOf("TP","OFF"));
     Value<Boolean> placeAnimation = setting("Place Animation", false);
 
-    private final Vec3d[] surroundTargets = new Vec3d[]{new Vec3d(0.0D, 0.0D, 0.0D), new Vec3d(1.0D, 1.0D, 0.0D), new Vec3d(0.0D, 1.0D, 1.0D), new Vec3d(-1.0D, 1.0D, 0.0D), new Vec3d(0.0D, 1.0D, -1.0D), new Vec3d(1.0D, 0.0D, 0.0D), new Vec3d(0.0D, 0.0D, 1.0D), new Vec3d(-1.0D, 0.0D, 0.0D), new Vec3d(0.0D, 0.0D, -1.0D), new Vec3d(1.0D, 1.0D, 0.0D), new Vec3d(0.0D, 1.0D, 1.0D), new Vec3d(-1.0D, 1.0D, 0.0D), new Vec3d(0.0D, 1.0D, -1.0D)};
+    private final Vec3d[] surroundTargets = new Vec3d[]{
+            new Vec3d(0.0D, 0.0D, 0.0D),
+            new Vec3d(1.0D, 1.0D, 0.0D),
+            new Vec3d(0.0D, 1.0D, 1.0D),
+            new Vec3d(-1.0D, 1.0D, 0.0D),
+            new Vec3d(0.0D, 1.0D, -1.0D),
+            new Vec3d(1.0D, 0.0D, 0.0D),
+            new Vec3d(0.0D, 0.0D, 1.0D),
+            new Vec3d(-1.0D, 0.0D, 0.0D),
+            new Vec3d(0.0D, 0.0D, -1.0D),
+            new Vec3d(1.0D, 1.0D, 0.0D),
+            new Vec3d(0.0D, 1.0D, 1.0D),
+            new Vec3d(-1.0D, 1.0D, 0.0D),
+            new Vec3d(0.0D, 1.0D, -1.0D)};
 
     private Vec3d playerPos;
     private BlockPos basePos;
     private int offsetStep = 0;
     private int playerHotBarSlot = -1;
     private int lastHotBarSlot = -1;
-
 
     @Override
     public void onTick() {

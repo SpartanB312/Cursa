@@ -1,5 +1,6 @@
 package club.deneb.client.mixin.client;
 
+import club.deneb.client.features.ModuleManager;
 import club.deneb.client.features.modules.render.ExtraTab;
 import net.minecraft.client.gui.GuiPlayerTabOverlay;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -19,12 +20,12 @@ public class MixinGuiPlayerTabOverlay {
 
     @Redirect(method = "renderPlayerlist", at = @At(value = "INVOKE", target = "Ljava/util/List;subList(II)Ljava/util/List;"))
     public List subList(List list, int fromIndex, int toIndex) {
-        return list.subList(fromIndex, ExtraTab.INSTANCE.isEnabled() ? Math.min(ExtraTab.INSTANCE.tabSize.getValue(), list.size()) : toIndex);
+        return list.subList(fromIndex, ModuleManager.getModule(ExtraTab.class).isEnabled() ? Math.min(ExtraTab.tabSize.getValue(), list.size()) : toIndex);
     }
 
     @Inject(method = "getPlayerName", at = @At("HEAD"), cancellable = true)
     public void getPlayerName(NetworkPlayerInfo networkPlayerInfoIn, CallbackInfoReturnable returnable) {
-        if (ExtraTab.INSTANCE.isEnabled()) {
+        if (ModuleManager.getModule(ExtraTab.class).isEnabled()) {
             returnable.cancel();
             returnable.setReturnValue(ExtraTab.getPlayerName(networkPlayerInfoIn));
         }

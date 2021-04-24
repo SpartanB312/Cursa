@@ -74,10 +74,10 @@ public class Panel {
 
         int panelColor = 0x85000000;
 
-        int color = new Color(GuiManager.INSTANCE.getRed(),GuiManager.INSTANCE.getGreen(),GuiManager.INSTANCE.getBlue(),208).getRGB();
+        int color = new Color(GuiManager.INSTANCE.getRed(),GuiManager.INSTANCE.getGreen(),GuiManager.INSTANCE.getBlue(),GuiManager.INSTANCE.getTransparency()).getRGB();
 
         Gui.drawRect(x, y, x + width, y + height, color);
-        font.drawString(category.getName(), x + (width / 2 - font.getStringWidth(category.getName()) / 2), y + height / 2 - font.getHeight() / 2f + 2, 0xffefefef);
+        font.drawString(category.getName(), x + (width / 2f - font.getStringWidth(category.getName()) / 2f), y + height / 2f - font.getHeight() / 2f + 2, 0xffefefef);
 
         Gui.drawRect(x, y+height, x + width, y +height +1 , panelColor);
 

@@ -1,5 +1,6 @@
 package club.deneb.client.gui.component;
 
+import club.deneb.client.Deneb;
 import club.deneb.client.client.GuiManager;
 import club.deneb.client.features.AbstractModule;
 import club.deneb.client.features.HUDModule;
@@ -74,6 +75,11 @@ public class ModuleButton extends club.deneb.client.gui.component.Component {
         //Background
         Gui.drawRect(x, y - 1, x + width, y + height + 1, 0x85000000);
         font.drawString(module.getName(), x + 1, (int) (y + height / 2 - font.getHeight() / 2f) + 2, module.isEnabled() ? color : fontColor);
+        Deneb.getINSTANCE().getIconFont().drawString(
+                GuiManager.INSTANCE.getIcon(),
+                x + width - 1 - Deneb.getINSTANCE().getIconFont().getStringWidth(GuiManager.INSTANCE.getIcon()) ,
+                (int) (y + height / 2 - font.getHeight() / 2f) + 1,
+                new Color(240,240,240,168).getRGB());
     }
 
     @Override

@@ -1,6 +1,6 @@
 package club.deneb.client.client
 
-import club.deneb.client.features.modules.client.Colors
+import club.deneb.client.features.modules.client.GUI
 import club.deneb.client.utils.ColorUtil
 import java.awt.Color
 
@@ -10,13 +10,18 @@ import java.awt.Color
  */
 object GuiManager {
 
-    private val colorINSTANCE: Colors get() = Colors.getINSTANCE()
-    private val isNull: Boolean get() = Colors.getINSTANCE() == null
+    private val colorINSTANCE: GUI get() = GUI.instance
+    private val isNull: Boolean get() = GUI.instance == null
 
     val normalRed: Int get() = if (isNull) 255 else colorINSTANCE.red.value
     val normalGreen: Int get() = if (isNull) 0 else colorINSTANCE.green.value
     val normalBlue: Int get() = if (isNull) 0 else colorINSTANCE.blue.value
     val normalRGB: Int get() = Color(normalRed, normalGreen, normalBlue).rgb
+
+    val transparency:Int get() = if(isNull) 200 else colorINSTANCE.alpha.value
+
+    val resetButton:Boolean get() = if (isNull) true else colorINSTANCE.resetButton.value
+    val visibleButton:Boolean get() = if (isNull) true else colorINSTANCE.visibleButton.value
 
     val isRainbow: Boolean get() = !isNull && colorINSTANCE.rainbow.value
     val rainbowColor: Int
@@ -37,6 +42,15 @@ object GuiManager {
     val isParticle: Boolean get() = !isNull && colorINSTANCE.particle.value
     val isSettingRect: Boolean get() = !isNull && colorINSTANCE.setting.toggled("Rect")
     val isSettingSide: Boolean get() = !isNull && colorINSTANCE.setting.toggled("Side")
+
+    val icon:String
+        get() = when(colorINSTANCE.iconMode.value){
+            "PaperPin" -> "a"
+            "Gear" -> "E"
+            "Chain" -> "l"
+            "Pointer" -> "g"
+            else -> ""
+        }
 
     val background: Background
         get() = when (colorINSTANCE.background.value) {

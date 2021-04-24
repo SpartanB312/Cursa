@@ -296,7 +296,7 @@ object ConfigManager {
                 loadJson.close()
                 for ((key, value) in moduleJason.entrySet()) {
                     val module = ModuleManager.getModuleByName(key)
-                    if (module !is NullModule) {
+                    if (module !is NullModule && !module.isHUD) {
                         val jsonMod = value as JsonObject
                         val enabled = jsonMod["Enable"].asBoolean
                         if (module.isEnabled && !enabled) module.disable()

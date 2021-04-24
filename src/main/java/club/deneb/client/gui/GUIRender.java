@@ -30,7 +30,7 @@ public class GUIRender {
         int startX = 5;
         for(Category category : Category.values()){
             if(category.isHUD() || category == Category.HIDDEN) continue;
-            panels.add(new Panel(category, startX, 5, 90, 11));
+            panels.add(new Panel(category, startX, 5, 90, 13));
             startX += 95;
         }
     }

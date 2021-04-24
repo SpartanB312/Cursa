@@ -90,7 +90,7 @@ public class AbstractModule {
         toggled = true;
         MinecraftForge.EVENT_BUS.register(this);
         if(!isHUD) NotificationManager.addNewNotification(this,this.toggled);
-        if(Notification.INSTANCE.chat.getValue()) ChatUtil.sendNoSpamMessage(name + " has been " + ChatUtil.SECTIONSIGN + "a" + "Enabled!");
+        if(Notification.chat.getValue()) ChatUtil.sendNoSpamMessage(name + " has been " + ChatUtil.SECTIONSIGN + "a" + "Enabled!");
         onEnable();
     }
 
@@ -98,7 +98,7 @@ public class AbstractModule {
         toggled = false;
         MinecraftForge.EVENT_BUS.unregister(this);
         if(!isHUD) NotificationManager.addNewNotification(this,this.toggled);
-        if(Notification.INSTANCE.chat.getValue()) ChatUtil.sendNoSpamMessage(name + " has been " + ChatUtil.SECTIONSIGN + "c" + "Disabled!");
+        if(Notification.chat.getValue()) ChatUtil.sendNoSpamMessage(name + " has been " + ChatUtil.SECTIONSIGN + "c" + "Disabled!");
         onDisable();
     }
 

@@ -124,7 +124,7 @@ object ForgeEventProcessor {
                     ChatUtil.sendNoSpamMessage("Command Error! Exception: [" + e.message + "]")
                 }
                 event.message = ""
-            } else if (IrcManager.isChatSend()) {
+            } else if (IrcManager.isChatSend) {
                 val s = event.message
                 if (s.startsWith("/")) return
                 Deneb.getINSTANCE().ircManager.client.sendChatMessage(s)
