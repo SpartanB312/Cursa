@@ -33,7 +33,7 @@ import java.nio.ByteBuffer;
 @Mod(modid = Deneb.MOD_ID, name = Deneb.MOD_NAME, version = Deneb.VERSION)
 public class Deneb {
 
-    public final static String VERSION = "0.4.2";
+    public final static String VERSION = "0.5";
     public final static String MOD_ID = "deneb";
     public final static String MOD_NAME = "Deneb";
     public final static String CHAT_PREFIX = "\u30c7\u30cd\u30d6";
@@ -72,12 +72,12 @@ public class Deneb {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event){
 
-        notificationManager = new NotificationManager();
+        notificationManager = NotificationManager.INSTANCE;
         moduleManager = new ModuleManager();
-        friendManager = new FriendManager();
+        friendManager = FriendManager.INSTANCE;
         commandManager = new CommandManager();
-        guiManager = new GuiManager();
-        MinecraftForge.EVENT_BUS.register(eventProcessor = new ForgeEventProcessor());
+        guiManager = GuiManager.INSTANCE;
+        MinecraftForge.EVENT_BUS.register(eventProcessor = ForgeEventProcessor.INSTANCE);
 
         /*
           We must load GUI and HUD after modules!
@@ -88,7 +88,7 @@ public class Deneb {
         /*
           Here we load ConfigManager to set values
          */
-        configManager = new ConfigManager();
+        configManager = ConfigManager.INSTANCE;
         ConfigManager.loadAll();
 
         //Disable GUIScreen

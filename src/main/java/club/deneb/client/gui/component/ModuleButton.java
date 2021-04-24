@@ -64,7 +64,7 @@ public class ModuleButton extends club.deneb.client.gui.component.Component {
 
         solveHUDPos(mouseX, mouseY);
 
-        int color = GuiManager.getINSTANCE().getRGB();
+        int color = GuiManager.INSTANCE.getRgb();
         int fontColor = new Color(255, 255, 255).getRGB();
 
         if (isHovered(mouseX, mouseY).test(this)) {

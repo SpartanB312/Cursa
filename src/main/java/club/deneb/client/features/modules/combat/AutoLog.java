@@ -3,6 +3,7 @@ package club.deneb.client.features.modules.combat;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
 import club.deneb.client.features.ModuleManager;
+import club.deneb.client.utils.CrystalUtil;
 import club.deneb.client.value.Value;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityEnderCrystal;
@@ -39,7 +40,7 @@ public class AutoLog extends Module {
     public void entityJoinWorldEventListener(EntityJoinWorldEvent event){
         if (mc.player == null) return;
         if (event.getEntity() instanceof EntityEnderCrystal) {
-            if (mc.player.getHealth() - AutoCrystal.calculateDamage(event.getEntity().posX,event.getEntity().posY,event.getEntity().posZ, mc.player) < health.getValue()) {
+            if (mc.player.getHealth() - CrystalUtil.INSTANCE.calculateDamage(event.getEntity().posX,event.getEntity().posY,event.getEntity().posZ, mc.player) < health.getValue()) {
                 log();
             }
         }

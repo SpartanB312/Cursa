@@ -74,7 +74,7 @@ public class Panel {
 
         int panelColor = 0x85000000;
 
-        int color = new Color(GuiManager.getINSTANCE().getRed(),GuiManager.getINSTANCE().getGreen(),GuiManager.getINSTANCE().getBlue(),208).getRGB();
+        int color = new Color(GuiManager.INSTANCE.getRed(),GuiManager.INSTANCE.getGreen(),GuiManager.INSTANCE.getBlue(),208).getRGB();
 
         Gui.drawRect(x, y, x + width, y + height, color);
         font.drawString(category.getName(), x + (width / 2 - font.getStringWidth(category.getName()) / 2), y + height / 2 - font.getHeight() / 2f + 2, 0xffefefef);
@@ -134,9 +134,9 @@ public class Panel {
                 }
 
                 if (extendedCount != 0) {
-                    if (GuiManager.getINSTANCE().isSettingRect() || GuiManager.getINSTANCE().isSettingSide())
+                    if (GuiManager.INSTANCE.isSettingRect() || GuiManager.INSTANCE.isSettingSide())
                         Gui.drawRect(x, settingY, x + 1, startY, color);
-                    if (GuiManager.getINSTANCE().isSettingRect()) {
+                    if (GuiManager.INSTANCE.isSettingRect()) {
                         Gui.drawRect(x + width, settingY, x + width - 1, startY, color);
                         Gui.drawRect(x + 1, settingY, x + width - 1, settingY + 1, color);
                         Gui.drawRect(x + 1, startY - 1, x + width - 1, startY, color);

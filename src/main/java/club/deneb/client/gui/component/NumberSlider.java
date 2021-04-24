@@ -33,7 +33,7 @@ public class NumberSlider<T extends Number> extends ValueButton<T> {
     public void render(int mouseX, int mouseY, float partialTicks) {
         if (!getSetting().visible()) sliding = false;
 
-        int color = new Color(GuiManager.getINSTANCE().getRed(),GuiManager.getINSTANCE().getGreen(),GuiManager.getINSTANCE().getBlue(),192).getRGB();
+        int color = new Color(GuiManager.INSTANCE.getRed(),GuiManager.INSTANCE.getGreen(),GuiManager.INSTANCE.getBlue(),192).getRGB();
         int fontColor = new Color(255, 255, 255).getRGB();
 
         //Background

@@ -1,9 +1,5 @@
 # Deneb
-A utility mod for Minecraft 1.12.2 anarchy server.
-
-## Credits
-Some utils and features form Kami and salhack, some mixin from summit.
-Thank you 086 for the basic Kami and ionar for salhack and summit!
+A utility mod base for Minecraft 1.12.2 anarchy server.
 
 ## License
-MIT
+GPL v3 You are not allowed to use this commercially.

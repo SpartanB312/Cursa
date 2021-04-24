@@ -1,26 +1,24 @@
 package club.deneb.client.event;
 
 import club.deneb.client.utils.Wrapper;
-import net.minecraftforge.fml.common.eventhandler.Event;;
+import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class MinecraftEvent extends Event {
+
     private boolean cancelled;
     public Era era = Era.PRE;
     private final float partialTicks;
 
-    public MinecraftEvent()
-    {
+    public MinecraftEvent() {
         partialTicks = Wrapper.getMinecraft().getRenderPartialTicks();
     }
 
-    public MinecraftEvent(Era p_Era)
-    {
+    public MinecraftEvent(Era era) {
         partialTicks = Wrapper.getMinecraft().getRenderPartialTicks();
-        era = p_Era;
+        this.era = era;
     }
 
-    public Era getEra()
-    {
+    public Era getEra() {
         return era;
     }
 
@@ -45,8 +43,7 @@ public class MinecraftEvent extends Event {
         this.era = era;
     }
 
-    public enum Era
-    {
+    public enum Era {
         PRE,
         PERI,
         POST

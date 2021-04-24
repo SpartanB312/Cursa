@@ -24,7 +24,7 @@ public class ActionButton extends ValueButton<Button>{
     @Override
     public void render(int mouseX, int mouseY, float partialTicks) {
 
-        int color = GuiManager.getINSTANCE().getRGB();
+        int color = GuiManager.INSTANCE.getRgb();
 
         //Background
         Gui.drawRect(x, y, x + width, y + height, 0x85000000);

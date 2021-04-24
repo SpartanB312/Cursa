@@ -35,7 +35,7 @@ public class ShowArrayList extends HUDModule {
     @Override
     public void onRender(){
 
-        int fontColor = new Color(GuiManager.getINSTANCE().getRed() / 255f, GuiManager.getINSTANCE().getGreen() / 255f, GuiManager.getINSTANCE().getBlue() / 255f, 1F).getRGB();
+        int fontColor = new Color(GuiManager.INSTANCE.getRed() / 255f, GuiManager.INSTANCE.getGreen() / 255f, GuiManager.INSTANCE.getBlue() / 255f, 1F).getRGB();
 
         List<ActiveModule> modList = new ArrayList<>();
 
@@ -77,7 +77,7 @@ public class ShowArrayList extends HUDModule {
             int blue = rgb & 255;
             int color;
 
-            color = GuiManager.getINSTANCE().isRainbow() ? new Color(red,green,blue).getRGB() : fontColor;
+            color = GuiManager.INSTANCE.isRainbow() ? new Color(red,green,blue).getRGB() : fontColor;
 
             int x=this.x;
 

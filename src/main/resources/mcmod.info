@@ -3,7 +3,7 @@
     "modid": "deneb",
     "name": "Deneb",
     "description": "A utility client base made by B_312.Some basic module from Kami.",
-    "version": "0.4.2",
+    "version": "0.5",
     "mcversion": "1.12.2",
     "logoFile": "deneb.png",
     "updateUrl": "",

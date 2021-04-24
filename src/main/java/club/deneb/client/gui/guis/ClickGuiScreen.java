@@ -1,10 +1,9 @@
 package club.deneb.client.gui.guis;
 
+import club.deneb.client.Deneb;
 import club.deneb.client.client.GuiManager;
 import club.deneb.client.features.ModuleManager;
-import club.deneb.client.Deneb;
 import club.deneb.client.gui.Description;
-import club.deneb.client.gui.component.ActionButton;
 import club.deneb.client.utils.Wrapper;
 import club.deneb.client.utils.particles.ParticleSystem;
 import net.minecraft.client.gui.Gui;
@@ -31,7 +30,7 @@ public class ClickGuiScreen extends GuiScreen {
     @Override
     public void initGui() {
 
-        if (GuiManager.getINSTANCE().getBackground().equals(GuiManager.Background.Blur) || GuiManager.getINSTANCE().getBackground().equals(GuiManager.Background.Both)) {
+        if (GuiManager.INSTANCE.getBackground().equals(GuiManager.Background.Blur) || GuiManager.INSTANCE.getBackground().equals(GuiManager.Background.Both)) {
             if(Wrapper.getMinecraft().entityRenderer.getShaderGroup() != null) {
                 Wrapper.getMinecraft().entityRenderer.getShaderGroup().deleteShaderGroup();
             }
@@ -53,11 +52,11 @@ public class ClickGuiScreen extends GuiScreen {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        if (GuiManager.getINSTANCE().getBackground().equals(GuiManager.Background.Shadow) || GuiManager.getINSTANCE().getBackground().equals(GuiManager.Background.Both)) {
+        if (GuiManager.INSTANCE.getBackground().equals(GuiManager.Background.Shadow) || GuiManager.INSTANCE.getBackground().equals(GuiManager.Background.Both)) {
             drawDefaultBackground();
         }
         if(mc.player == null) Gui.drawRect(0,0,9999,9999,new Color(0,0,0,255).getRGB());
-        if (GuiManager.getINSTANCE().isParticle()) {
+        if (GuiManager.INSTANCE.isParticle()) {
             particleSystem.tick(10);
             particleSystem.render();
         }

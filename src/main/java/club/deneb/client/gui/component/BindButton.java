@@ -30,7 +30,7 @@ public class BindButton extends Component {
     @Override
     public void render(int mouseX, int mouseY, float partialTicks) {
 
-        int color = GuiManager.getINSTANCE().getRGB();
+        int color = GuiManager.INSTANCE.getRgb();
         int fontColor = new Color(255, 255, 255).getRGB();
 
         //Background

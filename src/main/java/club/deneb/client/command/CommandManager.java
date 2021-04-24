@@ -35,6 +35,7 @@ public class CommandManager {
                 System.err.println("Couldn't initiate Command " + aClass.getSimpleName() + "! Err: " + e.getClass().getSimpleName() + ", message: " + e.getMessage());
             }
         });
+        commands.sort(Comparator.comparing(Command::getCommand));
     }
 
     public void runCommands(String s) {

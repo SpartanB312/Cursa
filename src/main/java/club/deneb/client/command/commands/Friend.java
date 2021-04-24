@@ -30,11 +30,11 @@ public class Friend extends Command {
                     }
                 }
             } else if (args[0].equalsIgnoreCase("get")) {
-                ChatUtil.sendNoSpamMessage(FriendManager.getFriendStringList().toString());
+                ChatUtil.sendNoSpamMessage(FriendManager.INSTANCE.friendList().toString());
             } else if (args[0].equalsIgnoreCase("add")) {
                 boolean addedFriend = false;
                 for (EntityPlayer player : Wrapper.getMinecraft().world.playerEntities) {
-                    if (!player.getName().toLowerCase().equals(args[1].toLowerCase())) {
+                    if (!player.getName().equalsIgnoreCase(args[1])) {
                         continue;
                     }
                     FriendManager.addFriend(player.getName());

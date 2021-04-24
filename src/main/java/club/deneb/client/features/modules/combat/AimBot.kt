@@ -12,9 +12,12 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemBow
 import net.minecraft.util.math.MathHelper
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import net.minecraftforge.fml.common.gameevent.TickEvent
 
 /**
- * This is a kotlin module example from KAMI BLUE
+ * This module originally from kami blue
+ * Updated by B_312 on 04/24/2021
  */
 @Module.Info(
     name = "AimBot",
@@ -34,21 +37,24 @@ class AimBot : Module() {
     private val neutral = setting("Neutral Mobs",false).v { mobs.value }
     private val hostile = setting("Hostile Mobs",false).v { mobs.value }
 
-    override fun onTick() {
+    @SubscribeEvent
+    fun onRenderTick(event:TickEvent.RenderTickEvent) {
 
         if (ModuleManager.getModule(Aura::class.java).isEnabled) {
             return
         }
         if (useBow.value) {
-            var bowSlot = 0
+            var bowSlot = -1
             for (i in 0..9) {
                 val potentialBow = mc.player.inventory.getStackInSlot(i)
                 if (potentialBow.getItem() is ItemBow) {
                     bowSlot = mc.player.inventory.getSlotFor(potentialBow)
                 }
             }
-            mc.player.inventory.currentItem = bowSlot
-            mc.playerController.syncCurrentPlayItem()
+            if(bowSlot != -1) {
+                mc.player.inventory.currentItem = bowSlot
+                mc.playerController.syncCurrentPlayItem()
+            }
         }
 
         for (entity in mc.world.loadedEntityList) {
@@ -73,10 +79,8 @@ class AimBot : Module() {
                         faceEntity(entity)
                     }
                     if (!targetFriends.value) {
-                        for (friend in FriendManager.INSTANCE.friends) {
-                            if (friend.name != entity.name) {
-                                faceEntity(entity)
-                            }
+                        if (!FriendManager.isFriend(entity)) {
+                            faceEntity(entity)
                         }
                     }
                 }

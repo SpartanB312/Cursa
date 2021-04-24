@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.eventhandler.Cancelable;
 @Cancelable
 public class PacketEvent extends MinecraftEvent {
 
-    public Packet packet;
+    public Packet<?> packet;
 
     public PacketEvent(final Packet<?> packet) {
         super();
@@ -29,7 +29,7 @@ public class PacketEvent extends MinecraftEvent {
         }
     }
 
-    public Packet getPacket(){
+    public Packet<?> getPacket(){
         return packet;
     }
     public boolean isCancelable() {
