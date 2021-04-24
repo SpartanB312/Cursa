@@ -5,7 +5,7 @@ import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
 import club.deneb.client.utils.DenebTessellator;
 import club.deneb.client.utils.GeometryMasks;
-import club.deneb.client.utils.MathUtil;
+import club.deneb.client.utils.MathsUtils;
 import club.deneb.client.value.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -120,7 +120,8 @@ public class HoleESP extends Module {
             DenebTessellator.release();
         } else {
             IBlockState iBlockState = mc.world.getBlockState(blockPos);
-            Vec3d interp = MathUtil.interpolateEntity(mc.player, mc.getRenderPartialTicks());
+            Vec3d interp = MathsUtils.INSTANCE.interpolateEntity(mc.player, mc.getRenderPartialTicks());
+
             if (mode.toggled("Full")) {
                 DenebTessellator.drawFullBox(iBlockState.getSelectedBoundingBox(mc.world, blockPos).grow(0.0020000000949949026).offset(-interp.x, -interp.y, -interp.z), iWidth, color);
             } else if (mode.toggled("Outline")) {

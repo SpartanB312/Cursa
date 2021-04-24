@@ -148,7 +148,7 @@ public class AutoPenis extends Module {
         if (Legit)
             y += 0.5;
 
-        double d1 = Wrapper.mc.player.posY + Wrapper.mc.player.getEyeHeight() - y;
+        double d1 = Wrapper.minecraft.player.posY + Wrapper.minecraft.player.getEyeHeight() - y;
         double d3 = MathHelper.sqrt(x * x + z * z);
         float yaw = (float) (Math.atan2(z, x) * 180.0D / Math.PI) - 90.0F;
         float pitch = (float) (Math.atan2(d1, d3) * 180.0D / Math.PI);
@@ -171,7 +171,7 @@ public class AutoPenis extends Module {
         if (isDisabled()){
             return;
         }
-        Packet<?> packet = event.packet;
+        Packet<?> packet = event.getPacket();
         if (packet instanceof CPacketPlayer) {
             if (isSpoofingAngles) {
                 ((CPacketPlayer) packet).yaw = (float) yaw;

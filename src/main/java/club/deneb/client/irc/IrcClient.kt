@@ -16,7 +16,7 @@ class IrcClient(host: String, port: Int) : Thread() {
 
     override fun run() {
         try {
-            send("[CONNECT]" + Wrapper.mc.getSession().username)
+            send("[CONNECT]" + Wrapper.minecraft.getSession().username)
             //Declare that we are deneb user!
             send("[CLIENT]Deneb")
             while (!socket.isClosed) {
@@ -30,7 +30,7 @@ class IrcClient(host: String, port: Int) : Thread() {
     }
 
     fun sendChatMessage(msg: String) {
-        send("[MSG][" + Wrapper.mc.getSession().username + "]" + msg)
+        send("[MSG][" + Wrapper.minecraft.getSession().username + "]" + msg)
     }
 
     fun send(msg: String) {

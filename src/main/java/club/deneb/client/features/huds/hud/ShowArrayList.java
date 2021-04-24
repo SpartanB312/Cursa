@@ -47,8 +47,8 @@ public class ShowArrayList extends HUDModule {
         });
 
         if (sort.getValue()) {
-            if(theme.toggled("Colorful")) modList.sort((string, string2) -> font.getStringWidth(string2.string()) - font.getStringWidth(string.string()));
-            else modList.sort((string, string2) -> mc.fontRenderer.getStringWidth(string2.string()) - mc.fontRenderer.getStringWidth(string.string()));
+            if(theme.toggled("Colorful")) modList.sort((string, string2) -> font.getStringWidth(string2.getString()) - font.getStringWidth(string.getString()));
+            else modList.sort((string, string2) -> mc.fontRenderer.getStringWidth(string2.getString()) - mc.fontRenderer.getStringWidth(string.getString()));
         }
 
         int y;
@@ -68,7 +68,7 @@ public class ShowArrayList extends HUDModule {
         int i = 0;
         for (ActiveModule string : modList) {
 
-            int width = theme.toggled("Colorful") ? font.getStringWidth(string.string()) + 4 : mc.fontRenderer.getStringWidth(string.string());
+            int width = theme.toggled("Colorful") ? font.getStringWidth(string.getString()) + 4 : mc.fontRenderer.getStringWidth(string.getString());
             if(width > maxWidth) maxWidth = width;
 
             int rgb = rainbow(index.get() * 100);
@@ -91,22 +91,22 @@ public class ShowArrayList extends HUDModule {
                     case "Colorful" : {
                         Gui.drawRect(x, offset.get() + 1, x + width, offset.get() + 13, rect);
                         Gui.drawRect(x + width - 2, offset.get() + 1, x + width, offset.get() + 13, color);
-                        font.drawString(string.string(), x + 1, offset.get() + 5.5f, color);
+                        font.drawString(string.getString(), x + 1, offset.get() + 5.5f, color);
                         break;
                     }
                     case "Small" : {
                         if(listPos.toggled("RightTop")) {
-                            mc.fontRenderer.drawString(string.string(), x, this.y + mc.fontRenderer.FONT_HEIGHT * i -9, color);
+                            mc.fontRenderer.drawString(string.getString(), x, this.y + mc.fontRenderer.FONT_HEIGHT * i -9, color);
                         } else {
-                            mc.fontRenderer.drawString(string.string(), x, this.y + mc.fontRenderer.FONT_HEIGHT * i, color);
+                            mc.fontRenderer.drawString(string.getString(), x, this.y + mc.fontRenderer.FONT_HEIGHT * i, color);
                         }
                         break;
                     }
                     default:{
                         if(listPos.toggled("RightTop")) {
-                            mc.fontRenderer.drawString(string.string(), x, this.y + mc.fontRenderer.FONT_HEIGHT * i -9, new Color(255, 255, 255).getRGB());
+                            mc.fontRenderer.drawString(string.getString(), x, this.y + mc.fontRenderer.FONT_HEIGHT * i -9, new Color(255, 255, 255).getRGB());
                         } else {
-                            mc.fontRenderer.drawString(string.string(), x, this.y + mc.fontRenderer.FONT_HEIGHT * i, new Color(255, 255, 255).getRGB());
+                            mc.fontRenderer.drawString(string.getString(), x, this.y + mc.fontRenderer.FONT_HEIGHT * i, new Color(255, 255, 255).getRGB());
                         }
                         break;
                     }
@@ -116,22 +116,22 @@ public class ShowArrayList extends HUDModule {
                     case "Colorful": {
                         Gui.drawRect(x, offset.get() + 1, x + width, offset.get() + 13, rect);
                         Gui.drawRect(x, offset.get() + 1, x + 2, offset.get() + 13, color);
-                        font.drawString(string.string(), x + 3, offset.get() + 5.5f, color);
+                        font.drawString(string.getString(), x + 3, offset.get() + 5.5f, color);
                         break;
                     }
                     case "Small" : {
                         if(listPos.toggled("LeftTop")) {
-                            mc.fontRenderer.drawString(string.string(), x, this.y + mc.fontRenderer.FONT_HEIGHT * i -9, color);
+                            mc.fontRenderer.drawString(string.getString(), x, this.y + mc.fontRenderer.FONT_HEIGHT * i -9, color);
                         } else {
-                            mc.fontRenderer.drawString(string.string(), x, this.y + mc.fontRenderer.FONT_HEIGHT * i, color);
+                            mc.fontRenderer.drawString(string.getString(), x, this.y + mc.fontRenderer.FONT_HEIGHT * i, color);
                         }
                         break;
                     }
                     default:{
                         if(listPos.toggled("LeftTop")) {
-                            mc.fontRenderer.drawString(string.string(), x, this.y + mc.fontRenderer.FONT_HEIGHT * i -9, new Color(255, 255, 255).getRGB());
+                            mc.fontRenderer.drawString(string.getString(), x, this.y + mc.fontRenderer.FONT_HEIGHT * i -9, new Color(255, 255, 255).getRGB());
                         } else {
-                            mc.fontRenderer.drawString(string.string(), x, this.y + mc.fontRenderer.FONT_HEIGHT * i, new Color(255, 255, 255).getRGB());
+                            mc.fontRenderer.drawString(string.getString(), x, this.y + mc.fontRenderer.FONT_HEIGHT * i, new Color(255, 255, 255).getRGB());
                         }
                         break;
                     }

@@ -3,7 +3,6 @@ package club.deneb.client.features.modules.render
 import club.deneb.client.event.events.render.RenderEvent
 import club.deneb.client.features.Category
 import club.deneb.client.features.Module
-import club.deneb.client.utils.ColourUtils
 import club.deneb.client.utils.DenebTessellator
 import club.deneb.client.utils.GeometryMasks
 import club.deneb.client.utils.Wrapper
@@ -15,6 +14,7 @@ import net.minecraft.item.ItemShulkerBox
 import net.minecraft.tileentity.*
 import net.minecraft.util.math.BlockPos
 import org.lwjgl.opengl.GL11
+import java.awt.Color
 import java.util.*
 
 @Module.Info(
@@ -25,19 +25,19 @@ import java.util.*
 class StorageESP : Module() {
 
     private fun getTileEntityColor(tileEntity: TileEntity): Int {
-        return if (tileEntity is TileEntityChest || tileEntity is TileEntityDispenser || tileEntity is TileEntityShulkerBox) ColourUtils.Colors.ORANGE else if (tileEntity is TileEntityEnderChest) ColourUtils.Colors.PURPLE else if (tileEntity is TileEntityFurnace) ColourUtils.Colors.GRAY else if (tileEntity is TileEntityHopper) ColourUtils.Colors.DARK_RED else -1
+        return if (tileEntity is TileEntityChest || tileEntity is TileEntityDispenser || tileEntity is TileEntityShulkerBox) Color(255,128,0,255).rgb else if (tileEntity is TileEntityEnderChest) Color(163,73,163,255).rgb else if (tileEntity is TileEntityFurnace) Color(127,127,127,255).rgb else if (tileEntity is TileEntityHopper) Color(64,0,0,255).rgb else -1
     }
 
     private fun getEntityColor(entity: Entity): Int {
-        return if (entity is EntityMinecartChest) ColourUtils.Colors.ORANGE else if (entity is EntityItemFrame &&
+        return if (entity is EntityMinecartChest) Color(255,128,0,255).rgb else if (entity is EntityItemFrame &&
             entity.displayedItem.getItem() is ItemShulkerBox
-        ) ColourUtils.Colors.YELLOW else -1
+        ) Color(255,255,0,255).rgb else -1
     }
 
     override fun onWorldRender(event: RenderEvent) {
         val a = ArrayList<Triplet<BlockPos, Int, Int>>()
         GlStateManager.pushMatrix()
-        for (tileEntity in Wrapper.getWorld().loadedTileEntityList) {
+        for (tileEntity in Wrapper.world.loadedTileEntityList) {
             val pos = tileEntity.pos
             val color = getTileEntityColor(tileEntity)
             var side = GeometryMasks.Quad.ALL
@@ -56,7 +56,7 @@ class StorageESP : Module() {
                 )
             ) //GeometryTessellator.drawCuboid(event.getBuffer(), pos, GeometryMasks.Line.ALL, color);
         }
-        for (entity in Wrapper.getWorld().loadedEntityList) {
+        for (entity in Wrapper.world.loadedEntityList) {
             val pos = entity.position
             val color = getEntityColor(entity)
             if (color != -1) a.add(

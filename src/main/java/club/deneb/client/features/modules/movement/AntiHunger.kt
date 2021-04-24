@@ -14,8 +14,8 @@ import net.minecraft.network.play.client.CPacketPlayer
 class AntiHunger : Module() {
     @SubscribeEvent
     fun packetListener(event: PacketEvent.Send) {
-        if (event.getPacket() is CPacketPlayer) {
-            (event.getPacket() as CPacketPlayer).onGround = false
+        if (event.packet is CPacketPlayer) {
+            (event.packet as CPacketPlayer).onGround = false
         }
     }
 }

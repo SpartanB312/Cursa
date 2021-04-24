@@ -2,12 +2,12 @@ package club.deneb.client.features.modules.render
 
 import club.deneb.client.features.Category
 import club.deneb.client.features.Module
-import club.deneb.client.utils.ColourHolder
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import java.awt.Color
 
 @Module.Info(
     name = "ArmourHUD",
@@ -53,9 +53,7 @@ class ArmourHUD : Module() {
                     dmg.toString() + "",
                     (x + 8 - mc.fontRenderer.getStringWidth(dmg.toString() + "") / 2).toFloat(),
                     (y - 11).toFloat(),
-                    ColourHolder.toHex(
-                        (red * 255).toInt(), (green * 255).toInt(), 0
-                    )
+                    Color((red * 255).toInt(), (green * 255).toInt(), 0).rgb
                 )
             }
         }

@@ -16,9 +16,9 @@ class Blink : Module() {
 
     @SubscribeEvent
     fun onPacket(event: PacketEvent.Send) {
-        if (isEnabled && event.getPacket() is CPacketPlayer) {
+        if (isEnabled && event.packet is CPacketPlayer) {
             event.cancel()
-            packets.add(event.getPacket() as CPacketPlayer)
+            packets.add(event.packet as CPacketPlayer)
         }
     }
 

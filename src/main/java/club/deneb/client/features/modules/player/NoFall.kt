@@ -23,8 +23,8 @@ class NoFall : Module() {
     private var last: Long = 0
     @SubscribeEvent
     fun onSendPacket(event: PacketEvent.Send) {
-        if (event.getPacket() is CPacketPlayer && packet.value) {
-            (event.getPacket() as CPacketPlayer).onGround = true
+        if (event.packet is CPacketPlayer && packet.value) {
+            (event.packet as CPacketPlayer).onGround = true
         }
     }
 

@@ -12,7 +12,7 @@ import club.deneb.client.value.ModeValue
 )
 class AntiFog : Module() {
 
-    override fun onInit() {
+    init {
         mode = setting("Mode", "NoFog", listOf("NoFog", "Air"))
     }
 

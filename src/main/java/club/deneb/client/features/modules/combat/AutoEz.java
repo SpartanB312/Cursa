@@ -76,10 +76,10 @@ public class AutoEz extends Module {
         if (this.targetedPlayers == null) {
             this.targetedPlayers = new ConcurrentHashMap<>();
         }
-        if (!(packetSent.packet instanceof CPacketUseEntity)) {
+        if (!(packetSent.getPacket() instanceof CPacketUseEntity)) {
             return;
         }
-        CPacketUseEntity cPacketUseEntity = (CPacketUseEntity)packetSent.packet;
+        CPacketUseEntity cPacketUseEntity = (CPacketUseEntity)packetSent.getPacket();
         if (!cPacketUseEntity.getAction().equals(CPacketUseEntity.Action.ATTACK)) {
             return;
         }

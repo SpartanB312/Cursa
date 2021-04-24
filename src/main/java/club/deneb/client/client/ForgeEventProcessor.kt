@@ -58,7 +58,7 @@ object ForgeEventProcessor {
         if (event.isCanceled || Utils.nullCheck()) return
         try {
             var target = RenderGameOverlayEvent.ElementType.EXPERIENCE
-            if (!Wrapper.getPlayer().isCreative && Wrapper.getPlayer().getRidingEntity() is AbstractHorse) target =
+            if (!Wrapper.player.isCreative && Wrapper.player.getRidingEntity() is AbstractHorse) target =
                 RenderGameOverlayEvent.ElementType.HEALTHMOUNT
             if (event.type == target) {
                 ModuleManager.onRender(event)
@@ -80,8 +80,8 @@ object ForgeEventProcessor {
                 val scaledResolution = ScaledResolution(Minecraft.getMinecraft())
                 val i = scaledResolution.scaledWidth
                 val j = scaledResolution.scaledHeight
-                val gui = GuiShulkerBox(Wrapper.getPlayer().inventory, Peek.sb)
-                gui.setWorldAndResolution(Wrapper.getMinecraft(), i, j)
+                val gui = GuiShulkerBox(Wrapper.player.inventory, Peek.sb)
+                gui.setWorldAndResolution(Wrapper.minecraft, i, j)
                 Minecraft.getMinecraft().displayGuiScreen(gui)
                 Peek.sb = null
             }
@@ -113,7 +113,7 @@ object ForgeEventProcessor {
             if (event.message.startsWith(Deneb.getINSTANCE().commandManager.getCmdPrefix())) {
                 event.isCanceled = true
                 try {
-                    Wrapper.getMinecraft().ingameGUI.chatGUI.addToSentMessages(event.message)
+                    Wrapper.minecraft.ingameGUI.chatGUI.addToSentMessages(event.message)
                     if (event.message.length > 1) Deneb.getINSTANCE().commandManager.runCommands(
                         event.message.substring(
                             Deneb.getINSTANCE().commandManager.getCmdPrefix().length - 1

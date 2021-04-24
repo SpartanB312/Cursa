@@ -1,9 +1,8 @@
 package club.deneb.client.gui.component;
 
+import club.deneb.client.Deneb;
 import club.deneb.client.gui.Panel;
 import club.deneb.client.gui.font.CFontRenderer;
-import club.deneb.client.Deneb;
-import club.deneb.client.utils.Timer;
 import net.minecraft.client.Minecraft;
 
 /**
@@ -21,7 +20,7 @@ public abstract class Component {
     public void keyTyped(char typedChar, int keyCode) { }
 
     public void solvePos(){
-        this.x = father.x;
-        this.y = father.y;
+        this.x = father.getX();
+        this.y = father.getY();
     }
 }

@@ -150,21 +150,21 @@ object ConfigManager {
             val father = JsonObject()
 
             //Click GUI
-            for (panel in GUIRender.getINSTANCE().panels) {
+            for (panel in GUIRender.panels) {
                 val jsonGui = JsonObject()
                 jsonGui.addProperty("X", panel.x)
                 jsonGui.addProperty("Y", panel.y)
                 jsonGui.addProperty("Extended", panel.extended)
-                father.add(panel.category.getName(), jsonGui)
+                father.add(panel.category.categoryName, jsonGui)
             }
 
             //HUD Editor
-            for (panel in HUDRender.getINSTANCE().panels) {
+            for (panel in HUDRender.panels) {
                 val jsonGui = JsonObject()
                 jsonGui.addProperty("X", panel.x)
                 jsonGui.addProperty("Y", panel.y)
                 jsonGui.addProperty("Extended", panel.extended)
-                father.add(panel.category.getName(), jsonGui)
+                father.add(panel.category.categoryName, jsonGui)
             }
             val saveJSon = PrintWriter(FileWriter(guiFile))
             saveJSon.println(gsonPretty.toJson(father))

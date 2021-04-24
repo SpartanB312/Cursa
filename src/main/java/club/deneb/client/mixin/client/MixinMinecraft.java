@@ -25,7 +25,7 @@ public class MixinMinecraft {
 
     @Inject(method = "displayGuiScreen", at = @At("HEAD"), cancellable = true)
     public void displayGuiScreen(GuiScreen guiScreenIn, CallbackInfo info) {
-        GuiScreenEvent.Closed screenEvent = new GuiScreenEvent.Closed(Wrapper.getMinecraft().currentScreen);
+        GuiScreenEvent.Closed screenEvent = new GuiScreenEvent.Closed(Wrapper.mc.currentScreen);
         MinecraftForge.EVENT_BUS.post(screenEvent);
         GuiScreenEvent.Displayed screenEvent1 = new GuiScreenEvent.Displayed(guiScreenIn);
         MinecraftForge.EVENT_BUS.post(screenEvent1);

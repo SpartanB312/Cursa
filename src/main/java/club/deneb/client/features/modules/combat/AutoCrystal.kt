@@ -279,7 +279,11 @@ class AutoCrystal : Module() {
         val positions = NonNullList.create<BlockPos>()
         positions
             .addAll(
-                BlockInteractionHelper.getSphere(playerPos, range.toFloat(), range.toInt(), false, true, 0)
+                BlockInteractionHelper.getSphere(playerPos, range.toFloat(), range.toInt(),
+                    hollow = false,
+                    sphere = true,
+                    plus_y = 0
+                )
                     .stream()
                     .filter { v: BlockPos -> canPlaceCrystal(v, oneThirtyPlace.value) }.collect(Collectors.toList())
             )

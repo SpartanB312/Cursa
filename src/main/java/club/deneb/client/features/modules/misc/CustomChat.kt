@@ -12,12 +12,12 @@ class CustomChat : Module() {
     private val commands = setting("Commands", false)
     @SubscribeEvent
     fun listener(event: PacketEvent.Send) {
-        if (event.getPacket() is CPacketChatMessage) {
-            var s = (event.getPacket() as CPacketChatMessage).getMessage()
+        if (event.packet is CPacketChatMessage) {
+            var s = (event.packet as CPacketChatMessage).getMessage()
             if (s.startsWith("/") && !commands.value) return
             s += Deneb.CHAT_SUFFIX
             if (s.length >= 256) s = s.substring(0, 256)
-            (event.getPacket() as CPacketChatMessage).message = s
+            (event.packet as CPacketChatMessage).message = s
         }
     }
 }

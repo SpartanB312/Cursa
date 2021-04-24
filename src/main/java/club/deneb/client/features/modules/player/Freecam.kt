@@ -97,7 +97,7 @@ class Freecam : Module() {
 
     @SubscribeEvent
     fun sendListener(event: PacketEvent.Send) {
-        if (event.getPacket() is CPacketPlayer || event.getPacket() is CPacketInput) {
+        if (event.packet is CPacketPlayer || event.packet is CPacketInput) {
             event.cancel()
         }
     }

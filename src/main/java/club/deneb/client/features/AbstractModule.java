@@ -46,13 +46,12 @@ public class AbstractModule {
         return values;
     }
 
-    public boolean reset(){
+    public void reset(){
         for(Value<?> value  : getValues()){
             value.reset();
         }
         this.disable();
         this.setBind(Keyboard.KEY_NONE);
-        return true;
     }
 
     public static List<String> listOf(String ...strings){

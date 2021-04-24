@@ -66,7 +66,7 @@ class Speed : Module() {
             Blocks.FROSTED_ICE.slipperiness = slipperiness.value
         }
         if (useTimer.value) {
-            timers.SetOverrideSpeed(1.088f)
+            timers.setOverrideSpeed(1.088f)
         }
         val boost = abs(mc.player.rotationYawHead - mc.player.rotationYaw) < 90
         if (mc.player.moveForward != 0.0f || mc.player.moveStrafing != 0.0f) {

@@ -35,7 +35,7 @@ public class MixinModelBiped {
         if (p_setRotationAngles_7_ instanceof EntityPlayer && p_setRotationAngles_7_.equals(Minecraft.getMinecraft().player)) {
             RenderModelEvent event = new RenderModelEvent();
             MinecraftForge.EVENT_BUS.post(event);
-            if(event.rotating)bipedHead.rotateAngleX = event.pitch / (180F / (float) Math.PI);
+            if(event.getRotating())bipedHead.rotateAngleX = event.getPitch() / (180F / (float) Math.PI);
         }
     }
 }

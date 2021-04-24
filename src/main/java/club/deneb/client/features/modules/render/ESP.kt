@@ -23,9 +23,9 @@ class ESP : Module() {
     private val mobs = setting("Mobs", false)
 
     override fun onWorldRender(event: RenderEvent) {
-        if (Wrapper.getMinecraft().getRenderManager().options == null) return
-        val isThirdPersonFrontal = Wrapper.getMinecraft().getRenderManager().options.thirdPersonView == 2
-        val viewerYaw = Wrapper.getMinecraft().getRenderManager().playerViewY
+        if (Wrapper.minecraft.getRenderManager().options == null) return
+        val isThirdPersonFrontal = Wrapper.minecraft.getRenderManager().options.thirdPersonView == 2
+        val viewerYaw = Wrapper.minecraft.getRenderManager().playerViewY
         mc.world.loadedEntityList.stream()
             .filter { e: Entity -> EntityUtil.isLiving(e) }
             .filter { entity: Entity -> mc.player !== entity }

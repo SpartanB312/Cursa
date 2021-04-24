@@ -159,7 +159,7 @@ public class ModuleManager {
         GlStateManager.disableDepth();
 
         GlStateManager.glLineWidth(1f);
-        Vec3d renderPos = getInterpolatedPos(Objects.requireNonNull(Wrapper.getMinecraft().getRenderViewEntity()), event.getPartialTicks());
+        Vec3d renderPos = getInterpolatedPos(Objects.requireNonNull(Wrapper.mc.getRenderViewEntity()), event.getPartialTicks());
 
         RenderEvent e = new RenderEvent(DenebTessellator.INSTANCE, renderPos);
         e.resetTranslation();

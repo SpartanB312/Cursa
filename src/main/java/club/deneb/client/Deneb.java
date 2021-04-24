@@ -84,8 +84,8 @@ public class Deneb {
         /*
           We must load GUI and HUD after modules!
          */
-        guiRender = new GUIRender();
-        hudEditor = new HUDRender();
+        guiRender = GUIRender.INSTANCE;
+        hudEditor = HUDRender.INSTANCE;
 
         /*
           Here we load ConfigManager to set values

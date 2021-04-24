@@ -10,7 +10,7 @@ import net.minecraft.network.play.client.CPacketConfirmTeleport
 class PortalGodMode : Module() {
     @SubscribeEvent
     fun onPacket(event: PacketEvent.Send) {
-        if (isEnabled && event.getPacket() is CPacketConfirmTeleport) {
+        if (isEnabled && event.packet is CPacketConfirmTeleport) {
             event.cancel()
         }
     }

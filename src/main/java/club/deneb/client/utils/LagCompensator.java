@@ -21,7 +21,7 @@ public class LagCompensator implements EventListener {
 
     @SubscribeEvent
     public void onPacketEvent(PacketEvent.Receive event) {
-        if (event.packet instanceof SPacketTimeUpdate) {
+        if (event.getPacket() instanceof SPacketTimeUpdate) {
             INSTANCE.onTimeUpdate();
         }
     }

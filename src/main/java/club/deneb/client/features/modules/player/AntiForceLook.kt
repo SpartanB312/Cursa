@@ -11,8 +11,8 @@ import club.deneb.client.features.Module
 class AntiForceLook : Module() {
     @SubscribeEvent
     fun onPacket(event: PacketEvent.Receive) {
-        if (event.getPacket() is SPacketPlayerPosLook) {
-            val packet = event.getPacket() as SPacketPlayerPosLook
+        if (event.packet is SPacketPlayerPosLook) {
+            val packet = event.packet as SPacketPlayerPosLook
             packet.yaw = mc.player.rotationYaw
             packet.pitch = mc.player.rotationPitch
         }

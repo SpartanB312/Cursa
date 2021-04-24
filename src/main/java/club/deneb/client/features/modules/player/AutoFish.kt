@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 class AutoFish : Module() {
     @SubscribeEvent
     fun onPacket(event: PacketEvent.Receive) {
-        if (mc.player != null && (mc.player.heldItemMainhand.getItem() === Items.FISHING_ROD || mc.player.heldItemOffhand.getItem() === Items.FISHING_ROD) && event.getPacket() is SPacketSoundEffect && SoundEvents.ENTITY_BOBBER_SPLASH == (event.getPacket() as SPacketSoundEffect).getSound()) {
+        if (mc.player != null && (mc.player.heldItemMainhand.getItem() === Items.FISHING_ROD || mc.player.heldItemOffhand.getItem() === Items.FISHING_ROD) && event.packet is SPacketSoundEffect && SoundEvents.ENTITY_BOBBER_SPLASH == (event.packet as SPacketSoundEffect).getSound()) {
             Thread {
                 try {
                     Thread.sleep(200)
