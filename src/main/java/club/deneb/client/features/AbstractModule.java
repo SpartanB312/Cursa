@@ -82,6 +82,10 @@ public class AbstractModule {
         return name;
     }
 
+    public void register(Value<?> value){
+        this.getValues().add(value);
+    }
+
     public void enable() {
         toggled = true;
         MinecraftForge.EVENT_BUS.register(this);

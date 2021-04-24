@@ -6,6 +6,7 @@ import club.deneb.client.features.Module
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent
 import club.deneb.client.features.ModuleManager
+import club.deneb.client.features.modules.combat.ShulkerRegear.Companion.shouldPauseOffhand
 import net.minecraft.init.Items
 import net.minecraft.inventory.EntityEquipmentSlot
 import club.deneb.client.utils.EntityUtil
@@ -44,6 +45,8 @@ class OffHandCrystal : Module() {
         if ((ModuleManager.getModule(AutoTotem::class.java) as AutoTotem).soft.value == false) {
             (ModuleManager.getModule(AutoTotem::class.java) as AutoTotem).soft.value = true
         }
+
+        if (shouldPauseOffhand()) return
 
         if (mc.player == null) return
 

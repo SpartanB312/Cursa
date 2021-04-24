@@ -34,6 +34,9 @@ public class AutoTotem extends Module {
         if (mc.player == null) {
             return;
         }
+
+        if(ShulkerRegear.Companion.shouldPauseOffhand())return;
+
         if (!findTotems()) {
             return;
         }

@@ -130,6 +130,10 @@ object CrystalUtil {
         return sqrt(x1 * x1 + y1 * y1 + z1 * z1)
     }
 
+    fun getVecDistance(blockPos: BlockPos,entity:Entity):Double{
+        return getVecDistance(blockPos,entity.posX,entity.posY,entity.posZ)
+    }
+
     fun glBillboardDistanceScaled(x: Float, y: Float, z: Float, player: EntityPlayer) {
         glBillboard(x, y, z)
         val distance = player.getDistance(x.toDouble(), y.toDouble(), z.toDouble()).toInt()
