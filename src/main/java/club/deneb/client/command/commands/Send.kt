@@ -2,7 +2,7 @@ package club.deneb.client.command.commands
 
 import club.deneb.client.command.Command
 import club.deneb.client.utils.ChatUtil.sendNoSpamErrorMessage
-import club.deneb.client.utils.Wrapper.player
+import net.minecraft.client.Minecraft
 import net.minecraft.network.play.client.CPacketChatMessage
 
 /**
@@ -17,7 +17,7 @@ class Send : Command() {
             for (arg in args) {
                 content = "$content $arg"
             }
-            player.connection.sendPacket(CPacketChatMessage(content))
+            Minecraft.getMinecraft().player.connection.sendPacket(CPacketChatMessage(content))
         } catch (e: Exception) {
             sendNoSpamErrorMessage(getSyntax())
         }

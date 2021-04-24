@@ -5,7 +5,6 @@ import club.deneb.client.client.GuiManager
 import club.deneb.client.client.GuiManager.background
 import club.deneb.client.client.GuiManager.isParticle
 import club.deneb.client.features.ModuleManager
-import club.deneb.client.utils.Wrapper
 import club.deneb.client.utils.particles.ParticleSystem
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen

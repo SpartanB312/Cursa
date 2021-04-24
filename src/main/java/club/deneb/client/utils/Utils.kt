@@ -6,7 +6,7 @@ import net.minecraft.init.SoundEvents
 
 object Utils {
     fun nullCheck(): Boolean {
-        return Wrapper.player == null || Wrapper.world == null
+        return Minecraft.getMinecraft().player == null || Minecraft.getMinecraft().world == null
     }
 
     @JvmStatic

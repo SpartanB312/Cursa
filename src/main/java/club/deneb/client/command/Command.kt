@@ -1,6 +1,5 @@
 package club.deneb.client.command
 
-import club.deneb.client.utils.Wrapper
 import net.minecraft.client.Minecraft
 
 /**

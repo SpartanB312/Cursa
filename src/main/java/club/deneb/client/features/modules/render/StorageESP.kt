@@ -5,7 +5,7 @@ import club.deneb.client.features.Category
 import club.deneb.client.features.Module
 import club.deneb.client.utils.DenebTessellator
 import club.deneb.client.utils.GeometryMasks
-import club.deneb.client.utils.Wrapper
+import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.entity.Entity
 import net.minecraft.entity.item.EntityItemFrame
@@ -37,7 +37,7 @@ class StorageESP : Module() {
     override fun onWorldRender(event: RenderEvent) {
         val a = ArrayList<Triplet<BlockPos, Int, Int>>()
         GlStateManager.pushMatrix()
-        for (tileEntity in Wrapper.world.loadedTileEntityList) {
+        for (tileEntity in Minecraft.getMinecraft().world.loadedTileEntityList) {
             val pos = tileEntity.pos
             val color = getTileEntityColor(tileEntity)
             var side = GeometryMasks.Quad.ALL
@@ -56,7 +56,7 @@ class StorageESP : Module() {
                 )
             ) //GeometryTessellator.drawCuboid(event.getBuffer(), pos, GeometryMasks.Line.ALL, color);
         }
-        for (entity in Wrapper.world.loadedEntityList) {
+        for (entity in Minecraft.getMinecraft().world.loadedEntityList) {
             val pos = entity.position
             val color = getEntityColor(entity)
             if (color != -1) a.add(

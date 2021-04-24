@@ -4,7 +4,6 @@ import club.deneb.client.event.events.render.RenderEvent
 import club.deneb.client.features.Category
 import club.deneb.client.features.Module
 import club.deneb.client.utils.EntityUtil
-import club.deneb.client.utils.Wrapper
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.entity.Entity

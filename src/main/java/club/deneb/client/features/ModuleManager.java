@@ -1,14 +1,13 @@
 package club.deneb.client.features;
 
-import club.deneb.client.utils.ClassFinder;
 import club.deneb.client.Deneb;
 import club.deneb.client.event.events.render.RenderEvent;
-import club.deneb.client.gui.guis.HUDEditorScreen;
 import club.deneb.client.features.modules.client.NullHUD;
 import club.deneb.client.features.modules.client.NullModule;
+import club.deneb.client.gui.guis.HUDEditorScreen;
+import club.deneb.client.utils.ClassFinder;
 import club.deneb.client.utils.DenebTessellator;
 import club.deneb.client.utils.EntityUtil;
-import club.deneb.client.utils.Wrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;

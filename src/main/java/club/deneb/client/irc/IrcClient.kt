@@ -2,7 +2,6 @@ package club.deneb.client.irc
 
 import club.deneb.client.Deneb
 import club.deneb.client.utils.ChatUtil
-import club.deneb.client.utils.Wrapper
 import net.minecraft.client.Minecraft
 import java.io.DataInputStream
 import java.io.DataOutputStream

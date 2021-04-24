@@ -62,7 +62,7 @@ public class EntityUtil {
     }
 
     public static boolean isFakeLocalPlayer(Entity entity) {
-        return entity != null && entity.getEntityId() == -100 && Wrapper.getPlayer() != entity;
+        return entity != null && entity.getEntityId() == -100 && Minecraft.getMinecraft().player != entity;
     }
 
     public static boolean isAboveWater(Entity entity) { return isAboveWater(entity, false); }
@@ -75,7 +75,7 @@ public class EntityUtil {
             for (int z = MathHelper.floor(entity.posZ); z < MathHelper.ceil(entity.posZ); z++) {
                 BlockPos pos = new BlockPos(x, MathHelper.floor(y), z);
 
-                if (Wrapper.getWorld().getBlockState(pos).getBlock() instanceof BlockLiquid) return true;
+                if (Minecraft.getMinecraft().world.getBlockState(pos).getBlock() instanceof BlockLiquid) return true;
             }
 
         return false;
@@ -112,7 +112,7 @@ public class EntityUtil {
             }
         } else if(entity instanceof EntityWolf) {
             return ((EntityWolf) entity).isAngry() &&
-                    !Wrapper.getPlayer().equals(((EntityWolf) entity).getOwner());
+                    !Minecraft.getMinecraft().player.equals(((EntityWolf) entity).getOwner());
         } else if(entity instanceof EntityEnderman) {
             return ((EntityEnderman) entity).isScreaming();
         }
@@ -153,7 +153,7 @@ public class EntityUtil {
     }
 
     public static List<Entity> getEntityList(){
-        return Wrapper.getWorld().getLoadedEntityList();
+        return Minecraft.getMinecraft().world.getLoadedEntityList();
     }
 
     public static BlockPos getLocalPlayerPosFloored() {

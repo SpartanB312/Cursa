@@ -1,5 +1,6 @@
 package club.deneb.client.utils
 
+import net.minecraft.client.Minecraft
 import net.minecraft.init.Blocks
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.math.BlockPos
@@ -59,7 +60,7 @@ object BlockInteractionHelper {
     private fun hasNeighbour(blockPos: BlockPos): Boolean {
         for (side in EnumFacing.values()) {
             val neighbour = blockPos.offset(side)
-            if (!Wrapper.world.getBlockState(neighbour).material.isReplaceable) {
+            if (!Minecraft.getMinecraft().world.getBlockState(neighbour).material.isReplaceable) {
                 return true
             }
         }

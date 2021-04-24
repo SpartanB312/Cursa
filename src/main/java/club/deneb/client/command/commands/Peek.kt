@@ -1,9 +1,8 @@
 package club.deneb.client.command.commands
 
 import club.deneb.client.command.Command
-import club.deneb.client.utils.Wrapper.player
-import club.deneb.client.utils.Wrapper.world
 import club.deneb.client.utils.ChatUtil.sendNoSpamErrorMessage
+import net.minecraft.client.Minecraft
 import net.minecraft.item.ItemShulkerBox
 import net.minecraft.tileentity.TileEntityShulkerBox
 import java.lang.Exception
@@ -15,12 +14,12 @@ import java.lang.Exception
 @Command.Info(command = "peek", description = "Look inside the contents of a shulker box without opening it.")
 class Peek : Command() {
     override fun onCall(s: String, vararg args: String) {
-        val item = player.inventory.getCurrentItem()
+        val item = Minecraft.getMinecraft().player.inventory.getCurrentItem()
         try {
             if (item.getItem() is ItemShulkerBox) {
                 val entityBox = TileEntityShulkerBox()
                 entityBox.blockType = (item.getItem() as ItemShulkerBox).block
-                entityBox.world = world
+                entityBox.world = Minecraft.getMinecraft().world
                 entityBox.readFromNBT(item.tagCompound!!.getCompoundTag("BlockEntityTag"))
                 sb = entityBox
             } else {

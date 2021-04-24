@@ -1,5 +1,6 @@
 package club.deneb.client.features;
 
+import club.deneb.client.Deneb;
 import club.deneb.client.client.NotificationManager;
 import club.deneb.client.event.events.render.RenderEvent;
 import club.deneb.client.features.modules.client.Notification;
@@ -7,8 +8,6 @@ import club.deneb.client.gui.font.CFontRenderer;
 import club.deneb.client.utils.ChatUtil;
 import club.deneb.client.utils.clazz.Button;
 import club.deneb.client.value.*;
-import club.deneb.client.Deneb;
-import club.deneb.client.utils.Wrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraftforge.client.event.InputUpdateEvent;

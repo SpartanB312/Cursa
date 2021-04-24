@@ -2,9 +2,8 @@ package club.deneb.client.mixin.client;
 
 import club.deneb.client.client.ConfigManager;
 import club.deneb.client.event.events.client.GuiScreenEvent;
-import club.deneb.client.utils.Wrapper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.crash.CrashReport;
 import net.minecraftforge.common.MinecraftForge;
 import org.spongepowered.asm.mixin.Mixin;

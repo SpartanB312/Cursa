@@ -3,7 +3,6 @@ package club.deneb.client.features.modules.combat;
 import club.deneb.client.event.events.client.PacketEvent;
 import club.deneb.client.features.Category;
 import club.deneb.client.features.Module;
-import club.deneb.client.utils.Wrapper;
 import club.deneb.client.value.Value;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;

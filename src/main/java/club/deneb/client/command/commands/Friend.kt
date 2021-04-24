@@ -1,17 +1,15 @@
 package club.deneb.client.command.commands
 
 import club.deneb.client.client.FriendManager.addFriend
-import club.deneb.client.utils.ChatUtil.sendNoSpamMessage
 import club.deneb.client.client.FriendManager.friendList
-import club.deneb.client.utils.ChatUtil.sendNoSpamErrorMessage
 import club.deneb.client.client.FriendManager.removeFriend
-import club.deneb.client.utils.EntityUtil
-import net.minecraft.entity.player.EntityPlayer
 import club.deneb.client.command.Command
 import club.deneb.client.utils.ChatUtil
-import club.deneb.client.utils.Wrapper
+import club.deneb.client.utils.ChatUtil.sendNoSpamErrorMessage
+import club.deneb.client.utils.ChatUtil.sendNoSpamMessage
+import club.deneb.client.utils.EntityUtil
 import net.minecraft.client.Minecraft
-import java.lang.Exception
+import net.minecraft.entity.player.EntityPlayer
 
 /**
  * Created by killRED on 2020

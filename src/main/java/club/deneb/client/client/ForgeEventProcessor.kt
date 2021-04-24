@@ -1,28 +1,25 @@
 package club.deneb.client.client
 
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.client.event.RenderWorldLastEvent
+import club.deneb.client.Deneb
+import club.deneb.client.command.commands.Peek
 import club.deneb.client.features.ModuleManager
-import java.lang.RuntimeException
+import club.deneb.client.irc.IrcManager
 import club.deneb.client.utils.ChatUtil
+import club.deneb.client.utils.DenebTessellator
+import club.deneb.client.utils.Utils
+import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.ScaledResolution
+import net.minecraft.client.gui.inventory.GuiShulkerBox
+import net.minecraft.entity.passive.AbstractHorse
+import net.minecraftforge.client.event.ClientChatEvent
 import net.minecraftforge.client.event.InputUpdateEvent
 import net.minecraftforge.client.event.RenderGameOverlayEvent
-import net.minecraft.entity.passive.AbstractHorse
-import club.deneb.client.utils.DenebTessellator
-import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent
-import club.deneb.client.command.commands.Peek
-import net.minecraft.client.gui.ScaledResolution
-import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.inventory.GuiShulkerBox
-import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent
+import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.fml.common.eventhandler.EventPriority
-import net.minecraftforge.client.event.ClientChatEvent
-import club.deneb.client.Deneb
-import club.deneb.client.irc.IrcManager
-import club.deneb.client.utils.Utils
-import club.deneb.client.utils.Wrapper
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent
+import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent
 import org.lwjgl.input.Keyboard
-import java.lang.Exception
 
 /**
  * Author KillRED on 2020
@@ -58,7 +55,7 @@ object ForgeEventProcessor {
         if (event.isCanceled || Utils.nullCheck()) return
         try {
             var target = RenderGameOverlayEvent.ElementType.EXPERIENCE
-            if (!Wrapper.player.isCreative && Wrapper.player.getRidingEntity() is AbstractHorse) target =
+            if (!Minecraft.getMinecraft().player.isCreative && Minecraft.getMinecraft().player.getRidingEntity() is AbstractHorse) target =
                 RenderGameOverlayEvent.ElementType.HEALTHMOUNT
             if (event.type == target) {
                 ModuleManager.onRender(event)
@@ -80,7 +77,7 @@ object ForgeEventProcessor {
                 val scaledResolution = ScaledResolution(Minecraft.getMinecraft())
                 val i = scaledResolution.scaledWidth
                 val j = scaledResolution.scaledHeight
-                val gui = GuiShulkerBox(Wrapper.player.inventory, Peek.sb)
+                val gui = GuiShulkerBox(Minecraft.getMinecraft().player.inventory, Peek.sb)
                 gui.setWorldAndResolution(Minecraft.getMinecraft(), i, j)
                 Minecraft.getMinecraft().displayGuiScreen(gui)
                 Peek.sb = null
