@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer
 import club.deneb.client.command.Command
 import club.deneb.client.utils.ChatUtil
 import club.deneb.client.utils.Wrapper
+import net.minecraft.client.Minecraft
 import java.lang.Exception
 
 /**
@@ -35,7 +36,7 @@ class Friend : Command() {
                 sendNoSpamMessage(friendList().toString())
             } else if (args[0].equals("add", ignoreCase = true)) {
                 var addedFriend = false
-                for (player in Wrapper.mc.world.playerEntities) {
+                for (player in Minecraft.getMinecraft().world.playerEntities) {
                     if (!player.name.equals(args[1], ignoreCase = true)) {
                         continue
                     }

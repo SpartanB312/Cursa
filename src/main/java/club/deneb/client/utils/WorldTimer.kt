@@ -1,10 +1,12 @@
 package club.deneb.client.utils
 
+import net.minecraft.client.Minecraft
+
 class WorldTimer {
     private var overrideSpeed = 1.0f
     private fun useTimer() {
         if (overrideSpeed != 1.0f && overrideSpeed > 0.1f) {
-            Wrapper.minecraft.timer.tickLength = 50.0f / overrideSpeed
+            Minecraft.getMinecraft().timer.tickLength = 50.0f / overrideSpeed
         }
     }
 
@@ -14,6 +16,6 @@ class WorldTimer {
     }
 
     fun resetTime() {
-        Wrapper.minecraft.timer.tickLength = 50f
+        Minecraft.getMinecraft().timer.tickLength = 50f
     }
 }

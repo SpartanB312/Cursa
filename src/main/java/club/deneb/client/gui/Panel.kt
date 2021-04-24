@@ -18,8 +18,9 @@ import club.deneb.client.gui.guis.ClickGuiScreen
 import club.deneb.client.gui.guis.HUDEditorScreen
 import club.deneb.client.utils.LambdaUtil
 import club.deneb.client.utils.Timer
-import club.deneb.client.utils.Wrapper
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Gui
+
 import java.awt.Color
 import java.util.*
 import java.util.function.Predicate
@@ -118,7 +119,7 @@ class Panel(var category: Category, var x: Int, var y: Int, var width: Int, var 
                     }
                 }
                 startY += 1
-                if (button.module.isHUD && Wrapper.minecraft.currentScreen is HUDEditorScreen) {
+                if (button.module.isHUD && Minecraft.getMinecraft().currentScreen is HUDEditorScreen) {
                     val hud = button.module as HUDModule
                     Gui.drawRect(hud.x, hud.y, hud.x + hud.width, hud.y + hud.height, panelColor)
                     hud.onRender()

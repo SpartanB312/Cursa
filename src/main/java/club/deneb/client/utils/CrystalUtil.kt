@@ -36,7 +36,7 @@ object CrystalUtil {
             finalValue = getBlastReduction(
                 entity,
                 getDamageMultiplied(damage),
-                Explosion(Wrapper.minecraft.world, null, posX, posY, posZ, 6f, false, true)
+                Explosion(Minecraft.getMinecraft().world, null, posX, posY, posZ, 6f, false, true)
             ).toDouble()
         }
         return finalValue.toFloat()
@@ -74,7 +74,7 @@ object CrystalUtil {
     }
 
     private fun getDamageMultiplied(damage: Float): Float {
-        val diff = Wrapper.minecraft.world.difficulty.id
+        val diff = Minecraft.getMinecraft().world.difficulty.id
         return damage * if (diff == 0) 0.0f else if (diff == 2) 1.0f else if (diff == 1) 0.5f else 1.5f
     }
 
@@ -91,31 +91,31 @@ object CrystalUtil {
         var i = 0
         while (i < length) {
             val enumFacing = values[i]
-            val vec3d = Vec3d(Wrapper.minecraft.player.posX, Wrapper.minecraft.player.posY + Wrapper.minecraft.player.getEyeHeight(), Wrapper.minecraft.player.posZ)
+            val vec3d = Vec3d(Minecraft.getMinecraft().player.posX, Minecraft.getMinecraft().player.posY + Minecraft.getMinecraft().player.getEyeHeight(), Minecraft.getMinecraft().player.posZ)
             val vec3d2 = Vec3d(
                 (blockPos.getX() + enumFacing.directionVec.getX()).toDouble(),
                 (blockPos.getY() + enumFacing.directionVec.getY()).toDouble(),
                 (blockPos.getZ() + enumFacing.directionVec.getZ()).toDouble()
             )
             val rayTraceBlocks: RayTraceResult
-            if (Wrapper.minecraft.world.rayTraceBlocks(vec3d, vec3d2, false, true, false).also {
+            if (Minecraft.getMinecraft().world.rayTraceBlocks(vec3d, vec3d2, false, true, false).also {
                     rayTraceBlocks = it!!
                 } != null && rayTraceBlocks.typeOfHit == RayTraceResult.Type.BLOCK && rayTraceBlocks.blockPos == blockPos) {
                 return enumFacing
             }
             i++
         }
-        return if (blockPos.getY() > Wrapper.minecraft.player.posY + Wrapper.minecraft.player.getEyeHeight()) {
+        return if (blockPos.getY() > Minecraft.getMinecraft().player.posY + Minecraft.getMinecraft().player.getEyeHeight()) {
             EnumFacing.DOWN
         } else EnumFacing.UP
     }
 
     val isEating: Boolean
-        get() = Wrapper.minecraft.player != null && (Wrapper.minecraft.player.heldItemMainhand.getItem() is ItemFood || Wrapper.minecraft.player.heldItemOffhand.getItem() is ItemFood) && Wrapper.minecraft.player.isHandActive
+        get() = Minecraft.getMinecraft().player != null && (Minecraft.getMinecraft().player.heldItemMainhand.getItem() is ItemFood || Minecraft.getMinecraft().player.heldItemOffhand.getItem() is ItemFood) && Minecraft.getMinecraft().player.isHandActive
 
     fun canSeeBlock(p_Pos: BlockPos): Boolean {
-        return if (Wrapper.minecraft.player == null) true else Wrapper.minecraft.world.rayTraceBlocks(
-            Vec3d(Wrapper.minecraft.player.posX, Wrapper.minecraft.player.posY + Wrapper.minecraft.player.getEyeHeight().toDouble(), Wrapper.minecraft.player.posZ),
+        return if (Minecraft.getMinecraft().player == null) true else Minecraft.getMinecraft().world.rayTraceBlocks(
+            Vec3d(Minecraft.getMinecraft().player.posX, Minecraft.getMinecraft().player.posY + Minecraft.getMinecraft().player.getEyeHeight().toDouble(), Minecraft.getMinecraft().player.posZ),
             Vec3d(p_Pos.getX().toDouble(), p_Pos.getY().toDouble(), p_Pos.getZ().toDouble()),
             false,
             true,
@@ -161,7 +161,7 @@ object CrystalUtil {
     }
 
     val playerPos: BlockPos
-        get() = BlockPos(floor(Wrapper.minecraft.player.posX), floor(Wrapper.minecraft.player.posY), floor(Wrapper.minecraft.player.posZ))
+        get() = BlockPos(floor(Minecraft.getMinecraft().player.posX), floor(Minecraft.getMinecraft().player.posY), floor(Minecraft.getMinecraft().player.posZ))
 
     fun canFacePlace(target: EntityLivingBase, blast: Double): Boolean {
         val healthTarget = target.health + target.absorptionAmount

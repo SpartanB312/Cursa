@@ -3,6 +3,7 @@ package club.deneb.client.irc
 import club.deneb.client.Deneb
 import club.deneb.client.utils.ChatUtil
 import club.deneb.client.utils.Wrapper
+import net.minecraft.client.Minecraft
 import java.io.DataInputStream
 import java.io.DataOutputStream
 import java.net.Socket
@@ -16,7 +17,7 @@ class IrcClient(host: String, port: Int) : Thread() {
 
     override fun run() {
         try {
-            send("[CONNECT]" + Wrapper.minecraft.getSession().username)
+            send("[CONNECT]" + Minecraft.getMinecraft().getSession().username)
             //Declare that we are deneb user!
             send("[CLIENT]Deneb")
             while (!socket.isClosed) {
@@ -30,7 +31,7 @@ class IrcClient(host: String, port: Int) : Thread() {
     }
 
     fun sendChatMessage(msg: String) {
-        send("[MSG][" + Wrapper.minecraft.getSession().username + "]" + msg)
+        send("[MSG][" + Minecraft.getMinecraft().getSession().username + "]" + msg)
     }
 
     fun send(msg: String) {

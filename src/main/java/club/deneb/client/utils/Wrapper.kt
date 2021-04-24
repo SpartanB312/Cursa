@@ -7,17 +7,13 @@ import net.minecraft.world.World
 import org.lwjgl.input.Keyboard
 
 object Wrapper {
-    @JvmField
-    var minecraft: Minecraft = Minecraft.getMinecraft()
-    @JvmField
-    var mc: Minecraft = Minecraft.getMinecraft()
-    var fontRenderer: FontRenderer = minecraft.fontRenderer
+    var fontRenderer: FontRenderer = Minecraft.getMinecraft().fontRenderer
     @JvmStatic
     val player: EntityPlayerSP
-        get() = minecraft.player
+        get() = Minecraft.getMinecraft().player
     @JvmStatic
     val world: World
-        get() = minecraft.world
+        get() = Minecraft.getMinecraft().world
 
     @JvmStatic
     fun getKey(keyName: String): Int {

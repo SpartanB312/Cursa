@@ -81,7 +81,7 @@ object ForgeEventProcessor {
                 val i = scaledResolution.scaledWidth
                 val j = scaledResolution.scaledHeight
                 val gui = GuiShulkerBox(Wrapper.player.inventory, Peek.sb)
-                gui.setWorldAndResolution(Wrapper.minecraft, i, j)
+                gui.setWorldAndResolution(Minecraft.getMinecraft(), i, j)
                 Minecraft.getMinecraft().displayGuiScreen(gui)
                 Peek.sb = null
             }
@@ -113,7 +113,7 @@ object ForgeEventProcessor {
             if (event.message.startsWith(Deneb.getINSTANCE().commandManager.getCmdPrefix())) {
                 event.isCanceled = true
                 try {
-                    Wrapper.minecraft.ingameGUI.chatGUI.addToSentMessages(event.message)
+                    Minecraft.getMinecraft().ingameGUI.chatGUI.addToSentMessages(event.message)
                     if (event.message.length > 1) Deneb.getINSTANCE().commandManager.runCommands(
                         event.message.substring(
                             Deneb.getINSTANCE().commandManager.getCmdPrefix().length - 1

@@ -1,5 +1,6 @@
 package club.deneb.client.utils
 
+import net.minecraft.client.Minecraft
 import net.minecraft.util.math.MathHelper
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.EnumFacing
@@ -23,13 +24,13 @@ object RotationUtil {
     }
 
     fun getRotationsBlock(block: BlockPos, face: EnumFacing, Legit: Boolean): FloatArray {
-        val x = block.getX() + 0.5 - Wrapper.minecraft.player.posX + face.xOffset
+        val x = block.getX() + 0.5 - Minecraft.getMinecraft().player.posX + face.xOffset
             .toDouble() / 2
-        val z = block.getZ() + 0.5 - Wrapper.minecraft.player.posZ + face.zOffset
+        val z = block.getZ() + 0.5 - Minecraft.getMinecraft().player.posZ + face.zOffset
             .toDouble() / 2
         var y = block.getY() + 0.5
         if (Legit) y += 0.5
-        val d1 = Wrapper.minecraft.player.posY + Wrapper.minecraft.player.getEyeHeight() - y
+        val d1 = Minecraft.getMinecraft().player.posY + Minecraft.getMinecraft().player.getEyeHeight() - y
         val d3 = MathHelper.sqrt(x * x + z * z).toDouble()
         var yaw = (atan2(z, x) * 180.0 / Math.PI).toFloat() - 90.0f
         val pitch = (atan2(d1, d3) * 180.0 / Math.PI).toFloat()

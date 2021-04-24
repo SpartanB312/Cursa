@@ -1,6 +1,7 @@
 package club.deneb.client.utils;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -34,9 +35,9 @@ public class DenebTessellator extends Tessellator {
     }
 
     public static void drawTracer(Entity entity, float red, float green, float blue, float alpha, float width, float height) {
-        double renderPosX = Wrapper.minecraft.getRenderManager().viewerPosX;
-        double renderPosY = Wrapper.minecraft.getRenderManager().viewerPosY;
-        double renderPosZ = Wrapper.minecraft.getRenderManager().viewerPosZ;
+        double renderPosX = Minecraft.getMinecraft().getRenderManager().viewerPosX;
+        double renderPosY = Minecraft.getMinecraft().getRenderManager().viewerPosY;
+        double renderPosZ = Minecraft.getMinecraft().getRenderManager().viewerPosZ;
         double xPos = (entity.lastTickPosX + (entity.posX - entity.lastTickPosX)) - renderPosX;
         double yPos = (entity.lastTickPosY + (entity.posY - entity.lastTickPosY))  + (entity.height * height) - renderPosY;
         double zPos = (entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ)) - renderPosZ;
@@ -50,10 +51,10 @@ public class DenebTessellator extends Tessellator {
         GL11.glDepthMask(false);
         GL11.glColor4f(red, green, blue, alpha);
 
-        Vec3d eyes = new Vec3d(0, 0, 1).rotatePitch(-(float) Math.toRadians(Wrapper.minecraft.player.rotationPitch)).rotateYaw(-(float) Math.toRadians(Wrapper.minecraft.player.rotationYaw));
+        Vec3d eyes = new Vec3d(0, 0, 1).rotatePitch(-(float) Math.toRadians(Minecraft.getMinecraft().player.rotationPitch)).rotateYaw(-(float) Math.toRadians(Minecraft.getMinecraft().player.rotationYaw));
 
         GL11.glBegin(GL11.GL_LINES);
-        GL11.glVertex3d(eyes.x, Wrapper.minecraft.player.getEyeHeight() + eyes.y, eyes.z);
+        GL11.glVertex3d(eyes.x, Minecraft.getMinecraft().player.getEyeHeight() + eyes.y, eyes.z);
         GL11.glVertex3d(xPos, yPos, zPos);
         GL11.glEnd();
 
@@ -257,9 +258,9 @@ public class DenebTessellator extends Tessellator {
     }
 
     public static AxisAlignedBB getBoundingFromPos(BlockPos pos){
-        IBlockState iBlockState = Wrapper.minecraft.world.getBlockState(pos);
-        Vec3d interp = interpolateEntity(Wrapper.minecraft.player, Wrapper.minecraft.getRenderPartialTicks());
-        return iBlockState.getSelectedBoundingBox(Wrapper.minecraft.world, pos).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D).offset(-interp.x, -interp.y, -interp.z);
+        IBlockState iBlockState = Minecraft.getMinecraft().world.getBlockState(pos);
+        Vec3d interp = interpolateEntity(Minecraft.getMinecraft().player, Minecraft.getMinecraft().getRenderPartialTicks());
+        return iBlockState.getSelectedBoundingBox(Minecraft.getMinecraft().world, pos).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D).offset(-interp.x, -interp.y, -interp.z);
     }
 
     public static Vec3d interpolateEntity(final Entity entity, final float time) {
@@ -268,13 +269,13 @@ public class DenebTessellator extends Tessellator {
 
     public static Vec3d interpolateEntityClose(final Entity entity, float renderPartialTicks) {
         return new Vec3d(
-                calculateDistanceWithPartialTicks(entity.posX, entity.lastTickPosX, renderPartialTicks) - Wrapper.minecraft.getRenderManager().renderPosX,
-                calculateDistanceWithPartialTicks(entity.posY, entity.lastTickPosY, renderPartialTicks) - Wrapper.minecraft.getRenderManager().renderPosY,
-                calculateDistanceWithPartialTicks(entity.posZ, entity.lastTickPosZ, renderPartialTicks) - Wrapper.minecraft.getRenderManager().renderPosZ);
+                calculateDistanceWithPartialTicks(entity.posX, entity.lastTickPosX, renderPartialTicks) - Minecraft.getMinecraft().getRenderManager().renderPosX,
+                calculateDistanceWithPartialTicks(entity.posY, entity.lastTickPosY, renderPartialTicks) - Minecraft.getMinecraft().getRenderManager().renderPosY,
+                calculateDistanceWithPartialTicks(entity.posZ, entity.lastTickPosZ, renderPartialTicks) - Minecraft.getMinecraft().getRenderManager().renderPosZ);
     }
 
     public static double calculateDistanceWithPartialTicks(final double n, final double n2, final float renderPartialTicks) {
-        return n2 + (n - n2) * Wrapper.minecraft.getRenderPartialTicks();
+        return n2 + (n - n2) * Minecraft.getMinecraft().getRenderPartialTicks();
     }
 
     public static void drawFullBox(AxisAlignedBB bb, float width, int red, int green, int blue, int alpha) {

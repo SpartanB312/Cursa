@@ -1,6 +1,7 @@
 package club.deneb.client.command
 
 import club.deneb.client.utils.Wrapper
+import net.minecraft.client.Minecraft
 
 /**
  * Created by B_312 on 01/15/21
@@ -23,7 +24,7 @@ open class Command {
     open fun onCall(s: String, vararg args: String){}
 
     companion object {
-        val mc = Wrapper.minecraft
+        val mc: Minecraft = Minecraft.getMinecraft()
     }
 
     init {

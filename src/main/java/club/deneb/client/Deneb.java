@@ -33,7 +33,7 @@ import java.nio.ByteBuffer;
 @Mod(modid = Deneb.MOD_ID, name = Deneb.MOD_NAME, version = Deneb.VERSION)
 public class Deneb {
 
-    public final static String VERSION = "0.5.1";
+    public final static String VERSION = "0.5.2";
     public final static String MOD_ID = "deneb";
     public final static String MOD_NAME = "Deneb";
     public final static String CHAT_PREFIX = "\u30c7\u30cd\u30d6";

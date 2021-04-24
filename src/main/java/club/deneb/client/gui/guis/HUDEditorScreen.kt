@@ -7,6 +7,7 @@ import club.deneb.client.client.GuiManager.isParticle
 import club.deneb.client.features.ModuleManager
 import club.deneb.client.utils.Wrapper
 import club.deneb.client.utils.particles.ParticleSystem
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.util.ResourceLocation
 import java.awt.Color
@@ -24,13 +25,13 @@ class HUDEditorScreen : GuiScreen() {
 
     override fun initGui() {
         if (background == GuiManager.Background.Blur || background == GuiManager.Background.Both) {
-            Wrapper.minecraft.entityRenderer.getShaderGroup().deleteShaderGroup()
-            Wrapper.minecraft.entityRenderer.loadShader(ResourceLocation("shaders/post/blur.json"))
+            Minecraft.getMinecraft().entityRenderer.getShaderGroup().deleteShaderGroup()
+            Minecraft.getMinecraft().entityRenderer.loadShader(ResourceLocation("shaders/post/blur.json"))
         }
     }
 
     override fun onGuiClosed() {
-        Wrapper.minecraft.entityRenderer.getShaderGroup().deleteShaderGroup()
+        Minecraft.getMinecraft().entityRenderer.getShaderGroup().deleteShaderGroup()
         if (ModuleManager.getModuleByName("HUDEditor").isEnabled) {
             ModuleManager.getModuleByName("HUDEditor").disable()
         }

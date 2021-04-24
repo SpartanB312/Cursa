@@ -74,7 +74,7 @@ public class AbstractModule {
         return Arrays.stream(strings).collect(Collectors.toList());
     }
 
-    public static final Minecraft mc = Wrapper.mc;
+    public static final Minecraft mc = Minecraft.getMinecraft();
     public static final FontRenderer fontRenderer = mc.fontRenderer;
 
     public String getName(){

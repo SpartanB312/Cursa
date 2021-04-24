@@ -1,6 +1,7 @@
 package club.deneb.client.utils
 
 import club.deneb.client.Deneb
+import net.minecraft.client.Minecraft
 import net.minecraft.util.text.TextComponentString
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
@@ -69,18 +70,18 @@ object ChatUtil {
     @SideOnly(Side.CLIENT)
     fun sendSpamlessMessage(message: String) {
         if (Utils.nullCheck()) return
-        val chat = Wrapper.minecraft.ingameGUI.chatGUI
+        val chat = Minecraft.getMinecraft().ingameGUI.chatGUI
         chat.printChatMessageWithOptionalDeletion(TextComponentString(message), DeleteID)
     }
 
     @SideOnly(Side.CLIENT)
     fun sendSpamlessMessage(messageID: Int, message: String) {
         if (Utils.nullCheck()) return
-        val chat = Wrapper.minecraft.ingameGUI.chatGUI
+        val chat = Minecraft.getMinecraft().ingameGUI.chatGUI
         chat.printChatMessageWithOptionalDeletion(TextComponentString(message), messageID)
     }
 
     private fun chatMessage(message: String) {
-        Wrapper.minecraft.ingameGUI.chatGUI.printChatMessage(TextComponentString(message))
+        Minecraft.getMinecraft().ingameGUI.chatGUI.printChatMessage(TextComponentString(message))
     }
 }

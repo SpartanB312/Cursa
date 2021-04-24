@@ -1,12 +1,12 @@
 package club.deneb.client.event
 
-import club.deneb.client.utils.Wrapper
+import net.minecraft.client.Minecraft
 import net.minecraftforge.fml.common.eventhandler.Event
 
 open class MinecraftEvent : Event() {
     var isCancelled = false
     var era = Era.PRE
-    val partialTicks: Float = Wrapper.mc.renderPartialTicks
+    val partialTicks: Float = Minecraft.getMinecraft().renderPartialTicks
     fun cancel() {
         isCancelled = true
     }

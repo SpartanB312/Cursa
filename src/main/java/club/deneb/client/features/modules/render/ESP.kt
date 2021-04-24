@@ -5,6 +5,7 @@ import club.deneb.client.features.Category
 import club.deneb.client.features.Module
 import club.deneb.client.utils.EntityUtil
 import club.deneb.client.utils.Wrapper
+import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
@@ -23,9 +24,9 @@ class ESP : Module() {
     private val mobs = setting("Mobs", false)
 
     override fun onWorldRender(event: RenderEvent) {
-        if (Wrapper.minecraft.getRenderManager().options == null) return
-        val isThirdPersonFrontal = Wrapper.minecraft.getRenderManager().options.thirdPersonView == 2
-        val viewerYaw = Wrapper.minecraft.getRenderManager().playerViewY
+        if (Minecraft.getMinecraft().getRenderManager().options == null) return
+        val isThirdPersonFrontal = Minecraft.getMinecraft().getRenderManager().options.thirdPersonView == 2
+        val viewerYaw = Minecraft.getMinecraft().getRenderManager().playerViewY
         mc.world.loadedEntityList.stream()
             .filter { e: Entity -> EntityUtil.isLiving(e) }
             .filter { entity: Entity -> mc.player !== entity }
