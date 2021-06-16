@@ -24,13 +24,17 @@ class HUDEditorScreen : GuiScreen() {
 
     override fun initGui() {
         if (background == GuiManager.Background.Blur || background == GuiManager.Background.Both) {
-            Minecraft.getMinecraft().entityRenderer.getShaderGroup().deleteShaderGroup()
+            if (Minecraft.getMinecraft().entityRenderer.getShaderGroup() != null) {
+                Minecraft.getMinecraft().entityRenderer.getShaderGroup().deleteShaderGroup()
+            }
             Minecraft.getMinecraft().entityRenderer.loadShader(ResourceLocation("shaders/post/blur.json"))
         }
     }
 
     override fun onGuiClosed() {
-        Minecraft.getMinecraft().entityRenderer.getShaderGroup().deleteShaderGroup()
+        if (Minecraft.getMinecraft().entityRenderer.getShaderGroup() != null) {
+            Minecraft.getMinecraft().entityRenderer.getShaderGroup().deleteShaderGroup()
+        }
         if (ModuleManager.getModuleByName("HUDEditor").isEnabled) {
             ModuleManager.getModuleByName("HUDEditor").disable()
         }

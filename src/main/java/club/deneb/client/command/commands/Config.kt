@@ -1,7 +1,7 @@
 package club.deneb.client.command.commands
 
-import club.deneb.client.client.ConfigManager.loadAll
-import club.deneb.client.client.ConfigManager.saveAll
+import club.deneb.client.config.ConfigManager.loadAll
+import club.deneb.client.config.ConfigManager.saveAll
 import club.deneb.client.command.Command
 import club.deneb.client.utils.ChatUtil.sendNoSpamMessage
 

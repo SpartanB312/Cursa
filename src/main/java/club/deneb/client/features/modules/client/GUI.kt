@@ -20,9 +20,10 @@ class GUI : Module() {
     val rainbowBrightness = setting("Brightness", 1.0f, 0.0f, 1.0f).b(rainbow)
     val background: ModeValue<String> = setting("Background", "Shadow", listOf("Shadow", "Blur", "Both", "None"))
     val setting: ModeValue<String> = setting("Setting", "Line", listOf("Rect", "Line", "None"))
-    val iconMode: ModeValue<String> = setting("Icon", "Chain", listOf("None", "Gear", "PaperPin", "Chain", "Pointer"))
+    val iconMode: ModeValue<String> =
+        setting("Icon", "Default", listOf("None", "Default", "Gear", "PaperPin", "Chain", "Pointer"))
 
-    init{
+    init {
         instance = this
     }
 

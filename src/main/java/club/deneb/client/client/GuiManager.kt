@@ -41,10 +41,11 @@ object GuiManager {
 
     val isParticle: Boolean get() = !isNull && colorINSTANCE.particle.value
     val isSettingRect: Boolean get() = !isNull && colorINSTANCE.setting.toggled("Rect")
-    val isSettingSide: Boolean get() = !isNull && colorINSTANCE.setting.toggled("Side")
+    val isSettingSide: Boolean get() = !isNull && colorINSTANCE.setting.toggled("Line")
 
     val icon:String
         get() = when(colorINSTANCE.iconMode.value){
+            "Default" -> "q"
             "PaperPin" -> "a"
             "Gear" -> "E"
             "Chain" -> "l"

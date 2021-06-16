@@ -1,5 +1,6 @@
 package club.deneb.client.command;
 
+import club.deneb.client.features.HUDModule;
 import club.deneb.client.utils.ChatUtil;
 import club.deneb.client.utils.ClassFinder;
 
@@ -25,10 +26,10 @@ public class CommandManager {
     }
 
     private void loadCommands(){
-        Set<Class> classList = ClassFinder.findClasses(Command.class.getPackage().getName(), Command.class);
+        Set<Class<? extends Command>> classList = ClassFinder.findClasses(Command.class.getPackage().getName(), Command.class);
         classList.stream().sorted(Comparator.comparing(Class::getSimpleName)).forEach(aClass -> {
             try {
-                Command command = (Command) aClass.newInstance();
+                Command command = aClass.newInstance();
                 commands.add(command);
             } catch (Exception e) {
                 e.printStackTrace();

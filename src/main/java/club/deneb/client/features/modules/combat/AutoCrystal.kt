@@ -586,13 +586,13 @@ class AutoCrystal : Module() {
                     .filter { entity: Entity -> entity !is EntityPlayer }
                     .filter { entity: Entity -> mc.player.getDistance(entity) < workingDistance.value }
                     .collect(Collectors.toList()))
-            for (ite2 in ArrayList(entities)) {
-                if (mc.player.getDistance(ite2) > workingDistance.value) entities.remove(ite2)
-                if (ite2 === mc.player) entities.remove(ite2)
+
+            entities.removeIf{
+                mc.player.getDistance(it) > workingDistance.value || it == mc.player
             }
+
             entities.sortWith(Comparator.comparingDouble { entity: Entity ->
-                entity.getDistance(mc.player)
-                    .toDouble()
+                entity.getDistance(mc.player).toDouble()
             })
             return entities
         }

@@ -54,10 +54,10 @@ public class ModuleManager {
     }
 
     private void loadModules(){
-        Set<Class> classList = ClassFinder.findClasses(AbstractModule.class.getPackage().getName(), Module.class);
+        Set<Class<? extends Module>> classList = ClassFinder.findClasses(AbstractModule.class.getPackage().getName(), Module.class);
         classList.stream().sorted(Comparator.comparing(Class::getSimpleName)).forEach(aClass -> {
             try {
-                Module mod = (Module) aClass.newInstance();
+                Module mod = aClass.newInstance();
                 moduleHashMap.put(aClass,mod);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -67,10 +67,10 @@ public class ModuleManager {
     }
 
     private void loadHUDs(){
-        Set<Class> classList = ClassFinder.findClasses(AbstractModule.class.getPackage().getName(), HUDModule.class);
+        Set<Class<? extends HUDModule>> classList = ClassFinder.findClasses(AbstractModule.class.getPackage().getName(), HUDModule.class);
         classList.stream().sorted(Comparator.comparing(Class::getSimpleName)).forEach(aClass -> {
             try {
-                HUDModule mod = (HUDModule) aClass.newInstance();
+                HUDModule mod = aClass.newInstance();
                 moduleHashMap.put(aClass,mod);
             } catch (Exception e) {
                 e.printStackTrace();

@@ -1,6 +1,6 @@
 package club.deneb.client.mixin.client;
 
-import club.deneb.client.client.ConfigManager;
+import club.deneb.client.config.ConfigManager;
 import club.deneb.client.event.events.client.GuiScreenEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;

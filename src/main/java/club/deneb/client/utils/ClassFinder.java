@@ -4,9 +4,8 @@ import org.reflections.Reflections;
 
 import java.util.Set;
 
-@SuppressWarnings("rawtypes")
 public class ClassFinder {
-    public static Set findClasses(String pack, Class subType) {
+    public static <T> Set<Class<? extends T>> findClasses(String pack, Class<T> subType) {
         Reflections reflections = new Reflections(pack);
         return reflections.getSubTypesOf(subType);
     }

@@ -1,6 +1,5 @@
 package club.deneb.client.utils
 
-import club.deneb.client.features.Module
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.enchantment.EnchantmentHelper

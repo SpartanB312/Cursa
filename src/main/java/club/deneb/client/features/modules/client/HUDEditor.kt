@@ -1,6 +1,6 @@
 package club.deneb.client.features.modules.client
 
-import club.deneb.client.client.ConfigManager.saveAll
+import club.deneb.client.config.ConfigManager.saveAll
 import club.deneb.client.features.Category
 import club.deneb.client.features.Module
 import club.deneb.client.gui.guis.HUDEditorScreen
