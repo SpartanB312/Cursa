@@ -1,0 +1,124 @@
+buildscript {
+    repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:4.+'
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+    }
+}
+
+apply plugin: 'idea'
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.spongepowered.mixin'
+
+version project.modVersion
+group project.modGroup
+
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+    options.encoding = 'UTF-8'
+}
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+    maven { url = 'https://impactdevelopment.github.io/maven/' }
+    maven { url = 'http://maven-eclipse.github.io/maven' }
+    maven { url = 'https://jitpack.io' }
+}
+
+minecraft {
+    mappings channel: 'stable', version: '39-1.12'
+
+    accessTransformer = file('src/main/resources/cursa_at.cfg')
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            property 'fml.coreMods.load', 'net.spartanb312.cursa.mixin.MixinLoader'
+            property 'mixin.env.disableRefMap', 'true' // Disable refmap so we don't get trolled by Baritone
+
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+        }
+    }
+}
+
+configurations {
+    addLib
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2854'
+
+    addLib("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
+        exclude module: 'launchwrapper'
+        exclude module: 'log4j-core'
+        exclude module: 'guava'
+        exclude module: 'gson'
+        exclude module: 'commons-io'
+    }
+
+    annotationProcessor('org.spongepowered:mixin:0.8.2:processor') {
+        exclude module: 'gson'
+    }
+
+    compileOnly('org.jetbrains:annotations:22.0.0')
+
+    implementation configurations.addLib
+}
+
+
+mixin {
+    defaultObfuscationEnv 'searge'
+    add sourceSets.main, 'mixins.cursa.refmap.json'
+}
+
+
+processResources {
+    inputs.property 'version', project.version
+    inputs.property 'mcversion', project.mcVersion
+
+    exclude '**/rawimagefiles'
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version': project.version,
+                'mcversion': project.mcVersion,
+                'modVersion': project.modVersion
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+
+    rename '(.+_at.cfg)', 'META-INF/$1'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Manifest-Version': 1.0,
+                'MixinConfigs': 'mixins.cursa.json',
+                'tweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
+                'TweakOrder': 0,
+                'FMLCorePluginContainsFMLMod': 'true',
+                'FMLCorePlugin': 'net.spartanb312.cursa.mixin.MixinLoader',
+                'ForceLoadAsMod': 'true',
+                'FMLAT': 'cursa_at.cfg'
+        )
+    }
+
+    from {
+        configurations.addLib.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+
+    exclude("LICENSE.txt")
+    exclude("META-INF/maven/**")
+    exclude("META-INF/MUMFREY.RSA")
+}
