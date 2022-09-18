@@ -1,5 +1,5 @@
 # Cursa
-A Mixin Injection Utility Mod for 1.12.2
+A Utility Mod Base for Minecraft 1.12.2 skidders
 
 ## License
-GPL3
+MIT
