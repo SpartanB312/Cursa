@@ -1,8 +1,8 @@
 package net.spartanb312.cursa.gui;
 
 import net.spartanb312.cursa.client.FontManager;
-import net.spartanb312.cursa.utils.graphics.font.CFontRenderer;
 import net.minecraft.client.Minecraft;
+import net.spartanb312.cursa.utils.graphics.font.UnicodeFontRenderer;
 
 import java.awt.*;
 
@@ -11,7 +11,7 @@ import java.awt.*;
  */
 public abstract class Component {
 
-    public CFontRenderer font = FontManager.fontRenderer;
+    public UnicodeFontRenderer font = FontManager.fontRenderer;
     public Minecraft mc = Minecraft.getMinecraft();
     public int x, y, width, height;
     protected int fontColor = new Color(255, 255, 255).getRGB();

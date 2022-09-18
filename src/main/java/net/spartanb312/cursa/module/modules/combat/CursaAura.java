@@ -73,14 +73,14 @@ public strictfp class CursaAura extends Module {
     Setting<Page> page = setting("Page", Page.General);
 
     //General
-    Setting<Boolean> autoSwitch = setting("AutoSwitch", false).whenAtMode(page, Page.General).des("Auto switch crystals in MainHand");
+    Setting<Boolean> autoSwitch = setting("AutoSwitch", false).whenAtMode(page, Page.General).des("主手模式下自动切换水晶");
     Setting<Integer> updateDelay = setting("UpdateDelay", 10, 1, 50).whenAtMode(page, Page.General).des("Loop updating delay");
-    Setting<Boolean> targetPlayer = setting("Players", true).whenAtMode(page, Page.General).des("Target players");
-    Setting<Boolean> targetMob = setting("Mobs", false).whenAtMode(page, Page.General).des("Target mobs");
-    Setting<Boolean> targetAnimal = setting("Animals", false).whenAtMode(page, Page.General).des("Target animals");
-    Setting<Boolean> autoPlace = setting("Place", true).whenAtMode(page, Page.General).des("Place crystals");
-    Setting<Boolean> autoExplode = setting("Explode", true).whenAtMode(page, Page.General).des("Explode crystals");
-    Setting<Boolean> multiPlace = setting("MultiPlace", false).whenAtMode(page, Page.General).des("Multi place crystal");
+    Setting<Boolean> targetPlayer = setting("Players", true).whenAtMode(page, Page.General).des("Player targets");
+    Setting<Boolean> targetMob = setting("Mobs", false).whenAtMode(page, Page.General).des("Mob targets");
+    Setting<Boolean> targetAnimal = setting("Animals", false).whenAtMode(page, Page.General).des("Animal targets");
+    Setting<Boolean> autoPlace = setting("Place", true).whenAtMode(page, Page.General).des("Automatically place crystals");
+    Setting<Boolean> autoExplode = setting("Explode", true).whenAtMode(page, Page.General).des("Automatically explode crystals");
+    Setting<Boolean> multiPlace = setting("MultiPlace", false).whenAtMode(page, Page.General).des("Place multi crystals before explode");
     Setting<Double> attackSpeed = setting("AttackSpeed", 35d, 0, 50).whenAtMode(page, Page.General).des("Speed of breaking crystal");
     Setting<Double> placeSpeed = setting("PlaceSpeed", 35d, 0d, 50).whenAtMode(page, Page.General).des("Speed of placing crystal");
     Setting<Double> distance = setting("Distance", 7.0D, 0D, 8D).whenAtMode(page, Page.General).des("Calculation working range");
@@ -383,7 +383,7 @@ public strictfp class CursaAura extends Module {
                 final double damage = renderBlockDmg.get(blockPos);
                 final String damageText = "DMG: " + (Math.floor(damage) == damage ? (int) damage : String.format("%.1f", damage));
                 GlStateManager.disableDepth();
-                GlStateManager.translate(-(FontManager.fontRenderer.getStringWidth(damageText) / 2.0d), 0, 0);
+                GlStateManager.translate(-(FontManager.fontRenderer.getWidth(damageText) / 2.0d), 0, 0);
                 FontManager.fontRenderer.drawStringWithShadow(damageText, 0, 0, -1);
                 GlStateManager.popMatrix();
             }

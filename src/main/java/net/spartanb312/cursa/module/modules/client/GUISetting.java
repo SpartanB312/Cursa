@@ -6,6 +6,8 @@ import net.spartanb312.cursa.core.setting.Setting;
 import net.spartanb312.cursa.module.Category;
 import net.spartanb312.cursa.module.Module;
 
+import java.awt.*;
+
 @Parallel
 @ModuleInfo(name = "GUISetting", category = Category.CLIENT, description = "Settings of GUI")
 public class GUISetting extends Module {
@@ -34,6 +36,10 @@ public class GUISetting extends Module {
     @Override
     public void onEnable() {
         disable();
+    }
+
+    public int getColor() {
+        return new Color(red.getValue(), green.getValue(), blue.getValue(), transparency.getValue()).getRGB();
     }
 
 }

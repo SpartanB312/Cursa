@@ -8,7 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import static net.spartanb312.cursa.core.concurrent.ConcurrentTaskManager.runBlocking;
+import static net.spartanb312.cursa.core.concurrent.ConcurrentTaskManager.runParallel;
 
 /**
  * Author B_312
@@ -50,7 +50,7 @@ public class EventManager {
 
     public void post(Object event) {
         Class<?> eventClass = event.getClass();
-        runBlocking(content -> {
+        runParallel(content -> {
             for (SubscribedUnit unit : registeredUnit) {
                 if (eventClass.equals(unit.getEventClass())) {
                     if (unit.isParallel()) content.launch(() -> unit.getTask().invoke(event));

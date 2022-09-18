@@ -51,6 +51,10 @@ public class Module extends ListenableContainer {
         getSettings().forEach(Setting::reset);
     }).des("Reset this module");
 
+    public boolean isVisible() {
+        return visibleSetting.getValue() == Visibility.True;
+    }
+
     enum Visibility {
         True,
         False

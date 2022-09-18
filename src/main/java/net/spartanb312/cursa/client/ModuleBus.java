@@ -19,7 +19,7 @@ import net.spartanb312.cursa.notification.NotificationManager;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import static net.spartanb312.cursa.core.concurrent.ConcurrentTaskManager.runBlocking;
+import static net.spartanb312.cursa.core.concurrent.ConcurrentTaskManager.runParallel;
 
 public class ModuleBus extends ListenableImpl {
 
@@ -59,7 +59,7 @@ public class ModuleBus extends ListenableImpl {
     }
 
     public void onTick() {
-        runBlocking(it -> modules.forEach(module -> {
+        runParallel(it -> modules.forEach(module -> {
             if (module.parallelRunnable) {
                 it.launch(() -> {
                     try {
@@ -82,7 +82,7 @@ public class ModuleBus extends ListenableImpl {
 
     @Listener(priority = Priority.HIGHEST)
     public void onRenderTick(RenderOverlayEvent event) {
-        runBlocking(it -> modules.forEach(module -> {
+        runParallel(it -> modules.forEach(module -> {
             try {
                 module.onRender(event);
             } catch (Exception exception) {

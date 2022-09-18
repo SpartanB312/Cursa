@@ -8,7 +8,7 @@ import org.lwjgl.input.Mouse;
 import java.util.ArrayList;
 import java.util.List;
 
-import static net.spartanb312.cursa.core.concurrent.ConcurrentTaskManager.runBlocking;
+import static net.spartanb312.cursa.core.concurrent.ConcurrentTaskManager.runParallel;
 
 public class RenderEngine {
 
@@ -46,7 +46,7 @@ public class RenderEngine {
             int mouseX = Mouse.getX();
             int mouseY = Mouse.getY();
             synchronized (subscribedAsyncRenderers) {
-                runBlocking(content -> subscribedAsyncRenderers.forEach(asyncRenderer -> content.launch(() -> asyncRenderer.onUpdate0(resolution, mouseX, mouseY))));
+                runParallel(content -> subscribedAsyncRenderers.forEach(asyncRenderer -> content.launch(() -> asyncRenderer.onUpdate0(resolution, mouseX, mouseY))));
             }
         }
     }

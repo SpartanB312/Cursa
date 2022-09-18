@@ -1,5 +1,6 @@
 package net.spartanb312.cursa.utils.graphics;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 
 import static org.lwjgl.opengl.GL11.*;

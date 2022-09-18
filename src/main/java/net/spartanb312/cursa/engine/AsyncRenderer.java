@@ -2,9 +2,11 @@ package net.spartanb312.cursa.engine;
 
 import net.spartanb312.cursa.client.FontManager;
 import net.spartanb312.cursa.engine.tasks.RectRenderTask;
+import net.spartanb312.cursa.engine.tasks.ScaleTask;
 import net.spartanb312.cursa.engine.tasks.TextRenderTask;
-import net.spartanb312.cursa.utils.graphics.font.CFontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
+import net.spartanb312.cursa.engine.tasks.TranslateTask;
+import net.spartanb312.cursa.utils.graphics.font.UnicodeFontRenderer;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -35,6 +37,26 @@ public abstract class AsyncRenderer {
         copiedTasks.forEach(RenderTask::onRender);
     }
 
+    public void scale(float x, float y, float z) {
+        tempTasks.add(new ScaleTask(x, y, z));
+    }
+
+    public void scale(float x, float y, float z, int matrixMode) {
+        tempTasks.add(new ScaleTask(x, y, z, matrixMode));
+    }
+
+    public void translate(float x, float y, float z) {
+        tempTasks.add(new TranslateTask(x, y, z));
+    }
+
+    public void translate(float x, float y, float z, int matrixMode) {
+        tempTasks.add(new TranslateTask(x, y, z, matrixMode));
+    }
+
+    public void drawAsyncIcon(float x, float y, int color) {
+        drawAsyncString("q", x, y, color, FontManager.iconFont);
+    }
+
     public void drawAsyncString(String text, float x, float y) {
         tempTasks.add(new TextRenderTask(text, x, y, white, false, false));
     }
@@ -55,24 +77,56 @@ public abstract class AsyncRenderer {
         tempTasks.add(new TextRenderTask(text, x, y, color, true, true));
     }
 
-    public void drawAsyncIcon(float x, float y, int color) {
-        drawAsyncString("q", x, y, color, FontManager.iconFont);
-    }
-
-    public void drawAsyncString(String text, float x, float y, int color, CFontRenderer fontRenderer) {
+    public void drawAsyncString(String text, float x, float y, int color, UnicodeFontRenderer fontRenderer) {
         tempTasks.add(new TextRenderTask(text, x, y, color, false, false, fontRenderer));
     }
 
-    public void drawAsyncCenteredString(String text, float x, float y, int color, CFontRenderer fontRenderer) {
+    public void drawAsyncCenteredString(String text, float x, float y, int color, UnicodeFontRenderer fontRenderer) {
         tempTasks.add(new TextRenderTask(text, x, y, color, true, false, fontRenderer));
     }
 
-    public void drawAsyncStringWithShadow(String text, float x, float y, int color, CFontRenderer fontRenderer) {
+    public void drawAsyncStringWithShadow(String text, float x, float y, int color, UnicodeFontRenderer fontRenderer) {
         tempTasks.add(new TextRenderTask(text, x, y, color, false, true, fontRenderer));
     }
 
-    public void drawAsyncCenteredStringWithShadow(String text, float x, float y, int color, CFontRenderer fontRenderer) {
+    public void drawAsyncCenteredStringWithShadow(String text, float x, float y, int color, UnicodeFontRenderer fontRenderer) {
         tempTasks.add(new TextRenderTask(text, x, y, color, true, true, fontRenderer));
+    }
+
+    public void drawAsyncString(String text, float x, float y, float scale) {
+        tempTasks.add(new TextRenderTask(text, x, y, white, false, false, scale));
+    }
+
+    public void drawAsyncString(String text, float x, float y, int color, float scale) {
+        tempTasks.add(new TextRenderTask(text, x, y, color, false, false, scale));
+    }
+
+    public void drawAsyncCenteredString(String text, float x, float y, int color, float scale) {
+        tempTasks.add(new TextRenderTask(text, x, y, color, true, false, scale));
+    }
+
+    public void drawAsyncStringWithShadow(String text, float x, float y, int color, float scale) {
+        tempTasks.add(new TextRenderTask(text, x, y, color, false, true, scale));
+    }
+
+    public void drawAsyncCenteredStringWithShadow(String text, float x, float y, int color, float scale) {
+        tempTasks.add(new TextRenderTask(text, x, y, color, true, true, scale));
+    }
+
+    public void drawAsyncString(String text, float x, float y, int color, float scale, UnicodeFontRenderer fontRenderer) {
+        tempTasks.add(new TextRenderTask(text, x, y, color, false, false, scale, fontRenderer));
+    }
+
+    public void drawAsyncCenteredString(String text, float x, float y, int color, float scale, UnicodeFontRenderer fontRenderer) {
+        tempTasks.add(new TextRenderTask(text, x, y, color, true, false, scale, fontRenderer));
+    }
+
+    public void drawAsyncStringWithShadow(String text, float x, float y, int color, float scale, UnicodeFontRenderer fontRenderer) {
+        tempTasks.add(new TextRenderTask(text, x, y, color, false, true, scale, fontRenderer));
+    }
+
+    public void drawAsyncCenteredStringWithShadow(String text, float x, float y, int color, float scale, UnicodeFontRenderer fontRenderer) {
+        tempTasks.add(new TextRenderTask(text, x, y, color, true, true, scale, fontRenderer));
     }
 
     public void drawAsyncRect(float x, float y, float endX, float endY, int color) {

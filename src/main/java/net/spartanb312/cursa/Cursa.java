@@ -10,18 +10,18 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.Display;
 
-import static net.spartanb312.cursa.core.concurrent.ConcurrentTaskManager.runBlocking;
+import static net.spartanb312.cursa.core.concurrent.ConcurrentTaskManager.runParallel;
 import static net.spartanb312.cursa.core.concurrent.ConcurrentTaskManager.runTiming;
 
 /**
  * Author B_312
  * Since 05/01/2021
- * Last update on 09/21/2021
+ * Last update on 09/16/2022
  */
 public class Cursa {
 
     public static final String MOD_NAME = "Cursa";
-    public static final String MOD_VERSION = "0.0.1-dev";
+    public static final String MOD_VERSION = "0.0.2";
 
     public static final String AUTHOR = "B_312";
     public static final String GITHUB = "https://github.com/SpartanB312/Cursa";
@@ -42,7 +42,7 @@ public class Cursa {
             Display.setTitle(MOD_NAME + " " + MOD_VERSION);
 
             //Parallel load managers
-            runBlocking(it -> {
+            runParallel(it -> {
 
                 Cursa.log.info("Loading Font Manager");
                 FontManager.init();

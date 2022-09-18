@@ -32,7 +32,7 @@ import net.spartanb312.cursa.module.modules.render.Brightness;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static net.spartanb312.cursa.core.concurrent.ConcurrentTaskManager.runBlocking;
+import static net.spartanb312.cursa.core.concurrent.ConcurrentTaskManager.runParallel;
 
 public class ModuleManager {
 
@@ -129,7 +129,7 @@ public class ModuleManager {
 
     private void loadModules() {
         Cursa.log.info("[ModuleManager]Loading modules.");
-        runBlocking(unit -> classes.stream().sorted(Comparator.comparing(Class::getSimpleName)).forEach(clazz -> {
+        runParallel(unit -> classes.stream().sorted(Comparator.comparing(Class::getSimpleName)).forEach(clazz -> {
             if (clazz != HUDModule.class) {
                 try {
                     if (clazz.isAnnotationPresent(Parallel.class) && clazz.getAnnotation(Parallel.class).loadable()) {

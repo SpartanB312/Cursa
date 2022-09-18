@@ -1,15 +1,24 @@
 package net.spartanb312.cursa.gui.renderers;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
+import net.spartanb312.cursa.client.FontManager;
 import net.spartanb312.cursa.gui.Component;
 import net.spartanb312.cursa.gui.Panel;
 import net.spartanb312.cursa.gui.components.ModuleButton;
 import net.spartanb312.cursa.client.ModuleManager;
 import net.spartanb312.cursa.module.Category;
 import net.spartanb312.cursa.module.modules.client.ClickGUI;
+import net.spartanb312.cursa.utils.graphics.VertexBuffer;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
 
+import java.awt.*;
 import java.util.ArrayList;
+
+import static net.minecraft.client.renderer.vertex.DefaultVertexFormats.POSITION_TEX_COLOR;
+import static org.lwjgl.opengl.GL11.*;
 
 public class ClickGUIRenderer {
 

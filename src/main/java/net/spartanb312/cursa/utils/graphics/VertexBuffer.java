@@ -1,5 +1,6 @@
 package net.spartanb312.cursa.utils.graphics;
 
+import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.spartanb312.cursa.utils.ColorUtil;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
@@ -18,6 +19,10 @@ public class VertexBuffer {
 
     public static void begin(int mode) {
         bufferbuilder.begin(mode, DefaultVertexFormats.POSITION_COLOR);
+    }
+
+    public static void begin(int mode, VertexFormat format) {
+        bufferbuilder.begin(mode, format);
     }
 
     public static void end() {
@@ -94,6 +99,13 @@ public class VertexBuffer {
 
     public static void put(int x, int y, int red, int green, int blue) {
         put(x, y, red / 255F, green / 255F, blue / 255F, 1.0F);
+    }
+
+    public static void tex2D(float x, float y, float u, float v, Color color) {
+        bufferbuilder.pos(x, y, 0.0)
+                .tex(u, v)
+                .color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())
+                .endVertex();
     }
 
 }

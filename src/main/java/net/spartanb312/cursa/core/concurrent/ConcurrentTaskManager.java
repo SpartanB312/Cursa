@@ -42,23 +42,23 @@ public class ConcurrentTaskManager {
     }
 
     //---- TaskPool Runner ----//
-    public static void runBlocking(BlockingTask task) {
+    public static void runParallel(BlockingTask task) {
         BlockingContent content = new BlockingContent();
         task.invoke(content);
         content.await();
     }
 
-    public static void runBlockingTasks(VoidTask... tasks) {
-        runBlockingTasks(Arrays.asList(tasks));
+    public static void runParallelTasks(VoidTask... tasks) {
+        runParallelTasks(Arrays.asList(tasks));
     }
 
-    public static void runBlockingTasks(List<VoidTask> tasks) {
+    public static void runParallelTasks(List<VoidTask> tasks) {
         Syncer syncer = new Syncer(tasks.size());
         tasks.forEach(it -> instance.executor.execute(new VoidRunnable(it, syncer)));
         syncer.await();
     }
 
-    public static <T> void runParameterBlocking(List<MultiParameterTask<T>> tasks, T[] parameters) {
+    public static <T> void runParameterParallels(List<MultiParameterTask<T>> tasks, T[] parameters) {
         Syncer syncer = new Syncer(tasks.size());
         tasks.forEach(it -> instance.executor.execute(new TaskRunnable<>(it, syncer, parameters)));
         syncer.await();

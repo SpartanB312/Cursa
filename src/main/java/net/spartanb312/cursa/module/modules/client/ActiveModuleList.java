@@ -11,8 +11,10 @@ import net.spartanb312.cursa.engine.RenderEngine;
 import net.spartanb312.cursa.event.events.render.RenderOverlayEvent;
 import net.spartanb312.cursa.module.Category;
 import net.spartanb312.cursa.module.Module;
+import net.spartanb312.cursa.utils.Timer;
 import net.spartanb312.cursa.utils.graphics.RenderHelper;
 import net.minecraft.client.gui.ScaledResolution;
+import org.lwjgl.Sys;
 
 import java.awt.*;
 import java.util.Comparator;
@@ -38,10 +40,11 @@ public class ActiveModuleList extends Module {
             int index = 0;
 
             List<Module> moduleList = Cursa.MODULE_BUS.getModules().stream()
+                    .filter(Module::isVisible)
                     .sorted(Comparator.comparing(it -> -FontManager.getWidth(it.getHudSuffix()))).collect(Collectors.toList());
 
             for (Module module : moduleList) {
-                int color = GUIManager.isRainbow() ? rainbow(index * 100) : GUIManager.getColor3I();
+                int color = GUIManager.isRainbow() ? rainbow(index * -100) : GUIManager.getColor3I();
                 index++;
                 String information = module.getHudSuffix();
                 switch (listPos.getValue()) {

@@ -13,9 +13,9 @@ public enum Category {
 
     HIDDEN("Hidden", false, false);
 
-    public String categoryName;
-    public boolean visible;
-    public boolean isHUD;
+    public final String categoryName;
+    public final boolean visible;
+    public final boolean isHUD;
 
     Category(String categoryName, boolean visible, boolean isHUD) {
         this.categoryName = categoryName;

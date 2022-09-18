@@ -1,50 +1,49 @@
 package net.spartanb312.cursa.client;
 
-import net.spartanb312.cursa.utils.graphics.font.CFont;
-import net.spartanb312.cursa.utils.graphics.font.CFontRenderer;
+import net.spartanb312.cursa.utils.graphics.font.UnicodeFontRenderer;
 
 import java.awt.*;
 
 public class FontManager {
 
-    public static CFontRenderer iconFont;
-    public static CFontRenderer fontRenderer;
+    public static UnicodeFontRenderer iconFont;
+    public static UnicodeFontRenderer fontRenderer;
 
     public static void init() {
-        iconFont = new CFontRenderer(new CFont.CustomFont("/assets/minecraft/fonts/Icon.ttf", 22f, Font.PLAIN), true, false);
-        fontRenderer = new CFontRenderer(new CFont.CustomFont("/assets/minecraft/fonts/Comfortaa-Bold.ttf", 18f, Font.PLAIN), true, false);
+        iconFont = UnicodeFontRenderer.create("/assets/minecraft/fonts/Icon.ttf", 50).setScale(0.32f);
+        fontRenderer = UnicodeFontRenderer.create("/assets/minecraft/fonts/Microsoft YaHei UI.ttc", 100, 560, 16, 0.1f);
     }
 
-    public static int getWidth(String str){
-        return fontRenderer.getStringWidth(str);
+    public static int getWidth(String str) {
+        return (int) fontRenderer.getWidth(str);
     }
 
-    public static int getHeight(){
-        return fontRenderer.getHeight() + 2;
+    public static int getHeight() {
+        return (int) fontRenderer.getHeight();
     }
 
     public static void draw(String str, int x, int y, int color) {
-        fontRenderer.drawString(str, x, y, color);
+        fontRenderer.drawString(str, x, y, new Color(color));
     }
 
     public static void draw(String str, int x, int y, Color color) {
-        fontRenderer.drawString(str, x, y, color.getRGB());
+        fontRenderer.drawString(str, x, y, color);
     }
 
-    public static int getIconWidth(){
-        return iconFont.getStringWidth("q");
+    public static int getIconWidth() {
+        return (int) iconFont.getWidth("q");
     }
 
-    public static int getIconHeight(){
-        return iconFont.getHeight();
+    public static int getIconHeight() {
+        return (int) iconFont.getHeight();
     }
 
     public static void drawIcon(int x, int y, int color) {
-        iconFont.drawString("q", x, y, color);
+        iconFont.drawString("q", x, y, new Color(color));
     }
 
     public static void drawIcon(int x, int y, Color color) {
-        iconFont.drawString("q", x, y, color.getRGB());
+        iconFont.drawString("q", x, y, color);
     }
 
 }

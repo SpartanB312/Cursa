@@ -51,8 +51,8 @@ public class ModuleButton extends Component {
         RenderUtils2D.drawRect(x, y - 1, x + width, y + height + 1, 0x85000000);
         if (module.isEnabled())
             RenderUtils2D.drawRect(x + 1, y, x + width - 1, y + height, GUIManager.getColor4I());
-        font.drawString(module.name, x + 3, (int) (y + height / 2 - font.getHeight() / 2f) + 2, fontColor);
-        FontManager.drawIcon(x + width - 2 - FontManager.getIconWidth(), y + 5, new Color(230, 230, 230, 230));
+        font.drawString(module.name, x + 3, (int) (y + height / 2 - font.getHeight() / 2f) , fontColor);
+        FontManager.drawIcon(x + width - 2 - FontManager.getIconWidth(), y, new Color(230, 230, 230, 230));
     }
 
     @Override

@@ -26,7 +26,7 @@ public class EnumButton extends Component {
         RenderUtils2D.drawRect(x, y, x + width, y + height, 0x85000000);
         font.drawString(setting.getName(), x + 5, (int) (y + height / 2 - font.getHeight() / 2f) + 2, ColorUtil.getHoovered(new Color(255, 255, 255).getRGB(), isHovered(mouseX, mouseY)));
         font.drawString(setting.displayValue(),
-                x + width - 3 - font.getStringWidth(setting.displayValue()), (int) (y + height / 2 - font.getHeight() / 2f) + 2,
+                x + width - 3 - font.getWidth(setting.displayValue()), (int) (y + height / 2 - font.getHeight() / 2f) + 2,
                 isHovered(mouseX, mouseY) ? fontColor : 0x909090);
     }
 

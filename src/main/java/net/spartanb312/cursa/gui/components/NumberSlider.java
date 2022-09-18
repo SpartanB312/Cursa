@@ -45,7 +45,7 @@ public class NumberSlider extends Component {
         }
 
         font.drawString(setting.getName(), x + 5, (int) (y + height / 2 - font.getHeight() / 2f) + 2, fontColor);
-        font.drawString(String.valueOf(displayValue), x + width - 3 - font.getStringWidth(String.valueOf(displayValue)), (int) (y + height / 2 - font.getHeight() / 2f) + 2, isHovered(mouseX, mouseY) ? fontColor : 0x909090);
+        font.drawString(String.valueOf(displayValue), x + width - 3 - font.getWidth(String.valueOf(displayValue)), (int) (y + height / 2 - font.getHeight() / 2f) + 2, isHovered(mouseX, mouseY) ? fontColor : 0x909090);
     }
 
     @Override

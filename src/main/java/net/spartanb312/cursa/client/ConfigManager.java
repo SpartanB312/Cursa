@@ -2,13 +2,12 @@ package net.spartanb312.cursa.client;
 
 import com.google.gson.*;
 import net.spartanb312.cursa.Cursa;
-import net.spartanb312.cursa.core.config.ConfigContainer;
 import net.spartanb312.cursa.gui.Panel;
 import net.spartanb312.cursa.gui.renderers.ClickGUIRenderer;
 import net.spartanb312.cursa.gui.renderers.HUDEditorRenderer;
 import net.spartanb312.cursa.module.Module;
 import net.spartanb312.cursa.module.modules.player.FakePlayer;
-import net.spartanb312.cursa.utils.ListUtil;
+import net.spartanb312.cursa.utils.common.CommonUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class ConfigManager {
+public class ConfigManager extends CommonUtils {
 
     public static final String CONFIG_PATH = "Cursa/config/";
     private static final Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
@@ -25,7 +24,7 @@ public class ConfigManager {
     private final File CLIENT_FILE = new File(CONFIG_PATH + "Cursa_Client.json");
     private final File GUI_FILE = new File(CONFIG_PATH + "Cursa_GUI.json");
 
-    private final List<File> configList = ListUtil.listOf(CLIENT_FILE, GUI_FILE);
+    private final List<File> configList = listOf(CLIENT_FILE, GUI_FILE);
 
     boolean shouldSave = false;
 
