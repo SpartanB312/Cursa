@@ -18,15 +18,15 @@ public class AntiContainer extends Module {
 
     Setting<Boolean> Chest = setting("Chest", true);
     Setting<Boolean> EnderChest = setting("EnderChest", true);
-    Setting<Boolean> Trapped_Chest = setting("Trapped_Chest", true);
+    Setting<Boolean> Trapped_Chest = setting("Trapped Chest", true);
     Setting<Boolean> Hopper = setting("Hopper", true);
     Setting<Boolean> Dispenser = setting("Dispenser", true);
     Setting<Boolean> Furnace = setting("Furnace", true);
     Setting<Boolean> Beacon = setting("Beacon", true);
-    Setting<Boolean> Crafting_Table = setting("Crafting_Table", true);
+    Setting<Boolean> Crafting_Table = setting("Crafting Table", true);
     Setting<Boolean> Anvil = setting("Anvil", true);
-    Setting<Boolean> Enchanting_table = setting("Enchanting_table", true);
-    Setting<Boolean> Brewing_Stand = setting("Brewing_Stand", true);
+    Setting<Boolean> Enchanting_table = setting("Enchanting table", true);
+    Setting<Boolean> Brewing_Stand = setting("Brewing Stand", true);
     Setting<Boolean> ShulkerBox = setting("ShulkerBox", true);
 
     @Override

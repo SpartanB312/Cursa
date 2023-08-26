@@ -24,7 +24,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.spartanb312.cursa.client.FontManager;
+import net.spartanb312.cursa.Cursa;
+import net.spartanb312.cursa.graphics.FontRenderers;
 import net.spartanb312.cursa.client.FriendManager;
 import net.spartanb312.cursa.client.GUIManager;
 import net.spartanb312.cursa.common.annotations.ModuleInfo;
@@ -42,8 +43,9 @@ import net.spartanb312.cursa.module.Category;
 import net.spartanb312.cursa.module.Module;
 import net.spartanb312.cursa.notification.NotificationManager;
 import net.spartanb312.cursa.utils.*;
-import net.spartanb312.cursa.utils.graphics.RenderUtils3D;
+import net.spartanb312.cursa.graphics.RenderUtils3D;
 import net.spartanb312.cursa.utils.math.Pair;
+import org.lwjgl.Sys;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -73,7 +75,7 @@ public strictfp class CursaAura extends Module {
     Setting<Page> page = setting("Page", Page.General);
 
     //General
-    Setting<Boolean> autoSwitch = setting("AutoSwitch", false).whenAtMode(page, Page.General).des("主手模式下自动切换水晶");
+    Setting<Boolean> autoSwitch = setting("AutoSwitch", false).whenAtMode(page, Page.General).des("Automatically switch to crystal");
     Setting<Integer> updateDelay = setting("UpdateDelay", 10, 1, 50).whenAtMode(page, Page.General).des("Loop updating delay");
     Setting<Boolean> targetPlayer = setting("Players", true).whenAtMode(page, Page.General).des("Player targets");
     Setting<Boolean> targetMob = setting("Mobs", false).whenAtMode(page, Page.General).des("Mob targets");
@@ -81,11 +83,11 @@ public strictfp class CursaAura extends Module {
     Setting<Boolean> autoPlace = setting("Place", true).whenAtMode(page, Page.General).des("Automatically place crystals");
     Setting<Boolean> autoExplode = setting("Explode", true).whenAtMode(page, Page.General).des("Automatically explode crystals");
     Setting<Boolean> multiPlace = setting("MultiPlace", false).whenAtMode(page, Page.General).des("Place multi crystals before explode");
-    Setting<Double> attackSpeed = setting("AttackSpeed", 35d, 0, 50).whenAtMode(page, Page.General).des("Speed of breaking crystal");
-    Setting<Double> placeSpeed = setting("PlaceSpeed", 35d, 0d, 50).whenAtMode(page, Page.General).des("Speed of placing crystal");
-    Setting<Double> distance = setting("Distance", 7.0D, 0D, 8D).whenAtMode(page, Page.General).des("Calculation working range");
-    Setting<Double> placeRange = setting("PlaceRange", 4.5D, 0D, 8D).whenAtMode(page, Page.General).des("Max place range");
-    Setting<Double> hitRange = setting("HitRange", 5.5D, 0D, 8D).whenAtMode(page, Page.General).des("Max break range");
+    Setting<Double> attackSpeed = setting("AttackSpeed", 35.0, 0.0, 50.0).whenAtMode(page, Page.General).des("Speed of breaking crystal");
+    Setting<Double> placeSpeed = setting("PlaceSpeed", 35.0, 0.0, 50.0).whenAtMode(page, Page.General).des("Speed of placing crystal");
+    Setting<Double> distance = setting("Distance", 7.0, 0.0, 8.0).whenAtMode(page, Page.General).des("Calculation working range");
+    Setting<Double> placeRange = setting("PlaceRange", 4.5, 0.0, 8.0).whenAtMode(page, Page.General).des("Max place range");
+    Setting<Double> hitRange = setting("HitRange", 5.5, 0.0, 8.0).whenAtMode(page, Page.General).des("Max break range");
     Setting<Boolean> rotate = setting("Rotate", true).whenAtMode(page, Page.General).des("Rotation packets and animation");
     Setting<Boolean> rayTrace = setting("RayTrace", false).whenAtMode(page, Page.General).des("Ray trace block side");
     //Place
@@ -94,9 +96,9 @@ public strictfp class CursaAura extends Module {
     Setting<Double> placeWallRange = setting("PlaceWallRange", 3.0, 0.0, 5.0).whenAtMode(page, Page.Place).des("Wall place calculation range");
     Setting<Boolean> noSuicide = setting("NoSuicide", true).whenAtMode(page, Page.Place).des("No suicide");
     Setting<Boolean> facePlace = setting("FacePlace", true).whenAtMode(page, Page.Place).des("Force place while enemies are nearly dying");
-    Setting<Double> blastHealth = setting("MinHealthFace", 10d, 0d, 20d).whenAtMode(page, Page.Place).whenTrue(facePlace).des("When enemy's health is lower than this then we starting face place");
-    Setting<Double> placeMinDmg = setting("PlaceMinDamage", 4.5d, 0d, 20d).whenAtMode(page, Page.Place).des("Each placement must make damage on enemy higher than this");
-    Setting<Double> placeMaxSelf = setting("PlaceMaxSelf", 10d, 0d, 36d).whenAtMode(page, Page.Place).des("Each placement must make damage on self lower than this");
+    Setting<Double> blastHealth = setting("MinHealthFace", 10.0, 0.0, 20.0).whenAtMode(page, Page.Place).whenTrue(facePlace).des("When enemy's health is lower than this then we starting face place");
+    Setting<Double> placeMinDmg = setting("PlaceMinDamage", 4.5, 0.0, 20.0).whenAtMode(page, Page.Place).des("Each placement must make damage on enemy higher than this");
+    Setting<Double> placeMaxSelf = setting("PlaceMaxSelf", 10.0, 0d, 36.0).whenAtMode(page, Page.Place).des("Each placement must make damage on self lower than this");
     Setting<Boolean> ghostHand = setting("GhostHand", false).whenAtMode(page, Page.Place).des("Ghost hand means that you don't need to switch to crystal to place");
     //Break
     Setting<AttackMode> attackMode = setting("HitMode", AttackMode.Smart).whenAtMode(page, Page.Break).des("Always or Smart(With break calculation)");
@@ -131,18 +133,18 @@ public strictfp class CursaAura extends Module {
 
     enum Page {General, Place, Break, Render}
 
-    transient public static float yaw;
-    transient public static float pitch;
-    transient public static float renderPitch;
-    transient public static boolean shouldSpoofPacket;
-    transient public static Entity target;
+    public static float yaw;
+    public static float pitch;
+    public static float renderPitch;
+    public static boolean shouldSpoofPacket;
+    public static Entity target;
     transient private int placements = 0;
     transient private int oldSlot = -1;
     transient private int prevSlot;
     transient private boolean switchCoolDown;
     transient private boolean togglePitch = false;
-    transient private BlockPos renderBlock;
-    transient private static boolean rotating = false;
+    transient private Vec3d targetRenderBlock;
+    private static boolean rotating = false;
     transient Timer placeTimer = new Timer();
     transient Timer breakTimer = new Timer();
     transient Timer packetBreakTimer = new Timer();
@@ -151,7 +153,7 @@ public strictfp class CursaAura extends Module {
     transient AtomicInteger lastEntityId = new AtomicInteger(-1);
 
     public final LocalTarget localTarget = new LocalTarget();
-    private final HashMap<BlockPos, Double> renderBlockDmg = new HashMap<>();
+    private final HashMap<Vec3d, Double> renderBlockDmg = new HashMap<>();
 
     RepeatUnit placeCalculation = new RepeatUnit(() -> (int) ((1000 / placeSpeed.getValue()) - 5) / (multiPlace.getValue() ? 1 : 2), () -> {
         if (mc.player == null || mc.world == null) return;
@@ -356,7 +358,7 @@ public strictfp class CursaAura extends Module {
         return newList;
     }
 
-    private void drawBlock(BlockPos blockPos, int color) {
+    private void drawBlock(Vec3d blockPos, int color) {
         RenderUtils3D.prepare(GL_QUADS);
         if (!renderMode.getValue().equals(RenderMode.OFF)) {
             if (renderMode.getValue().equals(RenderMode.Solid) || renderMode.getValue().equals(RenderMode.Up)) {
@@ -379,12 +381,12 @@ public strictfp class CursaAura extends Module {
         if (renderDmg.getValue()) {
             if (renderBlockDmg.containsKey(blockPos)) {
                 GlStateManager.pushMatrix();
-                glBillboardDistanceScaled((float) blockPos.getX() + 0.5f, (float) blockPos.getY() + 0.5f, (float) blockPos.getZ() + 0.5f, mc.player);
+                glBillboardDistanceScaled((float) blockPos.x + 0.5f, (float) blockPos.y + 0.5f, (float) blockPos.z + 0.5f, mc.player);
                 final double damage = renderBlockDmg.get(blockPos);
                 final String damageText = "DMG: " + (Math.floor(damage) == damage ? (int) damage : String.format("%.1f", damage));
                 GlStateManager.disableDepth();
-                GlStateManager.translate(-(FontManager.fontRenderer.getWidth(damageText) / 2.0d), 0, 0);
-                FontManager.fontRenderer.drawStringWithShadow(damageText, 0, 0, -1);
+                GlStateManager.translate(-(FontRenderers.MainFontRenderer.getWidth(damageText) / 2.0d), 0, 0);
+                FontRenderers.MainFontRenderer.drawStringWithShadow(damageText, 0, 0, -1);
                 GlStateManager.popMatrix();
             }
         }
@@ -517,11 +519,11 @@ public strictfp class CursaAura extends Module {
             if (ghostHand.getValue()) ghostHand();
         }
         if (target == null || targetBlock == null) {
-            renderBlock = null;
+            targetRenderBlock = null;
             resetRotation();
             return;
         }
-        renderBlock = targetBlock;
+        targetRenderBlock = new Vec3d(targetBlock);
         if (autoPlace.getValue()) {
             EnumHand enumHand = offhand ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
             if (!offhand && mc.player.inventory.currentItem != crystalSlot) {
@@ -589,7 +591,9 @@ public strictfp class CursaAura extends Module {
                     damage = targetDamage;
                     tempBlock = blockPos;
                     target = entity2;
-                    if (renderDmg.getValue()) renderBlockDmg.put(tempBlock, targetDamage);
+                    if (renderDmg.getValue()) {
+                        renderBlockDmg.put(new Vec3d(tempBlock), targetDamage);
+                    }
                 }
                 if (target != null) break;
             }
@@ -631,13 +635,12 @@ public strictfp class CursaAura extends Module {
                 new Color(red.getValue(), green.getValue(), blue.getValue(), transparency.getValue()).getRGB();
     }
 
-
     @Override
     public void onRenderWorld(RenderEvent event) {
         int color = syncGUI.getValue() ?
                 new Color(GUIManager.getRed(), GUIManager.getGreen(), GUIManager.getBlue(), transparency.getValue()).getRGB() :
                 getColor();
-        if (renderBlock != null) drawBlock(renderBlock, color);
+        if (targetRenderBlock != null) drawBlock(targetRenderBlock, color);
     }
 
     @Override
@@ -658,7 +661,7 @@ public strictfp class CursaAura extends Module {
         placeTimer.restart();
         breakTimer.restart();
         packetBreakTimer.restart();
-        renderBlock = null;
+        targetRenderBlock = null;
         target = null;
         yaw = mc.player.rotationYaw;
         pitch = mc.player.rotationPitch;

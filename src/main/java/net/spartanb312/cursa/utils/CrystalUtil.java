@@ -116,6 +116,13 @@ public class CrystalUtil {
         return new BlockPos(Math.floor(mc.player.posX), Math.floor(mc.player.posY), Math.floor(mc.player.posZ));
     }
 
+    public static double getVecDistance(Vec3d a, double posX, double posY, double posZ) {
+        double x1 = a.x - posX;
+        double y1 = a.y - posY;
+        double z1 = a.z - posZ;
+        return Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1);
+    }
+
     public static double getVecDistance(BlockPos a, double posX, double posY, double posZ) {
         double x1 = a.getX() - posX;
         double y1 = a.getY() - posY;

@@ -5,7 +5,7 @@ import net.spartanb312.cursa.core.setting.Setting;
 import net.spartanb312.cursa.gui.Component;
 import net.spartanb312.cursa.gui.Panel;
 import net.spartanb312.cursa.utils.SoundUtil;
-import net.spartanb312.cursa.utils.graphics.RenderUtils2D;
+import net.spartanb312.cursa.graphics.RenderUtils2D;
 
 public class BooleanButton extends Component {
 
@@ -21,8 +21,7 @@ public class BooleanButton extends Component {
     @Override
     public void render(int mouseX, int mouseY, float partialTicks) {
         RenderUtils2D.drawRect(x, y, x + width, y + height, 0x85000000);
-        font.drawString(setting.getName(), x + 5, (int) (y + height / 2 - font.getHeight() / 2f) + 2, getHoveredColor(mouseX, mouseY, setting.getValue() ? GUIManager.getColor3I() : fontColor));
-
+        font.drawString(setting.getName(), x + 6, (int) (y + height / 2 - font.getHeight() / 2f), getHoveredColor(mouseX, mouseY, setting.getValue() ? GUIManager.getColor3I() : fontColor));
     }
 
     @Override

@@ -1,15 +1,15 @@
 package net.spartanb312.cursa.gui;
 
-import net.spartanb312.cursa.client.FontManager;
+import net.spartanb312.cursa.graphics.FontRenderers;
 import net.spartanb312.cursa.client.GUIManager;
 import net.spartanb312.cursa.client.ModuleManager;
 import net.spartanb312.cursa.gui.renderers.ClickGUIRenderer;
 import net.spartanb312.cursa.module.modules.client.ClickGUI;
 import net.spartanb312.cursa.module.modules.client.GUISetting;
-import net.spartanb312.cursa.utils.graphics.RenderUtils2D;
+import net.spartanb312.cursa.graphics.RenderUtils2D;
 import net.spartanb312.cursa.utils.math.Pair;
 import net.spartanb312.cursa.utils.math.Vec2I;
-import net.spartanb312.cursa.utils.graphics.particle.ParticleSystem;
+import net.spartanb312.cursa.graphics.particle.ParticleSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
@@ -61,9 +61,9 @@ public class CursaClickGUI extends GuiScreen {
         }
         ClickGUIRenderer.instance.drawScreen(mouseX, mouseY, partialTicks);
         if (description != null) {
-            RenderUtils2D.drawRect(description.b.x + 10, description.b.y, description.b.x + 12 + FontManager.getWidth(description.a), description.b.y + FontManager.getHeight() + 4, 0x85000000);
-            RenderUtils2D.drawRectOutline(description.b.x + 10, description.b.y, description.b.x + 12 + FontManager.getWidth(description.a), description.b.y + FontManager.getHeight() + 4, GUIManager.getColor4I());
-            FontManager.draw(description.a, description.b.x + 11, description.b.y + 4, white);
+            RenderUtils2D.drawRect(description.b.x + 10, description.b.y, description.b.x + 12 + FontRenderers.getWidth(description.a), description.b.y + FontRenderers.getHeight() + 4, 0x85000000);
+            RenderUtils2D.drawRectOutline(description.b.x + 10, description.b.y, description.b.x + 12 + FontRenderers.getWidth(description.a), description.b.y + FontRenderers.getHeight() + 4, GUIManager.getColor4I());
+            FontRenderers.draw(description.a, description.b.x + 11, description.b.y + 2, white);
         }
     }
 

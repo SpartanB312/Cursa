@@ -1,4 +1,4 @@
-package net.spartanb312.cursa.utils.graphics;
+package net.spartanb312.cursa.graphics;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -63,6 +63,14 @@ public class RenderUtils3D extends Tessellator {
         INSTANCE.draw();
     }
 
+    public static void drawBox(Vec3d blockPos, int argb, int sides) {
+        int a = argb >>> 24 & 255;
+        int r = argb >>> 16 & 255;
+        int g = argb >>> 8 & 255;
+        int b = argb & 255;
+        RenderUtils3D.drawBox(blockPos, r, g, b, a, sides);
+    }
+
     public static void drawBox(BlockPos blockPos, int argb, int sides) {
         int a = argb >>> 24 & 255;
         int r = argb >>> 16 & 255;
@@ -73,6 +81,10 @@ public class RenderUtils3D extends Tessellator {
 
     public static void drawBox(BlockPos blockPos, int r, int g, int b, int a, int sides) {
         RenderUtils3D.drawBox(INSTANCE.getBuffer(), blockPos.getX(), blockPos.getY(), blockPos.getZ(), 1.0f, 1.0f, 1.0f, r, g, b, a, sides);
+    }
+
+    public static void drawBox(Vec3d blockPos, int r, int g, int b, int a, int sides) {
+        RenderUtils3D.drawBox(INSTANCE.getBuffer(), (float) blockPos.x, (float) blockPos.y, (float) blockPos.z, 1.0f, 1.0f, 1.0f, r, g, b, a, sides);
     }
 
     public static void drawBox(BufferBuilder buffer, float x, float y, float z, float w, float h, float d, int r, int g, int b, int a, int sides) {
@@ -122,7 +134,20 @@ public class RenderUtils3D extends Tessellator {
         RenderUtils3D.drawFullBox(pos, width, r, g, b, a);
     }
 
+    public static void drawFullBox(Vec3d pos, float width, int argb) {
+        int a = argb >>> 24 & 255;
+        int r = argb >>> 16 & 255;
+        int g = argb >>> 8 & 255;
+        int b = argb & 255;
+        RenderUtils3D.drawFullBox(pos, width, r, g, b, a);
+    }
+
     public static void drawFullBox(BlockPos pos, float width, int red, int green, int blue, int alpha) {
+        drawBoundingFullBox(getBoundingFromPos(pos), red, green, blue, alpha);
+        drawBoundingBox(getBoundingFromPos(pos), width, red, green, blue, 255);
+    }
+
+    public static void drawFullBox(Vec3d pos, float width, int red, int green, int blue, int alpha) {
         drawBoundingFullBox(getBoundingFromPos(pos), red, green, blue, alpha);
         drawBoundingBox(getBoundingFromPos(pos), width, red, green, blue, 255);
     }
@@ -133,10 +158,15 @@ public class RenderUtils3D extends Tessellator {
         return iBlockState.getSelectedBoundingBox(Minecraft.getMinecraft().world, pos).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D).offset(-interpolate.x, -interpolate.y, -interpolate.z);
     }
 
+    public static AxisAlignedBB getBoundingFromPos(Vec3d pos) {
+        IBlockState iBlockState = Minecraft.getMinecraft().world.getBlockState(new BlockPos(pos));
+        Vec3d interpolate = interpolateEntity(Minecraft.getMinecraft().player, Minecraft.getMinecraft().getRenderPartialTicks());
+        return iBlockState.getSelectedBoundingBox(Minecraft.getMinecraft().world, new BlockPos(pos)).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D).offset(-interpolate.x, -interpolate.y, -interpolate.z);
+    }
+
     public static Vec3d interpolateEntity(final Entity entity, final float time) {
         return new Vec3d(entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * time, entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * time, entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * time);
     }
-
 
     public static void drawBoundingBox(BlockPos bb, float width, int argb) {
         int a = argb >>> 24 & 255;
@@ -146,7 +176,19 @@ public class RenderUtils3D extends Tessellator {
         RenderUtils3D.drawBoundingBox(bb, width, r, g, b, a);
     }
 
+    public static void drawBoundingBox(Vec3d bb, float width, int argb) {
+        int a = argb >>> 24 & 255;
+        int r = argb >>> 16 & 255;
+        int g = argb >>> 8 & 255;
+        int b = argb & 255;
+        RenderUtils3D.drawBoundingBox(bb, width, r, g, b, a);
+    }
+
     public static void drawBoundingBox(BlockPos pos, float width, int red, int green, int blue, int alpha) {
+        drawBoundingBox(getBoundingFromPos(pos), width, red, green, blue, alpha);
+    }
+
+    public static void drawBoundingBox(Vec3d pos, float width, int red, int green, int blue, int alpha) {
         drawBoundingBox(getBoundingFromPos(pos), width, red, green, blue, alpha);
     }
 

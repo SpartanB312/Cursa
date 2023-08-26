@@ -14,8 +14,7 @@
     "client.MixinMinecraft",
     "entity.MixinEntityPlayerSP",
     "network.MixinNetWork",
-    "render.MixinEntityRenderer",
-    "render.MixinGuiSubtitleOverlay"
+    "render.MixinEntityRenderer"
   ],
   "client": [
     "render.MixinModelBiped"

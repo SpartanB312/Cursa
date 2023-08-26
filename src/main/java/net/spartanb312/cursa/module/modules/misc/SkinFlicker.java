@@ -13,11 +13,11 @@ import java.util.Random;
 @ModuleInfo(name = "SkinFlicker", category = Category.MISC, description = "Dynamic skin")
 public class SkinFlicker extends Module {
 
-    Setting<Mode> mode = setting("Mode", Mode.HORIZONTAL);
+    Setting<Mode> mode = setting("Mode", Mode.HRZ);
     Setting<Integer> slowness = setting("Slowness", 2, 1, 10);
 
     enum Mode {
-        HORIZONTAL, VERTICAL, RANDOM
+        HRZ, VTC, Random
     }
 
     private final static EnumPlayerModelParts[] PARTS_HORIZONTAL = new EnumPlayerModelParts[]{
@@ -45,19 +45,19 @@ public class SkinFlicker extends Module {
     public void onTick() {
         if (mc.player == null) return;
         switch (mode.getValue()) {
-            case RANDOM:
+            case Random:
                 if (mc.player.ticksExisted % slowness.getValue() != 0) return;
                 mc.gameSettings.switchModelPartEnabled(EnumPlayerModelParts.values()[r.nextInt(len)]);
                 break;
-            case VERTICAL:
-            case HORIZONTAL:
+            case VTC:
+            case HRZ:
                 int i = (mc.player.ticksExisted / slowness.getValue()) % (PARTS_HORIZONTAL.length * 2); // *2 for on/off
                 boolean on = false;
                 if (i >= PARTS_HORIZONTAL.length) {
                     on = true;
                     i -= PARTS_HORIZONTAL.length;
                 }
-                mc.gameSettings.setModelPartEnabled(mode.getValue().equals(Mode.VERTICAL) ? PARTS_VERTICAL[i] : PARTS_HORIZONTAL[i], on);
+                mc.gameSettings.setModelPartEnabled(mode.getValue().equals(Mode.VTC) ? PARTS_VERTICAL[i] : PARTS_HORIZONTAL[i], on);
         }
     }
 

@@ -1,4 +1,4 @@
-package net.spartanb312.cursa.utils.graphics.particle;
+package net.spartanb312.cursa.graphics.particle;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector2f;

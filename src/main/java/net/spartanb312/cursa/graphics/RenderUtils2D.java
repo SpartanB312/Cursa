@@ -1,6 +1,5 @@
-package net.spartanb312.cursa.utils.graphics;
+package net.spartanb312.cursa.graphics;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -15,15 +14,11 @@ public class RenderUtils2D {
         GlStateManager.disableTexture2D();
         GlStateManager.enableBlend();
         GlStateManager.shadeModel(GL_SMOOTH);
-        glEnable(GL_LINE_SMOOTH);
-        glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
         GlStateManager.disableCull();
     }
 
     public static void releaseGl() {
         GlStateManager.enableTexture2D();
-        GlStateManager.shadeModel(GL_FLAT);
-        glDisable(GL_LINE_SMOOTH);
         GlStateManager.enableCull();
     }
 

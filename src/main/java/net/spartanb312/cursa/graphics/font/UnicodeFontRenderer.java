@@ -1,9 +1,9 @@
-package net.spartanb312.cursa.utils.graphics.font;
+package net.spartanb312.cursa.graphics.font;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.spartanb312.cursa.utils.graphics.VertexBuffer;
-import net.spartanb312.cursa.utils.graphics.texture.MipmapTexture;
+import net.spartanb312.cursa.graphics.VertexBuffer;
+import net.spartanb312.cursa.graphics.texture.MipmapTexture;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -14,13 +14,13 @@ import java.util.Objects;
 import static java.awt.RenderingHints.*;
 import static net.minecraft.client.renderer.vertex.DefaultVertexFormats.POSITION_TEX_COLOR;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL14.GL_TEXTURE_LOD_BIAS;
 
 /**
  * Author B_312
- * on 09/16/2022
+ * Created on 09/16/2022
+ * Updated on 08/27/2023
  */
-public class UnicodeFontRenderer {
+public class UnicodeFontRenderer implements IFontRenderer, ICenteredFontRenderer, IGradiantFontRenderer {
 
     private final Font font;
     private final boolean antiAlias;
@@ -37,6 +37,8 @@ public class UnicodeFontRenderer {
 
     private int height = 0;
     private float scaleFactor;
+
+    public static final Color shadowColor = new Color(0, 0, 0, 96);
 
     public UnicodeFontRenderer(Font font, int size, boolean antiAlias, boolean fractionalMetrics, int imgSize, int chunkSize, boolean linearMag, float scaleFactor) {
         this.font = font;
@@ -70,7 +72,7 @@ public class UnicodeFontRenderer {
         } catch (FontFormatException | IOException e) {
             return null;
         }
-        return new UnicodeFontRenderer(font.deriveFont(size).deriveFont(Font.PLAIN), (int) size, true, false, imgSize, chunkSize, true, scaleFactor);
+        return new UnicodeFontRenderer(font.deriveFont(size).deriveFont(Font.PLAIN), (int) size, true, false, imgSize, chunkSize, false, scaleFactor);
     }
 
     public UnicodeFontRenderer setScale(float scale) {
@@ -117,31 +119,30 @@ public class UnicodeFontRenderer {
             posX += imgWidth;
         }
 
-        MipmapTexture texture = new MipmapTexture(img, GL_RGBA);
+        MipmapTexture texture = new MipmapTexture(img, GL_RGBA, 3);
         texture.bindTexture();
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, 0.0f);
         if (!linearMag) glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         texture.unbindTexture();
         textures[chunk] = texture;
         return texture;
     }
 
+    @Override
     public float getHeight() {
         return height * scaleFactor;
     }
 
+    @Override
     public float getHeight(float scale) {
         return height * scale * scaleFactor;
     }
 
+    @Override
     public float getWidth(String text) {
         return getWidth0(text) * scaleFactor;
     }
 
+    @Override
     public float getWidth(String text, float scale) {
         return getWidth0(text) * scale * scaleFactor;
     }
@@ -188,54 +189,202 @@ public class UnicodeFontRenderer {
         return sum;
     }
 
+    @Override
     public void drawString(String text, float x, float y) {
         drawString0(text, x, y, Color.WHITE, 1f, false);
     }
 
+    @Override
     public void drawString(String text, float x, float y, int color) {
         drawString0(text, x, y, new Color(color), 1f, false);
     }
 
+    @Override
     public void drawString(String text, float x, float y, Color color) {
         drawString0(text, x, y, color, 1f, false);
     }
 
+    @Override
     public void drawString(String text, float x, float y, Color color, float scale) {
         drawString0(text, x, y, color, scale, false);
     }
 
+    @Override
     public void drawStringWithShadow(String text, float x, float y) {
         drawString0(text, x + 1f, y + 1f, Color.WHITE, 1f, true);
         drawString0(text, x, y, Color.WHITE, 1f, false);
     }
 
+    @Override
     public void drawStringWithShadow(String text, float x, float y, Color color) {
         drawString0(text, x + 1f, y + 1f, color, 1f, true);
         drawString0(text, x, y, color, 1f, false);
     }
 
+    @Override
     public void drawStringWithShadow(String text, float x, float y, Color color, float scale) {
         drawString0(text, x + 1f, y + 1f, color, scale, true);
         drawString0(text, x, y, color, scale, false);
     }
 
+    @Override
     public void drawStringWithShadow(String text, float x, float y, float shadowDepth) {
         drawString0(text, x + shadowDepth, y + shadowDepth, Color.WHITE, 1f, true);
         drawString0(text, x, y, Color.WHITE, 1f, false);
     }
 
+    @Override
     public void drawStringWithShadow(String text, float x, float y, float shadowDepth, Color color) {
         drawString0(text, x + shadowDepth, y + shadowDepth, color, 1f, true);
         drawString0(text, x, y, color, 1f, false);
     }
 
+    @Override
     public void drawStringWithShadow(String text, float x, float y, float shadowDepth, Color color, float scale) {
         drawString0(text, x + shadowDepth, y + shadowDepth, color, scale, true);
         drawString0(text, x, y, color, scale, false);
     }
 
+    @Override//Centered
+    public void drawCenteredString(String text, float x, float y) {
+        float width = getWidth(text, 1f);
+        float height = this.height * scaleFactor;
+        float x1 = x - width / 2f;
+        float y1 = y - height / 2f;
+        drawString0(text, x1, y1, Color.WHITE, 1f, false);
+    }
+
+    @Override
+    public void drawCenteredString(String text, float x, float y, int color) {
+        float width = getWidth(text, 1f);
+        float height = this.height * scaleFactor;
+        float x1 = x - width / 2f;
+        float y1 = y - height / 2f;
+        drawString0(text, x1, y1, new Color(color), 1f, false);
+    }
+
+    @Override
+    public void drawCenteredString(String text, float x, float y, Color color) {
+        float width = getWidth(text, 1f);
+        float height = this.height * scaleFactor;
+        float x1 = x - width / 2f;
+        float y1 = y - height / 2f;
+        drawString0(text, x1, y1, color, 1f, false);
+    }
+
+    @Override
+    public void drawCenteredString(String text, float x, float y, Color color, float scale) {
+        float width = getWidth(text, scale);
+        float height = this.height * scale * scaleFactor;
+        float x1 = x - width / 2f;
+        float y1 = y - height / 2f;
+        drawString0(text, x1, y1, color, scale, false);
+    }
+
+    @Override
+    public void drawCenteredStringWithShadow(String text, float x, float y) {
+        float width = getWidth(text, 1f);
+        float height = this.height * scaleFactor;
+        float x1 = x - width / 2f;
+        float y1 = y - height / 2f;
+        drawString0(text, x1 + 1f, y1 + 1f, Color.WHITE, 1f, true);
+        drawString0(text, x1, y1, Color.WHITE, 1f, false);
+    }
+
+    @Override
+    public void drawCenteredStringWithShadow(String text, float x, float y, Color color) {
+        float width = getWidth(text, 1f);
+        float height = this.height * scaleFactor;
+        float x1 = x - width / 2f;
+        float y1 = y - height / 2f;
+        drawString0(text, x1 + 1f, y1 + 1f, color, 1f, true);
+        drawString0(text, x1, y1, color, 1f, false);
+    }
+
+    @Override
+    public void drawCenteredStringWithShadow(String text, float x, float y, Color color, float scale) {
+        float width = getWidth(text, scale);
+        float height = this.height * scale * scaleFactor;
+        float x1 = x - width / 2f;
+        float y1 = y - height / 2f;
+        drawString0(text, x1 + 1f, y1 + 1f, color, scale, true);
+        drawString0(text, x1, y1, color, scale, false);
+    }
+
+    @Override
+    public void drawCenteredStringWithShadow(String text, float x, float y, float shadowDepth) {
+        float width = getWidth(text, 1f);
+        float height = this.height * scaleFactor;
+        float x1 = x - width / 2f;
+        float y1 = y - height / 2f;
+        drawString0(text, x1 + shadowDepth, y1 + shadowDepth, Color.WHITE, 1f, true);
+        drawString0(text, x1, y1, Color.WHITE, 1f, false);
+    }
+
+    @Override
+    public void drawCenteredStringWithShadow(String text, float x, float y, float shadowDepth, Color color) {
+        float width = getWidth(text, 1f);
+        float height = this.height * scaleFactor;
+        float x1 = x - width / 2f;
+        float y1 = y - height / 2f;
+        drawString0(text, x1 + shadowDepth, y1 + shadowDepth, color, 1f, true);
+        drawString0(text, x1, y1, color, 1f, false);
+    }
+
+    @Override
+    public void drawCenteredStringWithShadow(String text, float x, float y, float shadowDepth, Color color, float scale) {
+        float width = getWidth(text, scale);
+        float height = this.height * scale * scaleFactor;
+        float x1 = x - width / 2f;
+        float y1 = y - height / 2f;
+        drawString0(text, x1 + shadowDepth, y1 + shadowDepth, color, scale, true);
+        drawString0(text, x1, y1, color, scale, false);
+    }
+
+    //Gradiant
+    @Override
+    public void drawGradiantString(String text, float x, float y, Color[] colors) {
+        drawString1(text, x, y, colors, 1f);
+    }
+
+    @Override
+    public void drawGradiantString(String text, float x, float y, Color[] colors, float scale) {
+        drawString1(text, x, y, colors, scale);
+    }
+
+    @Override
+    public void drawGradiantStringWithShadow(String text, float x, float y, Color[] colors) {
+        drawString0(text, x + 1f, y + 1f, colors[0], 1f, true);
+        drawString1(text, x, y, colors, 1f);
+    }
+
+    @Override
+    public void drawGradiantStringWithShadow(String text, float x, float y, Color[] colors, float scale) {
+        drawString0(text, x + 1f, y + 1f, colors[0], scale, true);
+        drawString1(text, x, y, colors, scale);
+    }
+
+    @Override
+    public void drawGradiantStringWithShadow(String text, float x, float y, float shadowDepth, Color[] colors) {
+        drawString0(text, x + shadowDepth, y + shadowDepth, colors[0], 1f, true);
+        drawString1(text, x, y, colors, 1f);
+    }
+
+    @Override
+    public void drawGradiantStringWithShadow(String text, float x, float y, float shadowDepth, Color[] colors, float scale) {
+        drawString0(text, x + shadowDepth, y + shadowDepth, colors[0], scale, true);
+        drawString1(text, x, y, colors, scale);
+    }
+
     private void drawString0(String text, float x, float y, Color color0, float scale0, boolean shadow) {
-        Color shadowColor = new Color(0, 0, 0, 128);
+        drawString0(text, x, y, color0, false, new Color[0], scale0, shadow);
+    }
+
+    private void drawString1(String text, float x, float y, Color[] colors, float scale0) {
+        drawString0(text, x, y, colors[0], true, colors, scale0, false);
+    }
+
+    private void drawString0(String text, float x, float y, Color color0, boolean gradiant, Color[] colors, float scale0, boolean shadow) {
         GlStateManager.enableTexture2D();
         GlStateManager.enableBlend();
         GlStateManager.enableAlpha();
@@ -280,7 +429,7 @@ public class UnicodeFontRenderer {
                     //Color
                     Color newColor = getColor(next, color0);
                     if (newColor != null) {
-                        currentColor = new Color(newColor.getRed(), newColor.getGreen(), newColor.getBlue(), alpha);
+                        if (!gradiant) currentColor = new Color(newColor.getRed(), newColor.getGreen(), newColor.getBlue(), alpha);
                         shouldSkip = true;
                         continue;
                     }
@@ -313,31 +462,32 @@ public class UnicodeFontRenderer {
             if (c >= charDataArray.length || charDataArray[c] == null) continue;
             else data = charDataArray[c];
 
-            Color renderColor = shadow ? shadowColor : currentColor;
+            Color leftColor = shadow ? shadowColor : currentColor;
+            Color rightColor = leftColor;
+            if (gradiant && !shadow) rightColor = colors[index % colors.length];
+
             float endX = startX + data.width;
             float endY = startY + data.height;
 
             VertexBuffer.begin(GL_QUADS, POSITION_TEX_COLOR);
-
             //RT
-            VertexBuffer.tex2D(endX, startY, data.u1, data.v, renderColor);
+            VertexBuffer.tex2D(endX, startY, data.u1, data.v, rightColor);
             //LT
-            VertexBuffer.tex2D(startX, startY, data.u, data.v, renderColor);
+            VertexBuffer.tex2D(startX, startY, data.u, data.v, leftColor);
             //LB
-            VertexBuffer.tex2D(startX, endY, data.u, data.v1, renderColor);
+            VertexBuffer.tex2D(startX, endY, data.u, data.v1, leftColor);
             //RB
-            VertexBuffer.tex2D(endX, endY, data.u1, data.v1, renderColor);
-
+            VertexBuffer.tex2D(endX, endY, data.u1, data.v1, rightColor);
             VertexBuffer.end();
 
             startX = endX;
+            currentColor = rightColor;
         }
         GlStateManager.bindTexture(0);
         if (scale != 1f) {
             glMatrixMode(GL_MODELVIEW);
             glPopMatrix();
         }
-        GlStateManager.disableTexture2D();
     }
 
     private Color getColor(char colorCode, Color prev) {

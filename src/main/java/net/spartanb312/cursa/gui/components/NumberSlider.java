@@ -8,7 +8,7 @@ import net.spartanb312.cursa.core.setting.settings.FloatSetting;
 import net.spartanb312.cursa.core.setting.settings.IntSetting;
 import net.spartanb312.cursa.gui.Component;
 import net.spartanb312.cursa.gui.Panel;
-import net.spartanb312.cursa.utils.graphics.RenderUtils2D;
+import net.spartanb312.cursa.graphics.RenderUtils2D;
 
 public class NumberSlider extends Component {
 
@@ -44,8 +44,8 @@ public class NumberSlider extends Component {
             }
         }
 
-        font.drawString(setting.getName(), x + 5, (int) (y + height / 2 - font.getHeight() / 2f) + 2, fontColor);
-        font.drawString(String.valueOf(displayValue), x + width - 3 - font.getWidth(String.valueOf(displayValue)), (int) (y + height / 2 - font.getHeight() / 2f) + 2, isHovered(mouseX, mouseY) ? fontColor : 0x909090);
+        font.drawString(setting.getName(), x + 6, (int) (y + height / 2 - font.getHeight() / 2f), fontColor);
+        font.drawString(String.valueOf(displayValue), x + width - 3 - font.getWidth(String.valueOf(displayValue)), (int) (y + height / 2 - font.getHeight() / 2f), isHovered(mouseX, mouseY) ? fontColor : 0x909090);
     }
 
     @Override

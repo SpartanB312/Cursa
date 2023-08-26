@@ -1,17 +1,18 @@
 package net.spartanb312.cursa;
 
+import net.spartanb312.cursa.client.*;
 import net.spartanb312.cursa.core.event.EventManager;
 import net.spartanb312.cursa.core.event.Listener;
 import net.spartanb312.cursa.core.event.Priority;
 import net.spartanb312.cursa.event.events.client.InitializationEvent;
+import net.spartanb312.cursa.graphics.FontRenderers;
 import net.spartanb312.cursa.module.modules.client.ClickGUI;
-import net.spartanb312.cursa.client.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.Display;
 
 import static net.spartanb312.cursa.core.concurrent.ConcurrentTaskManager.runParallel;
-import static net.spartanb312.cursa.core.concurrent.ConcurrentTaskManager.runTiming;
+import static net.spartanb312.cursa.core.concurrent.ConcurrentTaskManager.measureTime;
 
 /**
  * Author B_312
@@ -20,8 +21,11 @@ import static net.spartanb312.cursa.core.concurrent.ConcurrentTaskManager.runTim
  */
 public class Cursa {
 
+    public static final String MOD_ID = "cursa";
     public static final String MOD_NAME = "Cursa";
     public static final String MOD_VERSION = "0.0.2";
+    public static final String MOD_BRANCH = "dev";
+    public static final String FULL_MOD_VERSION = MOD_VERSION + "-" + MOD_BRANCH;
 
     public static final String AUTHOR = "B_312";
     public static final String GITHUB = "https://github.com/SpartanB312/Cursa";
@@ -38,28 +42,28 @@ public class Cursa {
 
     @Listener(priority = Priority.HIGHEST)
     public void initialize(InitializationEvent.Initialize event) {
-        long tookTime = runTiming(() -> {
-            Display.setTitle(MOD_NAME + " " + MOD_VERSION);
+        long tookTime = measureTime(() -> {
+            Display.setTitle(MOD_NAME + " " + FULL_MOD_VERSION);
 
             //Parallel load managers
             runParallel(it -> {
 
-                Cursa.log.info("Loading Font Manager");
-                FontManager.init();
+                Cursa.log.info("Loading font renderers");
+                FontRenderers.init();
 
-                Cursa.log.info("Loading Module Manager");
+                Cursa.log.info("Loading modules");
                 ModuleManager.init();
 
-                Cursa.log.info("Loading GUI Manager");
+                Cursa.log.info("Loading GUI");
                 it.launch(GUIManager::init);
 
-                Cursa.log.info("Loading Command Manager");
+                Cursa.log.info("Loading commands");
                 it.launch(CommandManager::init);
 
-                Cursa.log.info("Loading Friend Manager");
+                Cursa.log.info("Loading friends");
                 it.launch(FriendManager::init);
 
-                Cursa.log.info("Loading Config Manager");
+                Cursa.log.info("Loading configs");
                 it.launch(ConfigManager::init);
 
             });

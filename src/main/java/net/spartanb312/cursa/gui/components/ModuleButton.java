@@ -1,6 +1,6 @@
 package net.spartanb312.cursa.gui.components;
 
-import net.spartanb312.cursa.client.FontManager;
+import net.spartanb312.cursa.graphics.FontRenderers;
 import net.spartanb312.cursa.client.GUIManager;
 import net.spartanb312.cursa.core.setting.NumberSetting;
 import net.spartanb312.cursa.core.setting.Setting;
@@ -11,7 +11,7 @@ import net.spartanb312.cursa.module.ListenerSetting;
 import net.spartanb312.cursa.module.Module;
 import net.spartanb312.cursa.utils.SoundUtil;
 import net.spartanb312.cursa.utils.Timer;
-import net.spartanb312.cursa.utils.graphics.RenderUtils2D;
+import net.spartanb312.cursa.graphics.RenderUtils2D;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -51,8 +51,8 @@ public class ModuleButton extends Component {
         RenderUtils2D.drawRect(x, y - 1, x + width, y + height + 1, 0x85000000);
         if (module.isEnabled())
             RenderUtils2D.drawRect(x + 1, y, x + width - 1, y + height, GUIManager.getColor4I());
-        font.drawString(module.name, x + 3, (int) (y + height / 2 - font.getHeight() / 2f) , fontColor);
-        FontManager.drawIcon(x + width - 2 - FontManager.getIconWidth(), y, new Color(230, 230, 230, 230));
+        font.drawString(module.name, x + 3, (int) (y + height / 2 - font.getHeight() / 2f), fontColor);
+        FontRenderers.drawIcon(x + width - 2 - FontRenderers.getIconWidth(), y, new Color(230, 230, 230, 230));
     }
 
     @Override

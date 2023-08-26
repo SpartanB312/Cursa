@@ -1,7 +1,7 @@
 package net.spartanb312.cursa.engine.tasks;
 
 import net.spartanb312.cursa.engine.RenderTask;
-import net.spartanb312.cursa.utils.graphics.RenderUtils2D;
+import net.spartanb312.cursa.graphics.RenderUtils2D;
 
 public class RectRenderTask implements RenderTask {
 

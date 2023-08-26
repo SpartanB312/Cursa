@@ -1,6 +1,11 @@
-package net.spartanb312.cursa.utils.graphics.texture;
+package net.spartanb312.cursa.graphics.texture;
 
 import net.minecraft.client.renderer.GlStateManager;
+import net.spartanb312.cursa.graphics.Compatibility;
+import org.lwjgl.opengl.EXTFramebufferObject;
+import org.lwjgl.opengl.GL12;
+import org.lwjgl.opengl.GL14;
+import org.lwjgl.opengl.GL30;
 
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
@@ -20,14 +25,28 @@ public class MipmapTexture {
     private final int textureID;
     private int width = 0;
     private int height = 0;
+    private int mipmapLevels = 0;
 
     public MipmapTexture() {
         textureID = glGenTextures();
         // upload image later
     }
 
+    public MipmapTexture(int mipmapLevels) {
+        textureID = glGenTextures();
+        this.mipmapLevels = mipmapLevels;
+        // upload image later
+    }
+
     public MipmapTexture(BufferedImage bufferedImage, int format) {
         textureID = glGenTextures();
+        // upload image immediately
+        uploadImage(bufferedImage, format);
+    }
+
+    public MipmapTexture(BufferedImage bufferedImage, int format, int mipmapLevels) {
+        textureID = glGenTextures();
+        this.mipmapLevels = mipmapLevels;
         // upload image immediately
         uploadImage(bufferedImage, format);
     }
@@ -42,7 +61,19 @@ public class MipmapTexture {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        boolean useMipmaps = mipmapLevels > 0 && Compatibility.openGL14;
+        if (useMipmaps) {
+            glTexParameteri(GL_TEXTURE_2D, GL12.GL_TEXTURE_MIN_LOD, 0);
+            glTexParameteri(GL_TEXTURE_2D, GL12.GL_TEXTURE_MAX_LOD, mipmapLevels);
+            glTexParameteri(GL_TEXTURE_2D, GL12.GL_TEXTURE_BASE_LEVEL, 0);
+            glTexParameteri(GL_TEXTURE_2D, GL12.GL_TEXTURE_MAX_LEVEL, mipmapLevels);
+        }
         upload(bufferedImage, format, bufferedImage.getWidth(), bufferedImage.getHeight());
+        if (useMipmaps) {
+            if (Compatibility.openGL30) GL30.glGenerateMipmap(GL_TEXTURE_2D);
+            else if (Compatibility.extFramebufferObject) EXTFramebufferObject.glGenerateMipmapEXT(GL_TEXTURE_2D);
+            else glTexParameteri(GL_TEXTURE_2D, GL14.GL_GENERATE_MIPMAP, GL_TRUE);
+        }
         unbindTexture();
     }
 

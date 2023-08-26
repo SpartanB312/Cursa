@@ -14,14 +14,14 @@ import java.util.Map;
 @IFMLLoadingPlugin.SortingIndex(value = 1001)
 public class MixinLoader implements IFMLLoadingPlugin {
 
-    public static final Logger log = LogManager.getLogger("MIXIN");
+    public static final Logger LOGGER = LogManager.getLogger("MIXIN");
 
     public MixinLoader() {
-        log.info("Cursa mixins initialized");
+        LOGGER.info("Cursa mixins initialized");
         MixinBootstrap.init();
         Mixins.addConfigurations("mixins.cursa.json");
         MixinEnvironment.getDefaultEnvironment().setObfuscationContext("searge");
-        log.info(MixinEnvironment.getDefaultEnvironment().getObfuscationContext());
+        LOGGER.info(MixinEnvironment.getDefaultEnvironment().getObfuscationContext());
     }
 
     @Override

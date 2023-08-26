@@ -4,7 +4,7 @@ buildscript {
         maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:4.+'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:6.+'
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
@@ -25,7 +25,7 @@ repositories {
     mavenCentral()
     maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
     maven { url = 'https://impactdevelopment.github.io/maven/' }
-    maven { url = 'http://maven-eclipse.github.io/maven' }
+    maven { url = 'https://maven-eclipse.github.io/maven' }
     maven { url = 'https://jitpack.io' }
 }
 
@@ -39,7 +39,7 @@ minecraft {
             workingDirectory project.file('run')
 
             property 'fml.coreMods.load', 'net.spartanb312.cursa.mixin.MixinLoader'
-            property 'mixin.env.disableRefMap', 'true' // Disable refmap so we don't get trolled by Baritone
+            property 'mixin.env.disableRefMap', 'true'
 
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
@@ -52,9 +52,13 @@ configurations {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2854'
+    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
 
-    addLib("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
+    configurations.implementation {
+        extendsFrom(configurations.addLib)
+    }
+
+    addLib("org.spongepowered:mixin:0.8-SNAPSHOT") {
         exclude module: 'launchwrapper'
         exclude module: 'log4j-core'
         exclude module: 'guava'
@@ -62,13 +66,11 @@ dependencies {
         exclude module: 'commons-io'
     }
 
-    annotationProcessor('org.spongepowered:mixin:0.8.2:processor') {
+    annotationProcessor('org.spongepowered:mixin:0.8.3:processor') {
         exclude module: 'gson'
     }
 
     compileOnly('org.jetbrains:annotations:22.0.0')
-
-    implementation configurations.addLib
 }
 
 
@@ -81,6 +83,8 @@ mixin {
 processResources {
     inputs.property 'version', project.version
     inputs.property 'mcversion', project.mcVersion
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
     exclude '**/rawimagefiles'
 

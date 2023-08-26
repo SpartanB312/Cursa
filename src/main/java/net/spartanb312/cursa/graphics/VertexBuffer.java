@@ -1,4 +1,4 @@
-package net.spartanb312.cursa.utils.graphics;
+package net.spartanb312.cursa.graphics;
 
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.spartanb312.cursa.utils.ColorUtil;

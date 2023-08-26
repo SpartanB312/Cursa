@@ -1,8 +1,8 @@
 package net.spartanb312.cursa.engine.tasks;
 
-import net.spartanb312.cursa.client.FontManager;
+import net.spartanb312.cursa.graphics.FontRenderers;
 import net.spartanb312.cursa.engine.RenderTask;
-import net.spartanb312.cursa.utils.graphics.font.UnicodeFontRenderer;
+import net.spartanb312.cursa.graphics.font.UnicodeFontRenderer;
 
 import java.awt.*;
 
@@ -22,7 +22,7 @@ public class TextRenderTask implements RenderTask {
         this.color = new Color(color);
         this.centered = centered;
         this.shadow = shadow;
-        this.fontRenderer = FontManager.fontRenderer;
+        this.fontRenderer = FontRenderers.MainFontRenderer;
     }
 
     public TextRenderTask(String text, float x, float y, int color, boolean centered, boolean shadow, UnicodeFontRenderer fontRenderer) {
@@ -43,7 +43,7 @@ public class TextRenderTask implements RenderTask {
         this.centered = centered;
         this.shadow = shadow;
         this.scale = scale;
-        this.fontRenderer = FontManager.fontRenderer;
+        this.fontRenderer = FontRenderers.MainFontRenderer;
     }
 
     public TextRenderTask(String text, float x, float y, int color, boolean centered, boolean shadow, float scale, UnicodeFontRenderer fontRenderer) {

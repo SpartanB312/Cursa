@@ -4,7 +4,7 @@ import net.spartanb312.cursa.core.setting.Setting;
 import net.spartanb312.cursa.engine.AsyncRenderer;
 import net.spartanb312.cursa.engine.RenderEngine;
 import net.spartanb312.cursa.module.Module;
-import net.spartanb312.cursa.utils.graphics.RenderUtils2D;
+import net.spartanb312.cursa.graphics.RenderUtils2D;
 import net.minecraft.client.gui.ScaledResolution;
 
 import java.awt.*;
@@ -17,27 +17,27 @@ public abstract class HUDModule extends Module {
     int x2, y2;
     protected AsyncRenderer asyncRenderer = null;
 
-    private final Setting<Integer> hud_x = setting("HUD_X", 100, Integer.MIN_VALUE, Integer.MAX_VALUE).when(() -> false);
-    private final Setting<Integer> hud_y = setting("HUD_Y", 100, Integer.MIN_VALUE, Integer.MAX_VALUE).when(() -> false);
-    private final Setting<Integer> hud_width = setting("HUD_WIDTH", 100, Integer.MIN_VALUE, Integer.MAX_VALUE).when(() -> false);
-    private final Setting<Integer> hud_height = setting("HUD_HEIGHT", 100, Integer.MIN_VALUE, Integer.MAX_VALUE).when(() -> false);
+    private final Setting<Integer> hudX = setting("X", 100, Integer.MIN_VALUE, Integer.MAX_VALUE).when(() -> false);
+    private final Setting<Integer> hudY = setting("Y", 100, Integer.MIN_VALUE, Integer.MAX_VALUE).when(() -> false);
+    private final Setting<Integer> hudWidth = setting("Width", 100, Integer.MIN_VALUE, Integer.MAX_VALUE).when(() -> false);
+    private final Setting<Integer> hudHeight = setting("Height", 100, Integer.MIN_VALUE, Integer.MAX_VALUE).when(() -> false);
 
     @Override
     public void onSave() {
-        hud_x.setValue(x);
-        hud_y.setValue(y);
-        hud_width.setValue(width);
-        hud_height.setValue(height);
+        hudX.setValue(x);
+        hudY.setValue(y);
+        hudWidth.setValue(width);
+        hudHeight.setValue(height);
         super.onSave();
     }
 
     @Override
     public void onLoad() {
         super.onLoad();
-        x = hud_x.getValue();
-        y = hud_y.getValue();
-        width = hud_width.getValue();
-        height = hud_height.getValue();
+        x = hudX.getValue();
+        y = hudY.getValue();
+        width = hudWidth.getValue();
+        height = hudHeight.getValue();
     }
 
     public void onHUDEnable() {

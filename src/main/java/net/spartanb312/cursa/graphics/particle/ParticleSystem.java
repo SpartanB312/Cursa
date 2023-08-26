@@ -1,4 +1,4 @@
-package net.spartanb312.cursa.utils.graphics.particle;
+package net.spartanb312.cursa.graphics.particle;
 
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Mouse;

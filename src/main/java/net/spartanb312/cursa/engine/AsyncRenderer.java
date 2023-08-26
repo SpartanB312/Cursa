@@ -1,12 +1,9 @@
 package net.spartanb312.cursa.engine;
 
-import net.spartanb312.cursa.client.FontManager;
-import net.spartanb312.cursa.engine.tasks.RectRenderTask;
-import net.spartanb312.cursa.engine.tasks.ScaleTask;
-import net.spartanb312.cursa.engine.tasks.TextRenderTask;
+import net.spartanb312.cursa.graphics.FontRenderers;
+import net.spartanb312.cursa.engine.tasks.*;
 import net.minecraft.client.gui.ScaledResolution;
-import net.spartanb312.cursa.engine.tasks.TranslateTask;
-import net.spartanb312.cursa.utils.graphics.font.UnicodeFontRenderer;
+import net.spartanb312.cursa.graphics.font.UnicodeFontRenderer;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -37,6 +34,14 @@ public abstract class AsyncRenderer {
         copiedTasks.forEach(RenderTask::onRender);
     }
 
+    public void rotate(float angle, float x, float y, float z) {
+        tempTasks.add(new RotateTask(angle, x, y, z));
+    }
+
+    public void rotate(float angle, float x, float y, float z, int matrixMode) {
+        tempTasks.add(new RotateTask(angle, x, y, z, matrixMode));
+    }
+
     public void scale(float x, float y, float z) {
         tempTasks.add(new ScaleTask(x, y, z));
     }
@@ -54,7 +59,7 @@ public abstract class AsyncRenderer {
     }
 
     public void drawAsyncIcon(float x, float y, int color) {
-        drawAsyncString("q", x, y, color, FontManager.iconFont);
+        drawAsyncString("q", x, y, color, FontRenderers.IconFont);
     }
 
     public void drawAsyncString(String text, float x, float y) {

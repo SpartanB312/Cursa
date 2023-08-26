@@ -78,7 +78,9 @@ public class ConfigContainer {
         if (configFile.exists()) {
             try {
                 BufferedReader bufferedJson = new BufferedReader(new FileReader(configFile));
-                JsonObject jsonObject = (JsonObject) jsonParser.parse(bufferedJson);
+                JsonElement jsonElement = jsonParser.parse(bufferedJson);
+                if (jsonElement instanceof JsonNull) return;
+                JsonObject jsonObject = (JsonObject) jsonElement;
                 bufferedJson.close();
                 Map<String, JsonElement> map = new HashMap<>();
                 jsonObject.entrySet().forEach(it -> map.put(it.getKey(), it.getValue()));

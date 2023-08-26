@@ -8,7 +8,7 @@ import net.spartanb312.cursa.gui.Component;
 import net.spartanb312.cursa.gui.Panel;
 import net.spartanb312.cursa.module.modules.client.ClickGUI;
 import net.spartanb312.cursa.utils.SoundUtil;
-import net.spartanb312.cursa.utils.graphics.RenderUtils2D;
+import net.spartanb312.cursa.graphics.RenderUtils2D;
 import org.lwjgl.input.Keyboard;
 
 public class BindButton extends Component {
@@ -16,7 +16,7 @@ public class BindButton extends Component {
     Setting<KeyBind> setting;
     boolean accepting = false;
 
-    public BindButton(Setting<KeyBind>  setting, int width, int height, Panel father) {
+    public BindButton(Setting<KeyBind> setting, int width, int height, Panel father) {
         this.setting = setting;
         this.width = width;
         this.height = height;
@@ -27,7 +27,7 @@ public class BindButton extends Component {
     public void render(int mouseX, int mouseY, float partialTicks) {
         RenderUtils2D.drawRect(x, y, x + width, y + height, 0x85000000);
         font.drawString(accepting ? (setting.getName() + " | ...") : setting.getName() + " | " + (setting.getValue().getKeyCode() == 0x00 ? "NONE" : Keyboard.getKeyName(setting.getValue().getKeyCode())),
-                x + 5, (int) (y + height / 2 - font.getHeight() / 2f) + 2, getHoveredColor(mouseX, mouseY, GUIManager.getColor3I()));
+                x + 6, (int) (y + height / 2 - font.getHeight() / 2f), getHoveredColor(mouseX, mouseY, GUIManager.getColor3I()));
     }
 
     @Override

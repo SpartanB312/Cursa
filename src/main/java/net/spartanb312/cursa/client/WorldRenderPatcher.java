@@ -4,7 +4,7 @@ import net.spartanb312.cursa.Cursa;
 import net.spartanb312.cursa.event.events.render.RenderEvent;
 import net.spartanb312.cursa.event.events.render.RenderWorldEvent;
 import net.spartanb312.cursa.notification.NotificationManager;
-import net.spartanb312.cursa.utils.graphics.RenderUtils3D;
+import net.spartanb312.cursa.graphics.RenderUtils3D;
 import net.spartanb312.cursa.utils.EntityUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

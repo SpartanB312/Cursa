@@ -1,6 +1,6 @@
 package net.spartanb312.cursa.gui;
 
-import net.spartanb312.cursa.client.FontManager;
+import net.spartanb312.cursa.graphics.FontRenderers;
 import net.spartanb312.cursa.client.GUIManager;
 import net.spartanb312.cursa.client.ModuleManager;
 import net.spartanb312.cursa.gui.components.ModuleButton;
@@ -9,8 +9,8 @@ import net.spartanb312.cursa.gui.renderers.HUDEditorRenderer;
 import net.spartanb312.cursa.module.Category;
 import net.spartanb312.cursa.module.Module;
 import net.spartanb312.cursa.utils.Timer;
-import net.spartanb312.cursa.utils.graphics.RenderUtils2D;
-import net.spartanb312.cursa.utils.graphics.font.UnicodeFontRenderer;
+import net.spartanb312.cursa.graphics.RenderUtils2D;
+import net.spartanb312.cursa.graphics.font.UnicodeFontRenderer;
 import net.spartanb312.cursa.utils.math.Pair;
 import net.spartanb312.cursa.utils.math.Vec2I;
 
@@ -43,7 +43,7 @@ public class Panel {
         this.extended = true;
         this.dragging = false;
         this.category = category;
-        font = FontManager.fontRenderer;
+        font = FontRenderers.MainFontRenderer;
         setup();
     }
 
@@ -65,7 +65,7 @@ public class Panel {
 
         int panelColor = 0x85000000;
         RenderUtils2D.drawRect(x, y, x + width, y + height, GUIManager.getColor4I());
-        font.drawString(category.categoryName, x + (width / 2f - font.getWidth(category.categoryName) / 2f), y + height / 2f - font.getHeight() / 2f + 2, 0xffefefef);
+        font.drawString(category.categoryName, x + (width / 2f - font.getWidth(category.categoryName) / 2f), y + height / 2f - font.getHeight() / 2f, 0xffefefef);
         RenderUtils2D.drawRect(x, y + height, x + width, y + height + 1, panelColor);
 
         if (!elements.isEmpty()) {

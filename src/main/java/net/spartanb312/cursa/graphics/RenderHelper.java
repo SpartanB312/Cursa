@@ -1,4 +1,4 @@
-package net.spartanb312.cursa.utils.graphics;
+package net.spartanb312.cursa.graphics;
 
 import net.spartanb312.cursa.module.modules.client.ActiveModuleList;
 import net.spartanb312.cursa.utils.math.Vec2I;

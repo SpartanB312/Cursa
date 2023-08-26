@@ -6,7 +6,7 @@ import net.spartanb312.cursa.gui.Component;
 import net.spartanb312.cursa.gui.Panel;
 import net.spartanb312.cursa.utils.ColorUtil;
 import net.spartanb312.cursa.utils.SoundUtil;
-import net.spartanb312.cursa.utils.graphics.RenderUtils2D;
+import net.spartanb312.cursa.graphics.RenderUtils2D;
 
 import java.awt.*;
 
@@ -24,9 +24,9 @@ public class EnumButton extends Component {
     @Override
     public void render(int mouseX, int mouseY, float partialTicks) {
         RenderUtils2D.drawRect(x, y, x + width, y + height, 0x85000000);
-        font.drawString(setting.getName(), x + 5, (int) (y + height / 2 - font.getHeight() / 2f) + 2, ColorUtil.getHoovered(new Color(255, 255, 255).getRGB(), isHovered(mouseX, mouseY)));
+        font.drawString(setting.getName(), x + 6, (int) (y + height / 2 - font.getHeight() / 2f), ColorUtil.getHoovered(new Color(255, 255, 255).getRGB(), isHovered(mouseX, mouseY)));
         font.drawString(setting.displayValue(),
-                x + width - 3 - font.getWidth(setting.displayValue()), (int) (y + height / 2 - font.getHeight() / 2f) + 2,
+                x + width - 3 - font.getWidth(setting.displayValue()), (int) (y + height / 2 - font.getHeight() / 2f),
                 isHovered(mouseX, mouseY) ? fontColor : 0x909090);
     }
 

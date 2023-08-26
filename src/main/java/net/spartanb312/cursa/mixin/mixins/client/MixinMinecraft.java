@@ -10,6 +10,7 @@ import net.minecraft.crash.CrashReport;
 import net.spartanb312.cursa.event.events.client.*;
 import org.lwjgl.input.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -18,7 +19,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Minecraft.class)
 public class MixinMinecraft {
 
-    @Inject(method = "displayGuiScreen", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "init", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;setWindowIcon()V", shift = At.Shift.AFTER))
+    public void debug(CallbackInfo ci) {
+        System.out.println("-------PASS-------");
+    }
+
+    @Inject(method = "displayGuiScreen", at = @At("HEAD"))
     public void displayGuiScreen(GuiScreen guiScreenIn, CallbackInfo info) {
         if (Minecraft.getMinecraft().currentScreen != null) {
             GuiScreenEvent.Closed screenEvent = new GuiScreenEvent.Closed(Minecraft.getMinecraft().currentScreen);
@@ -78,15 +84,16 @@ public class MixinMinecraft {
 
     @Redirect(method = "run", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;displayCrashReport(Lnet/minecraft/crash/CrashReport;)V"))
     public void displayCrashReport(Minecraft minecraft, CrashReport crashReport) {
-        save();
+        cursa$save();
     }
 
     @Inject(method = "shutdown", at = @At("HEAD"))
     public void shutdown(CallbackInfo info) {
-        save();
+        cursa$save();
     }
 
-    private void save() {
+    @Unique
+    private void cursa$save() {
         System.out.println("Shutting down: saving " + Cursa.MOD_NAME + " configuration");
         ConfigManager.saveAll();
         System.out.println("Configuration saved.");

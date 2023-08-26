@@ -5,7 +5,6 @@ import net.spartanb312.cursa.core.event.Listener;
 import net.spartanb312.cursa.core.event.Priority;
 import net.spartanb312.cursa.core.event.decentralization.ListenableImpl;
 import net.spartanb312.cursa.event.decentraliized.DecentralizedClientTickEvent;
-import net.spartanb312.cursa.event.decentraliized.DecentralizedPacketEvent;
 import net.spartanb312.cursa.event.decentraliized.DecentralizedRenderTickEvent;
 import net.spartanb312.cursa.event.decentraliized.DecentralizedRenderWorldEvent;
 import net.spartanb312.cursa.event.events.client.InputUpdateEvent;
@@ -28,8 +27,6 @@ public class ModuleBus extends ListenableImpl {
         listener(DecentralizedClientTickEvent.class, it -> onTick());
         listener(DecentralizedRenderTickEvent.class, this::onRenderTick);
         listener(DecentralizedRenderWorldEvent.class, this::onRenderWorld);
-        listener(DecentralizedPacketEvent.Send.class, this::onPacketSend);
-        listener(DecentralizedPacketEvent.Receive.class, this::onPacketReceive);
         subscribe();
     }
 

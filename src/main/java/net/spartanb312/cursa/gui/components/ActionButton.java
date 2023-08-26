@@ -5,7 +5,7 @@ import net.spartanb312.cursa.core.concurrent.task.VoidTask;
 import net.spartanb312.cursa.core.setting.Setting;
 import net.spartanb312.cursa.gui.Component;
 import net.spartanb312.cursa.gui.Panel;
-import net.spartanb312.cursa.utils.graphics.RenderUtils2D;
+import net.spartanb312.cursa.graphics.RenderUtils2D;
 
 public class ActionButton extends Component {
 
@@ -21,7 +21,7 @@ public class ActionButton extends Component {
     @Override
     public void render(int mouseX, int mouseY, float partialTicks) {
         RenderUtils2D.drawRect(x, y, x + width, y + height, 0x85000000);
-        font.drawString(setting.getName(), x + 5, (int) (y + height / 2 - font.getHeight() / 2f) + 2, getHoveredColor(mouseX, mouseY, GUIManager.getColor3I()));
+        font.drawString(setting.getName(), x + 6, (int) (y + height / 2 - font.getHeight() / 2f), getHoveredColor(mouseX, mouseY, GUIManager.getColor3I()));
     }
 
     @Override

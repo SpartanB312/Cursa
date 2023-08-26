@@ -35,7 +35,7 @@ public class ConcurrentTaskManager {
         backgroundMainThread.start();
     }
 
-    public static long runTiming(VoidTask task) {
+    public static long measureTime(VoidTask task) {
         long startTime = System.currentTimeMillis();
         task.invoke();
         return System.currentTimeMillis() - startTime;
