@@ -18,9 +18,9 @@ import static org.lwjgl.opengl.GL11.*;
 /**
  * Author B_312
  * Created on 09/16/2022
- * Updated on 08/27/2023
+ * Updated on 08/28/2023
  */
-public class UnicodeFontRenderer implements IFontRenderer, ICenteredFontRenderer, IGradiantFontRenderer {
+public class UnicodeFontRenderer implements IFontRenderer, ICenteredFontRenderer, IGradientFontRenderer {
 
     private final Font font;
     private final boolean antiAlias;
@@ -341,37 +341,37 @@ public class UnicodeFontRenderer implements IFontRenderer, ICenteredFontRenderer
         drawString0(text, x1, y1, color, scale, false);
     }
 
-    //Gradiant
+    // Gradient
     @Override
-    public void drawGradiantString(String text, float x, float y, Color[] colors) {
+    public void drawGradientString(String text, float x, float y, Color[] colors) {
         drawString1(text, x, y, colors, 1f);
     }
 
     @Override
-    public void drawGradiantString(String text, float x, float y, Color[] colors, float scale) {
+    public void drawGradientString(String text, float x, float y, Color[] colors, float scale) {
         drawString1(text, x, y, colors, scale);
     }
 
     @Override
-    public void drawGradiantStringWithShadow(String text, float x, float y, Color[] colors) {
+    public void drawGradientStringWithShadow(String text, float x, float y, Color[] colors) {
         drawString0(text, x + 1f, y + 1f, colors[0], 1f, true);
         drawString1(text, x, y, colors, 1f);
     }
 
     @Override
-    public void drawGradiantStringWithShadow(String text, float x, float y, Color[] colors, float scale) {
+    public void drawGradientStringWithShadow(String text, float x, float y, Color[] colors, float scale) {
         drawString0(text, x + 1f, y + 1f, colors[0], scale, true);
         drawString1(text, x, y, colors, scale);
     }
 
     @Override
-    public void drawGradiantStringWithShadow(String text, float x, float y, float shadowDepth, Color[] colors) {
+    public void drawGradientStringWithShadow(String text, float x, float y, float shadowDepth, Color[] colors) {
         drawString0(text, x + shadowDepth, y + shadowDepth, colors[0], 1f, true);
         drawString1(text, x, y, colors, 1f);
     }
 
     @Override
-    public void drawGradiantStringWithShadow(String text, float x, float y, float shadowDepth, Color[] colors, float scale) {
+    public void drawGradientStringWithShadow(String text, float x, float y, float shadowDepth, Color[] colors, float scale) {
         drawString0(text, x + shadowDepth, y + shadowDepth, colors[0], scale, true);
         drawString1(text, x, y, colors, scale);
     }
@@ -384,7 +384,7 @@ public class UnicodeFontRenderer implements IFontRenderer, ICenteredFontRenderer
         drawString0(text, x, y, colors[0], true, colors, scale0, false);
     }
 
-    private void drawString0(String text, float x, float y, Color color0, boolean gradiant, Color[] colors, float scale0, boolean shadow) {
+    private void drawString0(String text, float x, float y, Color color0, boolean gradient, Color[] colors, float scale0, boolean shadow) {
         GlStateManager.enableTexture2D();
         GlStateManager.enableBlend();
         GlStateManager.enableAlpha();
@@ -429,7 +429,7 @@ public class UnicodeFontRenderer implements IFontRenderer, ICenteredFontRenderer
                     //Color
                     Color newColor = getColor(next, color0);
                     if (newColor != null) {
-                        if (!gradiant) currentColor = new Color(newColor.getRed(), newColor.getGreen(), newColor.getBlue(), alpha);
+                        if (!gradient) currentColor = new Color(newColor.getRed(), newColor.getGreen(), newColor.getBlue(), alpha);
                         shouldSkip = true;
                         continue;
                     }
@@ -464,7 +464,7 @@ public class UnicodeFontRenderer implements IFontRenderer, ICenteredFontRenderer
 
             Color leftColor = shadow ? shadowColor : currentColor;
             Color rightColor = leftColor;
-            if (gradiant && !shadow) rightColor = colors[index % colors.length];
+            if (gradient && !shadow) rightColor = colors[index % colors.length];
 
             float endX = startX + data.width;
             float endY = startY + data.height;

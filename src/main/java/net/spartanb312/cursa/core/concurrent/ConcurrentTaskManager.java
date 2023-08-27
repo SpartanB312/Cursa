@@ -1,10 +1,10 @@
 package net.spartanb312.cursa.core.concurrent;
 
-import net.spartanb312.cursa.core.concurrent.blocking.BlockingContent;
+import net.spartanb312.cursa.core.concurrent.blocking.BlockingContext;
 import net.spartanb312.cursa.core.concurrent.blocking.BlockingTask;
-import net.spartanb312.cursa.core.concurrent.repeat.DelayUnit;
+import net.spartanb312.cursa.core.concurrent.repeat.DelayJob;
 import net.spartanb312.cursa.core.concurrent.repeat.RepeatManager;
-import net.spartanb312.cursa.core.concurrent.repeat.RepeatUnit;
+import net.spartanb312.cursa.core.concurrent.repeat.RepeatJob;
 import net.spartanb312.cursa.core.concurrent.task.*;
 import net.spartanb312.cursa.core.concurrent.thread.BackgroundMainThread;
 import net.spartanb312.cursa.core.concurrent.utils.Syncer;
@@ -18,6 +18,7 @@ import java.util.function.IntSupplier;
 
 /**
  * Created by B_312 on 05/01/2021
+ * Meme codes. Lol
  */
 public class ConcurrentTaskManager {
 
@@ -42,8 +43,9 @@ public class ConcurrentTaskManager {
     }
 
     //---- TaskPool Runner ----//
+    @Deprecated // inefficient synchronized in lightweight tasks, use runParallelTasks instead
     public static void runParallel(BlockingTask task) {
-        BlockingContent content = new BlockingContent();
+        BlockingContext content = new BlockingContext();
         task.invoke(content);
         content.await();
     }
@@ -90,44 +92,44 @@ public class ConcurrentTaskManager {
 
     //---- Delay Runner ----//
     public static void addDelayTask(int delay, VoidTask task) {
-        RepeatManager.instance.delayUnits.add(new DelayUnit(System.currentTimeMillis() + delay, task));
+        RepeatManager.instance.delayJobs.add(new DelayJob(System.currentTimeMillis() + delay, task));
     }
 
-    public static void addDelayTask(DelayUnit delayUnit) {
-        RepeatManager.instance.delayUnits.add(delayUnit);
+    public static void addDelayTask(DelayJob delayJob) {
+        RepeatManager.instance.delayJobs.add(delayJob);
     }
 
     //---- Repeat Runner ----//
-    public static void runRepeat(RepeatUnit unit) {
+    public static void runRepeat(RepeatJob unit) {
         registerRepeatUnit(unit);
     }
 
     public static void runRepeat(int delay, VoidTask task) {
-        RepeatUnit unit = new RepeatUnit(delay, task);
+        RepeatJob unit = new RepeatJob(delay, task);
         registerRepeatUnit(unit);
     }
 
     public static void runRepeat(int delay, int times, VoidTask task) {
-        RepeatUnit unit = new RepeatUnit(delay, times, task);
+        RepeatJob unit = new RepeatJob(delay, times, task);
         registerRepeatUnit(unit);
     }
 
     public static void runRepeat(IntSupplier delay, VoidTask task) {
-        RepeatUnit unit = new RepeatUnit(delay, task);
+        RepeatJob unit = new RepeatJob(delay, task);
         registerRepeatUnit(unit);
     }
 
     public static void runRepeat(IntSupplier delay, int times, VoidTask task) {
-        RepeatUnit unit = new RepeatUnit(delay, times, task);
+        RepeatJob unit = new RepeatJob(delay, times, task);
         registerRepeatUnit(unit);
     }
 
-    public static void registerRepeatUnit(RepeatUnit repeatUnit) {
-        RepeatManager.instance.repeatUnits.add(repeatUnit);
+    public static void registerRepeatUnit(RepeatJob repeatJob) {
+        RepeatManager.instance.repeatJobs.add(repeatJob);
     }
 
-    public static void unregisterRepeatUnit(RepeatUnit repeatUnit) {
-        RepeatManager.instance.repeatUnits.remove(repeatUnit);
+    public static void unregisterRepeatUnit(RepeatJob repeatJob) {
+        RepeatManager.instance.repeatJobs.remove(repeatJob);
     }
 
     public static void repeat(int times, VoidTask task) {

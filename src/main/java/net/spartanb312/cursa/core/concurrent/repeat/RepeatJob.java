@@ -10,10 +10,9 @@ import java.util.function.IntSupplier;
 /**
  * Created by B_312 on 05/01/2021
  */
-public class RepeatUnit {
+public class RepeatJob {
 
-    VoidTask task;
-
+    private VoidTask task;
     private final AtomicBoolean runnable = new AtomicBoolean(true);
     private final AtomicBoolean isRunning = new AtomicBoolean(true);
     private final AtomicBoolean isDead = new AtomicBoolean(false);
@@ -30,45 +29,45 @@ public class RepeatUnit {
         STOP
     }
 
-    public RepeatUnit(int delay, VoidTask task) {
+    public RepeatJob(int delay, VoidTask task) {
         this.task = task;
         this.delay = delay;
         this.times += Integer.MAX_VALUE;
     }
 
-    public RepeatUnit(int delay, int times, VoidTask task) {
+    public RepeatJob(int delay, int times, VoidTask task) {
         this.task = task;
         this.delay = delay;
         this.times += times;
     }
 
-    public RepeatUnit(IntSupplier delay, VoidTask task) {
+    public RepeatJob(IntSupplier delay, VoidTask task) {
         this.task = task;
         this.delaySupplier = delay;
         this.times += Integer.MAX_VALUE;
     }
 
-    public RepeatUnit(IntSupplier delay, int times, VoidTask task) {
+    public RepeatJob(IntSupplier delay, int times, VoidTask task) {
         this.task = task;
         this.delaySupplier = delay;
         this.times += times;
     }
 
-    public RepeatUnit(int delay, VoidTask timeOutOperation, VoidTask task) {
+    public RepeatJob(int delay, VoidTask timeOutOperation, VoidTask task) {
         this.task = task;
         this.delay = delay;
         this.timeOutOperation = timeOutOperation;
         this.times += Integer.MAX_VALUE;
     }
 
-    public RepeatUnit(int delay, int times, VoidTask timeOutOperation, VoidTask task) {
+    public RepeatJob(int delay, int times, VoidTask timeOutOperation, VoidTask task) {
         this.task = task;
         this.delay = delay;
         this.timeOutOperation = timeOutOperation;
         this.times += times;
     }
 
-    public RepeatUnit(IntSupplier delay, int times, VoidTask timeOutOperation, VoidTask task) {
+    public RepeatJob(IntSupplier delay, int times, VoidTask timeOutOperation, VoidTask task) {
         this.task = task;
         this.delaySupplier = delay;
         this.timeOutOperation = timeOutOperation;
@@ -109,19 +108,19 @@ public class RepeatUnit {
         return delaySupplier != null ? delaySupplier.getAsInt() : delay;
     }
 
-    public RepeatUnit afterTimeOutOperation(AfterTimeOutOperation atop) {
+    public RepeatJob afterTimeOutOperation(AfterTimeOutOperation atop) {
         this.afterTimeOut = atop;
         return this;
     }
 
-    public RepeatUnit timeOut(Task<RepeatUnit> task) {
+    public RepeatJob timeOut(Task<RepeatJob> task) {
         this.timeOutOperation = () -> {
             task.invoke(this);
         };
         return this;
     }
 
-    public RepeatUnit timeOut(AfterTimeOutOperation atop, Task<RepeatUnit> task) {
+    public RepeatJob timeOut(AfterTimeOutOperation atop, Task<RepeatJob> task) {
         this.timeOutOperation = () -> {
             task.invoke(this);
         };
@@ -140,7 +139,7 @@ public class RepeatUnit {
         return isRunning.get();
     }
 
-    public RepeatUnit suspend() {
+    public RepeatJob suspend() {
         isRunning.set(false);
         return this;
     }

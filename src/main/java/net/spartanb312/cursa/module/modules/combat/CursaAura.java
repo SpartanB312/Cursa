@@ -24,13 +24,12 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.spartanb312.cursa.Cursa;
 import net.spartanb312.cursa.graphics.FontRenderers;
 import net.spartanb312.cursa.client.FriendManager;
 import net.spartanb312.cursa.client.GUIManager;
 import net.spartanb312.cursa.common.annotations.ModuleInfo;
 import net.spartanb312.cursa.common.annotations.Parallel;
-import net.spartanb312.cursa.core.concurrent.repeat.RepeatUnit;
+import net.spartanb312.cursa.core.concurrent.repeat.RepeatJob;
 import net.spartanb312.cursa.core.event.Listener;
 import net.spartanb312.cursa.core.setting.Setting;
 import net.spartanb312.cursa.event.events.network.PacketEvent;
@@ -45,7 +44,6 @@ import net.spartanb312.cursa.notification.NotificationManager;
 import net.spartanb312.cursa.utils.*;
 import net.spartanb312.cursa.graphics.RenderUtils3D;
 import net.spartanb312.cursa.utils.math.Pair;
-import org.lwjgl.Sys;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -155,12 +153,12 @@ public strictfp class CursaAura extends Module {
     public final LocalTarget localTarget = new LocalTarget();
     private final HashMap<Vec3d, Double> renderBlockDmg = new HashMap<>();
 
-    RepeatUnit placeCalculation = new RepeatUnit(() -> (int) ((1000 / placeSpeed.getValue()) - 5) / (multiPlace.getValue() ? 1 : 2), () -> {
+    RepeatJob placeCalculation = new RepeatJob(() -> (int) ((1000 / placeSpeed.getValue()) - 5) / (multiPlace.getValue() ? 1 : 2), () -> {
         if (mc.player == null || mc.world == null) return;
         if (multiPlace.getValue()) localTarget.putPlaceTarget(calculator(shouldIgnoreEntity.get()));
     }).timeOut(it -> NotificationManager.error("Can't keep up!The calculation can't catch up with your place speed!Decrease PlaceSpeed plz!"));
 
-    RepeatUnit breakCalculation = new RepeatUnit(() -> (int) ((1000 / attackSpeed.getValue()) - 5), () -> {
+    RepeatJob breakCalculation = new RepeatJob(() -> (int) ((1000 / attackSpeed.getValue()) - 5), () -> {
         if (mc.player == null || mc.world == null) return;
         localTarget.putAttackTarget(new ArrayList<>(mc.world.loadedEntityList)
                 .stream()
@@ -169,14 +167,14 @@ public strictfp class CursaAura extends Module {
                 .min(Comparator.comparing(e -> mc.player.getDistance(e))).orElse(null));
     }).timeOut(it -> NotificationManager.error("Can't keep up!The calculation can't catch up with your attack speed!Decrease BreakSpeed plz!"));
 
-    List<RepeatUnit> repeatUnits = new ArrayList<>();
+    List<RepeatJob> repeatJobs = new ArrayList<>();
 
     public CursaAura() {
         INSTANCE = this;
-        repeatUnits.add(placeCalculation);
-        repeatUnits.add(breakCalculation);
-        repeatUnits.add(updateAutoCrystal);
-        repeatUnits.forEach(it -> {
+        repeatJobs.add(placeCalculation);
+        repeatJobs.add(breakCalculation);
+        repeatJobs.add(updateAutoCrystal);
+        repeatJobs.forEach(it -> {
             it.suspend();
             runRepeat(it);
         });
@@ -455,7 +453,7 @@ public strictfp class CursaAura extends Module {
     boolean antiWeak = false;
     int weakPreSlot = -1;
 
-    RepeatUnit updateAutoCrystal = new RepeatUnit(() -> updateDelay.getValue(), () -> {
+    RepeatJob updateAutoCrystal = new RepeatJob(() -> updateDelay.getValue(), () -> {
         if (mc.player == null || mc.world == null) return;
 
         if (placeTimer.passed(1050) || breakTimer.passed(1050)) rotating = false;
@@ -649,13 +647,13 @@ public strictfp class CursaAura extends Module {
         weakPreSlot = -1;
         lastEntityId.set(-1);
         shouldIgnoreEntity.set(false);
-        repeatUnits.forEach(RepeatUnit::resume);
+        repeatJobs.forEach(RepeatJob::resume);
         renderBlockDmg.clear();
     }
 
     @Override
     public void onDisable() {
-        repeatUnits.forEach(RepeatUnit::suspend);
+        repeatJobs.forEach(RepeatJob::suspend);
         rotating = false;
         resetRotation();
         placeTimer.restart();

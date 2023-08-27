@@ -3,7 +3,7 @@ package net.spartanb312.cursa.module.modules.misc;
 import net.minecraft.network.play.client.CPacketChatMessage;
 import net.spartanb312.cursa.common.annotations.ModuleInfo;
 import net.spartanb312.cursa.common.annotations.Parallel;
-import net.spartanb312.cursa.core.concurrent.repeat.RepeatUnit;
+import net.spartanb312.cursa.core.concurrent.repeat.RepeatJob;
 import net.spartanb312.cursa.core.setting.Setting;
 import net.spartanb312.cursa.module.Category;
 import net.spartanb312.cursa.module.Module;
@@ -30,9 +30,9 @@ public class Spammer extends Module {
     private static final List<String> spamMessages = new ArrayList<>();
     private static final Random rnd = new Random();
 
-    RepeatUnit fileChangeListener = new RepeatUnit(1000, this::readSpamFile);
+    RepeatJob fileChangeListener = new RepeatJob(1000, this::readSpamFile);
 
-    RepeatUnit runner = new RepeatUnit(() -> delay.getValue() * 1000, () -> {
+    RepeatJob runner = new RepeatJob(() -> delay.getValue() * 1000, () -> {
         if (mc.player == null) {
             disable();
         } else if (spamMessages.size() > 0) {

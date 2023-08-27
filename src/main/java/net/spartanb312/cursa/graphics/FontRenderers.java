@@ -1,6 +1,5 @@
 package net.spartanb312.cursa.graphics;
 
-import net.spartanb312.cursa.graphics.font.IGradiantFontRenderer;
 import net.spartanb312.cursa.graphics.font.UnicodeFontRenderer;
 
 import java.awt.*;

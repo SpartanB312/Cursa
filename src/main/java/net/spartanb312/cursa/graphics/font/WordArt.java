@@ -9,11 +9,11 @@ public class WordArt {
 
     public static final long startTime = System.currentTimeMillis();
 
-    public static void drawRainbowString(IGradiantFontRenderer fontRenderer, String str, float x, float y, float scale, int originX, float circleWidth, int timeGap) {
+    public static void drawRainbowString(IGradientFontRenderer fontRenderer, String str, float x, float y, float scale, int originX, float circleWidth, int timeGap) {
         drawRainbowStringWithShadow(fontRenderer, str, x, y, scale, 0f, originX, circleWidth, timeGap);
     }
 
-    public static void drawRainbowStringWithShadow(IGradiantFontRenderer fontRenderer, String str, float x, float y, float scale, float shadowDepth, int originX, float circleWidth, int timeGap) {
+    public static void drawRainbowStringWithShadow(IGradientFontRenderer fontRenderer, String str, float x, float y, float scale, float shadowDepth, int originX, float circleWidth, int timeGap) {
         Color[] colors = new Color[str.length() + 1];
         float currentX = x;
         int index = 0;
@@ -27,8 +27,8 @@ public class WordArt {
         float offset = (currentX - originX) % circleWidth / circleWidth;
         float hue = (((int) (System.currentTimeMillis() - startTime)) % timeGap) / ((float) timeGap);
         colors[index] = new Color(Color.HSBtoRGB(hue - offset, 1.0f, 1.0f));
-        if (shadowDepth == 0) fontRenderer.drawGradiantString(str, x, y, colors, scale);
-        else fontRenderer.drawGradiantStringWithShadow(str, x, y, shadowDepth, colors, scale);
+        if (shadowDepth == 0) fontRenderer.drawGradientString(str, x, y, colors, scale);
+        else fontRenderer.drawGradientStringWithShadow(str, x, y, shadowDepth, colors, scale);
     }
 
     public static int rainbow(int delay) {

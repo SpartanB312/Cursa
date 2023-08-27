@@ -7,12 +7,17 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 import java.awt.*;
+import java.util.function.Supplier;
 
 /**
  * Author B_312
  * last update on Sep 12th 2021
  */
 public class VertexBuffer {
+
+    public interface U {
+        void invoke(VertexBuffer buffer);
+    }
 
     private static final Tessellator tessellator = Tessellator.getInstance();
     private static final BufferBuilder bufferbuilder = tessellator.getBuffer();

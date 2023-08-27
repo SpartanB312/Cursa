@@ -40,6 +40,7 @@ public class Cursa {
         mainThread = Thread.currentThread();
     }
 
+    @SuppressWarnings("deprecation")
     @Listener(priority = Priority.HIGHEST)
     public void initialize(InitializationEvent.Initialize event) {
         long tookTime = measureTime(() -> {

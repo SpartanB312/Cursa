@@ -2,12 +2,12 @@ package net.spartanb312.cursa.core.concurrent.repeat;
 
 import net.spartanb312.cursa.core.concurrent.task.VoidTask;
 
-public class DelayUnit {
+public class DelayJob {
 
     private final VoidTask task;
     private final long startTime;
 
-    public DelayUnit(long startTime, VoidTask task) {
+    public DelayJob(long startTime, VoidTask task) {
         this.task = task;
         this.startTime = startTime;
     }

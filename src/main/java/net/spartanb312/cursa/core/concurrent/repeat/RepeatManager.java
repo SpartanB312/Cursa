@@ -16,13 +16,13 @@ public class RepeatManager {
         if (instance == null) instance = new RepeatManager();
     }
 
-    public final List<RepeatUnit> repeatUnits = new CopyOnWriteArrayList<>();
-    public final List<DelayUnit> delayUnits = new CopyOnWriteArrayList<>();
+    public final List<RepeatJob> repeatJobs = new CopyOnWriteArrayList<>();
+    public final List<DelayJob> delayJobs = new CopyOnWriteArrayList<>();
 
     public static void update() {
-        instance.delayUnits.removeIf(DelayUnit::invoke);
-        instance.repeatUnits.removeIf(RepeatUnit::isDead);
-        instance.repeatUnits.forEach(it -> {
+        instance.delayJobs.removeIf(DelayJob::invoke);
+        instance.repeatJobs.removeIf(RepeatJob::isDead);
+        instance.repeatJobs.forEach(it -> {
             if (it.shouldRun()) {
                 launch(it::run);
             }

@@ -2,12 +2,12 @@ package net.spartanb312.cursa.core.concurrent.blocking;
 
 import net.spartanb312.cursa.core.concurrent.task.VoidTask;
 
-public class BlockingUnit implements Runnable {
+public class BlockingJob implements Runnable {
 
     private final VoidTask task;
-    private final BlockingContent content;
+    private final BlockingContext content;
 
-    public BlockingUnit(VoidTask task, BlockingContent content) {
+    public BlockingJob(VoidTask task, BlockingContext content) {
         this.task = task;
         this.content = content;
     }
